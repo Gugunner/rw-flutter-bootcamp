@@ -9,17 +9,21 @@ part of 'pokemon_model.dart';
 PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) => PokemonModel(
       num: json['num'] as String,
       name: json['name'] as String,
-      type: (json['type'] as List<dynamic>).map((e) => e as String).toList(),
-      location:
-          (json['location'] as List<dynamic>).map((e) => e as int).toList(),
+      types: (json['type'] as List<dynamic>).map((e) => e as String).toList(),
+      locations: (json['locations'] as List<dynamic>)
+          .map((e) =>
+              (e as List<dynamic>).map((e) => (e as num).toDouble()).toList())
+          .toList(),
       img: json['img'] as String,
+      entry: json['entry'] as String?,
     );
 
 Map<String, dynamic> _$PokemonModelToJson(PokemonModel instance) =>
     <String, dynamic>{
       'num': instance.num,
       'name': instance.name,
-      'type': instance.type,
-      'location': instance.location,
+      'type': instance.types,
+      'locations': instance.locations,
       'img': instance.img,
+      'entry': instance.entry,
     };

@@ -6,19 +6,24 @@ class PokemonModel {
   PokemonModel({
     required this.num,
     required this.name,
-    required this.type,
-    required this.location,
+    required this.types,
+    required this.locations,
     required this.img,
+    this.entry,
   });
 
   final String num;
   final String name;
-  final List<String> type;
-  final List<int> location;
+  @JsonKey(
+    name: 'type',
+  )
+  final List<String> types;
+  final List<List<double>> locations;
   final String img;
+  final String? entry;
+  // ignore: todo
+  //TODO: Add a description property
 
   factory PokemonModel.fromJson(Map<String, dynamic> json) =>
       _$PokemonModelFromJson(json);
-    
 }
-
