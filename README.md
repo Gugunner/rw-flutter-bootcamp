@@ -69,3 +69,36 @@ ___
 &nbsp;
 <img src="./assets/iphone_13_max_pro_app.png" width="160" height="320" />
 
+## Assignment 6 and Assignment 7
+
+Here it is the Pokedex Sample proyect with some nice to haves.
+
+* Some responsiveness for big and small screens
+* Pokeball X,Y location is the same no matter the screen 
+* Scrollable on small screens
+* Some additional styles to make a more attractive visual experience
+<br>
+<br>
+
+A 2.7 inch QVGA screen app test
+
+<img src="./assets/pokedex_sample.gif" width="260" height="360" />
+
+<br>
+<br>
+
+Here are some screenshots on an iPhone Max 13 Pro
+
+<img src="./assets/pokedex_sample_iphone_13_max_pro.png" width="160" height="320" /> 
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<img src="./assets/pokedex_sample_iphone_13_max_pro_2.png" width="160" height="320" />
+
