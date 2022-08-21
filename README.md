@@ -31,10 +31,11 @@ Right now I'm working in an app that is operating in Mexico to allow people with
 * I love reading books focused in management, psychology and business, this year I read "The Toyota Way", "Never Split the Difference", "Dart Apprentice" and "Ego is the enemy". 
 * I enjoy going for a run in the early morning. 
 * I'm a huge fan of board games and card games, basically where there is strategy I like to go for a dive in it, just played "Everdell" and "Spirit Island" those game rock!. 
-* I also enjoy going out to eat and learn about new places with delicious food. Most of all I enjoy studying and build or rebuild skills to enter bigger challenges.
+* I also enjoy going out to eat and learn about new places with delicious food.
+* Most of all I enjoy studying and build or rebuild skills to enter bigger challenges.
 
 ### What I want to achieve
-1. Graduate from the course (since I own a smalls startup being able to graduate from this course is for me a great leap forward)
+1. Graduate from the course (since I own a small startup being able to graduate from this course is for me a great leap forward)
 
 2. Improve on my developing skills to better understand a software line of production for mobile apps.
 
