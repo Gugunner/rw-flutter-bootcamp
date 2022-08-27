@@ -1,16 +1,62 @@
-# pokedex
 
-A new Flutter project.
+## **Week 1 Homework**
+___
+## Assignment 3
 
-## Getting Started
+Running... 
+```
+flutter doctor
+```
 
-This project is a starting point for a Flutter application.
+<img src="../../assets/flutter_doctor_ok.gif" width="500" height="280" />
 
-A few resources to get you started if this is your first Flutter project:
+## Assignment 4
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### *Google Pixel and iPhone 13 Max Pro Screenshot of Recipes App*
+___
+<br>
+<img src="../../assets/pixel_recipes_app.png" width="160" height="320" /> 
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<img src="../../assets/iphone_13_max_pro_app.png" width="160" height="320" />
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Assignment 6 and Assignment 7
+
+Here it is the Pokedex Sample proyect with some nice to haves.
+
+* Some responsiveness for big and small screens
+* Pokeball X,Y location is the same no matter the screen 
+* Scrollable on small screens
+* Some additional styles to make a more attractive visual experience
+<br>
+<br>
+
+A 2.7 inch QVGA screen app test
+
+<img src="../../assets/pokedex_sample.gif" width="260" height="360" />
+
+<br>
+<br>
+
+Here are some screenshots on an iPhone Max 13 Pro
+
+<img src="../../assets/pokedex_sample_iphone_13_max_pro.png" width="160" height="320" /> 
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<img src="../../assets/pokedex_sample_iphone_13_max_pro_2.png" width="160" height="320" />
