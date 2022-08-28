@@ -18,6 +18,7 @@ PokemonModel _$PokemonModelFromJson(Map<String, dynamic> json) => PokemonModel(
       entry: json['entry'] as String?,
     );
 
+// ignore: unused_element
 Map<String, dynamic> _$PokemonModelToJson(PokemonModel instance) =>
     <String, dynamic>{
       'num': instance.num,

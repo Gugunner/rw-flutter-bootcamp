@@ -1,4 +1,4 @@
-import 'package:pokedex/pokemon_model.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
 
 class FakePokemonRepository {
   List<PokemonModel> getFakePokedex() {
@@ -41,7 +41,7 @@ class FakePokemonRepository {
             "Water",
           ],
           'locations': [
-            [121, 276]
+            [121, 220]
           ],
           'entry':
               'When it retracts its long neck into its shell, it squirts out water with vigorous force.'

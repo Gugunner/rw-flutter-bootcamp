@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/pokemon_display.dart';
-import 'package:pokedex/pokemon_map.dart';
-import 'package:pokedex/pokemon_model.dart';
-import 'package:pokedex/pokemon_types.dart';
+import 'package:pokedex/pokemon_detail_feature/ui/widgets/pokemon_display.dart';
+import 'package:pokedex/pokemon_detail_feature/ui/widgets/pokemon_map.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
+import 'package:pokedex/pokemon_detail_feature/ui/widgets/pokemon_types.dart';
 
 class Detail extends StatelessWidget {
   const Detail({
@@ -16,7 +16,9 @@ class Detail extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.orange,
+        ),
         body: SingleChildScrollView(
           child: Container(
             color: Colors.white,
@@ -69,9 +71,7 @@ class Header extends StatelessWidget {
           // ignore: prefer_const_constructors
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-              border: Border.all(
-                  color: const Color.fromARGB(255, 200, 193, 253)
-                      .withOpacity(0.5))),
+              border: Border.all(color: Colors.orange)),
           child: Image.asset(
             'assets/pokeball.png',
             width: 35,

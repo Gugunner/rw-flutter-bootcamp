@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:pokedex/types.dart';
+import 'package:pokedex/general_app_feature/utils/types.dart';
 
 class Types extends StatelessWidget {
   const Types({

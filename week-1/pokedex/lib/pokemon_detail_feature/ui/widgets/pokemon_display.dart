@@ -1,7 +1,5 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:pokedex/pokemon_model.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
 
 class Display extends StatelessWidget {
   const Display({
@@ -21,7 +19,7 @@ class Display extends StatelessWidget {
             vertical: 10,
           ),
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 200, 193, 253).withOpacity(0.3),
+            color: const Color.fromARGB(255, 227, 224, 249).withOpacity(0.3),
             borderRadius: const BorderRadius.all(Radius.circular(20.0)),
           ),
           width: 140,
@@ -79,10 +77,10 @@ class Information extends StatelessWidget {
   }
 
   String entry() {
-    return pokemon.entry ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-          'Praesent egestas elit eget nisl varius, a mollis sem placerat.'
-          'Donec felis erat, Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    return pokemon.entry ??
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            'Praesent egestas elit eget nisl varius, a mollis sem placerat.'
+            'Donec felis erat, Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
   }
-
 }

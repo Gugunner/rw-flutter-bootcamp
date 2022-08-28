@@ -60,3 +60,15 @@ Here are some screenshots on an iPhone Max 13 Pro
 &nbsp;
 &nbsp;
 <img src="../../assets/pokedex_sample_iphone_13_max_pro_2.png" width="160" height="320" />
+
+## **Week 2 Homework**
+
+## Assignment 5
+The login page of the pokedex app
+
+<img src="../../assets/pokedex_with_login.gif" width="160" height="320" />
+
+<br>
+You can find the code here 
+
+[Pokedex](https://github.com/Gugunner/rw-flutter-bootcamp/tree/raul/week-2/week-1/pokedex)

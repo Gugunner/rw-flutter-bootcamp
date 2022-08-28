@@ -17,8 +17,8 @@ class Location extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              width: 280,
-              height: 320,
+              width: MediaQuery.of(context).size.width * 0.875,
+              height: MediaQuery.of(context).size.width * 0.6186,
               decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
@@ -49,9 +49,8 @@ class Capture extends StatelessWidget {
         top: location[1],
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-            border: Border.all(width: 2.0, color: Colors.red),
-          ),
+              borderRadius: const BorderRadius.all(Radius.circular(100.0)),
+              border: Border.all(width: 2.0, color: Colors.orange)),
           child: Image.asset(
             'assets/pokeball.png',
             width: 30,
