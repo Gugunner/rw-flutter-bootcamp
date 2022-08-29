@@ -27,4 +27,4 @@ The login page of the pokedex app
 <br>
 You can find the code here 
 
-[Pokedex](https://github.com/Gugunner/rw-flutter-bootcamp/tree/raul/week-2/week-1/pokedex)
+[Pokedex](https://github.com/Gugunner/rw-flutter-bootcamp/tree/raul/week-2/week-1/pokedex/lib)
