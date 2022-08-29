@@ -37,8 +37,8 @@ void quadraticRealEquation({
   required num c,
 }) {
   //Exits the function if a is not greater than 0 and alerts the user
-  if (a <= 0) {
-    print('a must be > than 0');
+  if (a == 0) {
+    print('a must not be 0');
     return;
   }
   //Stores if final value is going to calculate complex numbers
