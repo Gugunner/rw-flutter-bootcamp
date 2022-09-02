@@ -7,9 +7,9 @@ To execute
 ```
 dart run playground_week_3_1.dart
 ```
-This is a screenshot of the code running.
+This is the code running.
 ___
-<img src="./assets/week_3_1_running_code.gif" width="680" height="220" />
+<img src="./assets/week_3_1_running_code.gif" width="680" height="340" />
 
 ___
 <br>
@@ -20,9 +20,9 @@ To execute
 ```
 dart run playground_week_3_2.dart
 ```
-This is a screenshot of the code running.
+This is the code running.
 ___
-<img src="./assets/week_3_2_running_code.gif" width="680" height="220" />
+<img src="./assets/week_3_2_running_code.gif" width="680" height="340" />
 
 ___
 <br>
