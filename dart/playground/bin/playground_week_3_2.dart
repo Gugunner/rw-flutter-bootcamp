@@ -7,7 +7,5 @@ void main() {
   final battlers = <Pokemon>[bulbasaur, charmander, squirtle];
   Pokemon.freeForAll(battlers);
   Pokemon.pokemonCenter(battlers);
-  for (var b in battlers) {
-    print('${b.name} healed up to ${b.hp} HP');
-  }
+  
 }

@@ -77,6 +77,7 @@ class Pokemon {
   static pokemonCenter(List<Pokemon> pokemons, [double healBy = 10]) {
     for (var p in pokemons) {
       p.hp = healBy;
+      print('\u{1F4AA} ${p.name} healed up to ${p.hp} HP');
     }
   }
 
@@ -110,19 +111,19 @@ class Pokemon {
     print('\n*****************************');
     print('A VICTOR EMERGES!\n');
     print(
-        '\u{1F3C6}${winner.name} has won the battle with remaining hp ${winner.hp}.\n');
+        '\u{1F3C6} ${winner.name} has won the battle with remaining hp ${winner.hp}.\n');
   }
 
   ///This attacks the [pokemon] who is treated as the defender.
   void attack(Pokemon pokemon) {
     //Attacks only happen if the defender pokemon is not knocked out.
     if (pokemon.hp > 0) {
+      print('$name($hp) attacks ${pokemon.name}(${pokemon.hp})');
       pokemon.hp -= damage(pokemon: pokemon);
       //Prevents negative hp for the pokemon when 2X factor is applied
       if (pokemon.hp < 0) {
         pokemon.hp = 0;
       }
-      print('$name($hp) attacks ${pokemon.name}(${pokemon.hp})');
     } else {
       print('$name roars with fury!');
     }

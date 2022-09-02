@@ -1,11 +1,40 @@
 A simple command-line application.
 
-To run execute in console the command from this project root...
+## **Week 3 Homework**
+
+## Assignment 1 
+To execute 
 ```
-dart run 
+dart run playground_week_3_1.dart
 ```
+This is a screenshot of the code running.
+___
+<img src="./assets/week_3_1_running_code.gif" width="680" height="220" />
+
+___
+<br>
+<br>
+
+## Assignment 2 
+To execute 
+```
+dart run playground_week_3_2.dart
+```
+This is a screenshot of the code running.
+___
+<img src="./assets/week_3_2_running_code.gif" width="680" height="220" />
+
+___
+<br>
+<br>
+
 ## **Week 2 Homework**
 ## Assignment 1 to 4
+
+To execute 
+```
+dart run playground_week_2.dart
+```
 This is a screenshot of the code running.
 ___
 <img src="./assets/running_code.png" width="460" height="150" />
