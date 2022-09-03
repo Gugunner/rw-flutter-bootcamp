@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/auth_user_feature/ui/widgets/email_input.dart';
 import 'package:pokedex/auth_user_feature/ui/widgets/login_button.dart';
 import 'package:pokedex/auth_user_feature/ui/widgets/password_input.dart';
+import 'package:pokedex/general_app_feature/utils/input_enums.dart';
+import 'package:pokedex/general_app_feature/utils/regex.dart';
 
 class Login extends StatefulWidget {
   const Login({
@@ -19,6 +21,8 @@ class _LoginState extends State<Login> {
   bool visible = false;
   final _formKey = GlobalKey<FormState>();
   bool submit = false;
+  MessageType emailMessage = MessageType.unchecked;
+  MessageType passwordMessage = MessageType.unchecked;
 
   void _visibility() {
     setState(() {
@@ -28,10 +32,41 @@ class _LoginState extends State<Login> {
 
   void _login() {
     if (_formKey.currentState != null) {
-      if (_formKey.currentState!.validate()) {
-        widget.login();
+      _formKey.currentState!.save();
+      if (passwordMessage == MessageType.valid &&
+          emailMessage == MessageType.valid) {
+        if (_formKey.currentState!.validate()) {
+          setState(() {
+            passwordMessage = MessageType.unchecked;
+            emailMessage = MessageType.unchecked;
+          });
+          widget.login();
+        }
       }
     }
+  }
+
+  void checkFields(InputField input, String? value) {
+    if (input == InputField.email) {
+      if (value == null || value.isEmpty) {
+        emailMessage = MessageType.emptyEmail;
+      } else if (!RegExp(Regex.email).hasMatch(value)) {
+        emailMessage = MessageType.invalidEmail;
+      } else {
+        emailMessage = MessageType.valid;
+      }
+    } else if (input == InputField.password) {
+      if (value == null || value.isEmpty) {
+        passwordMessage = MessageType.emptyPassword;
+      } else if (value.length < 6) {
+        passwordMessage = MessageType.shortPassword;
+      } else if (!RegExp(Regex.password).hasMatch(value)) {
+        passwordMessage = MessageType.invalidPassword;
+      } else {
+        passwordMessage = MessageType.valid;
+      }
+    }
+    setState(() {});
   }
 
   @override
@@ -70,10 +105,15 @@ class _LoginState extends State<Login> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const EmailInput(),
+                    EmailInput(
+                      save: checkFields,
+                      message: emailMessage,
+                    ),
                     PasswordInput(
                       visible: visible,
                       visibility: _visibility,
+                      save: checkFields,
+                      message: passwordMessage,
                     )
                   ],
                 ),

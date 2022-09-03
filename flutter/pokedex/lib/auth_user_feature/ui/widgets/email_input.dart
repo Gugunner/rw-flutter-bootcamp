@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/general_app_feature/utils/input_enums.dart';
 
 class EmailInput extends StatelessWidget {
   const EmailInput({
     Key? key,
     this.submit = false,
+    this.message = MessageType.unchecked,
+    this.save,
   }) : super(key: key);
 
   final bool submit;
+  final MessageType message;
+  final Function? save;
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +27,22 @@ class EmailInput extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
               child: TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please provide a valid email';
-                  }
-                  //TODO: Add email regex
-                  return null;
-                },
                 keyboardType: TextInputType.emailAddress,
                 textAlignVertical: TextAlignVertical.center,
                 style: TextStyle(
                   fontSize: screenHeight * 0.0246,
                   color: Colors.black,
                 ),
+                onSaved: (value) {
+                  if (save != null) save!(InputField.email, value);
+                },
                 cursorColor: Colors.orange,
                 scrollPadding: const EdgeInsets.all(0),
                 decoration: InputDecoration(
                     isDense: true,
                     hintText: 'Your email',
                     focusColor: Colors.orange.withOpacity(0.5),
+                    errorText: message.errorMessage,
                     prefixIcon: Icon(
                       Icons.email_outlined,
                       size: screenWidth * 0.0625,
@@ -55,6 +57,8 @@ class EmailInput extends StatelessWidget {
                     focusedBorder: const OutlineInputBorder(
                         borderSide:
                             BorderSide(width: 1.0, color: Colors.orange)),
+                    errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(width: 1.0, color: Colors.red)),
                     contentPadding: const EdgeInsets.all(0)),
               ),
             ),
