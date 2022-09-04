@@ -9,7 +9,7 @@ dart run playground_week_3_1.dart
 ```
 This is the code running.
 ___
-<img src="./assets/week_3_1_running_code.gif" width="680" height="340" />
+<img src="./assets/week_3_1_running_code.gif" width="420" height="200" />
 
 ___
 <br>
@@ -22,7 +22,7 @@ dart run playground_week_3_2.dart
 ```
 This is the code running.
 ___
-<img src="./assets/week_3_2_running_code.gif" width="680" height="340" />
+<img src="./assets/week_3_2_running_code.gif" width="420" height="200" />
 
 ___
 <br>

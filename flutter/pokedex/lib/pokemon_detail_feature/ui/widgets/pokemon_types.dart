@@ -9,7 +9,7 @@ class Types extends StatelessWidget {
     required this.types,
   }) : super(key: key);
 
-  final List<String> types;
+  final List<PokemonType> types;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +25,11 @@ class TypeTag extends StatelessWidget {
     required this.type,
   }) : super(key: key);
 
-  final String type;
+  final PokemonType type;
 
   @override
   Widget build(BuildContext context) {
-    final displayName = type.substring(0, 1).toUpperCase() + type.substring(1);
+    final displayName = type.displayValue;
 
     return Card(
       color: TagTypes.tagColor(type),

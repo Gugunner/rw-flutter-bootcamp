@@ -1,3 +1,23 @@
+## **Week 3 Homework**
+## Assignment 3-4
+Login validation and search function with sliver app bar
+___
+<br>
+<img src="../../assets/pokedex_login_validation.gif" width="160" height="320" /> 
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<img src="../../assets/pokedex_search.gif" width="160" height="320" />
+
+___
+
 ## **Week 2 Homework**
 
 ## Assignment 5

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/general_app_feature/utils/input_enums.dart';
-import 'package:pokedex/general_app_feature/utils/regex.dart';
 
 class PasswordInput extends StatelessWidget {
   const PasswordInput({
