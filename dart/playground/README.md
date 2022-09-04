@@ -2,7 +2,7 @@ A simple command-line application.
 
 ## **Week 3 Homework**
 
-## Assignment 1 
+## Assignment 1 -  A girl who knows what she wants
 To execute 
 ```
 dart run playground_week_3_1.dart
@@ -15,7 +15,7 @@ ___
 <br>
 <br>
 
-## Assignment 2 
+## Assignment 2 - Last Pokemon Standing
 To execute 
 ```
 dart run playground_week_3_2.dart
