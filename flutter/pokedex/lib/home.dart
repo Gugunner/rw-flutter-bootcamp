@@ -87,13 +87,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: !isSignedIn
+      appBar: isSignedIn
           ? AppBar(
               title: const Text("Pokedex Sample"),
               backgroundColor: Colors.orange,
             )
           : null,
-      body: !isSignedIn
+      body: isSignedIn
           ? CustomScrollView(
               physics: const BouncingScrollPhysics(),
               controller: scrollController,
