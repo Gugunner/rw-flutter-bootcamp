@@ -42,7 +42,7 @@ void sarahMenu() {
   final List<Weather> weathers = Weather.values;
 
   ///Iterates each value of [WeekDay]
-  for (var weekDay in weekDays) {
+  for (final weekDay in weekDays) {
     ///A random generated index from 0 to exclusive [weekDays] length
     final index = Random().nextInt(weathers.length);
     ///The weather chosen by the [index]

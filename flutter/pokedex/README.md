@@ -1,3 +1,11 @@
+## **Week 4 Homework**
+
+Favorite pokemons in the form of being captured. 
+## Assignment 4
+<br>
+<img src="../../assets/pokedex_capture_pokemon.gif" width="160" height="320" /> 
+
+
 ## **Week 3 Homework**
 ## Assignment 3-4
 Login validation and search function with sliver app bar

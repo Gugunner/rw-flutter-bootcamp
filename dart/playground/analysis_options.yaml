@@ -15,11 +15,19 @@ include: package:lints/recommended.yaml
 
 # Uncomment the following section to specify additional rules.
 
-# linter:
-#   rules:
-#     - camel_case_types
+linter:
+  rules:
+    - camel_case_types
+    - prefer_final_in_for_each
+    - prefer_single_quotes
 
-# analyzer:
+  
+
+analyzer:
+  errors:
+    todo: ignore
+    invalid_null_aware_operator: error
+    const_constructor_with_non_final_field: ignore
 #   exclude:
 #     - path/to/excluded/files/**
 

@@ -10,6 +10,7 @@ class PokemonModel {
     required this.types,
     required this.locations,
     required this.img,
+    this.captured = false,
     this.entry,
   });
 
@@ -24,6 +25,7 @@ class PokemonModel {
   final List<List<double>> locations;
   final String img;
   final String? entry;
+  bool captured;
 
   static List<PokemonType> toPokemonType(List<String> type) {
     return type

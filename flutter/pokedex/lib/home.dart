@@ -5,6 +5,9 @@ import 'package:pokedex/general_app_feature/ui/widgets/search_bar.dart';
 import 'package:pokedex/general_app_feature/utils/pokemon_search.dart';
 import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
 import 'package:pokedex/pokemon_detail_feature/ui/widgets/pokemon_card.dart';
+import 'package:pokedex/pokemon_capture_feature/ui/captured_pokemon_screen.dart';
+import 'package:pokedex/pokemon_capture_feature/provider/pokemon_capture.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -15,19 +18,21 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<PokemonModel> pokemons = [];
-  List<PokemonModel> originalPokemons = [];
+
   final fakeRepository = FakePokemonRepository();
   bool isSignedIn = false;
   late ScrollController scrollController;
   late TextEditingController textEditingController;
   final toolbarHeight = 0.0;
   final expandedHeight = 60.0;
+  late PokemonCaptureProvider capturedPokemonProvider;
 
   @override
   void initState() {
     super.initState();
     pokemons = fakeRepository.getFakePokedex();
-    originalPokemons = pokemons;
+    capturedPokemonProvider = context.read<PokemonCaptureProvider>();
+    capturedPokemonProvider.originalPokemons = pokemons;
     scrollController = ScrollController()..addListener(() => setState(() {}));
     textEditingController = TextEditingController()
       ..addListener(searchPokemons);
@@ -60,9 +65,9 @@ class _HomeState extends State<Home> {
       return;
     }
     final pokemonsByName = PokemonSearch.searchBy(SearchBy.name,
-        pokemons: originalPokemons, value: text);
+        pokemons: capturedPokemonProvider.originalPokemons, value: text);
     final pokemonsByType = PokemonSearch.searchBy(SearchBy.type,
-        pokemons: originalPokemons, value: text);
+        pokemons: capturedPokemonProvider.originalPokemons, value: text);
 
     if (pokemonsByName.isNotEmpty || pokemonsByType.isNotEmpty) {
       setState(() {
@@ -78,22 +83,55 @@ class _HomeState extends State<Home> {
 
   void cleanSearch() {
     setState(() {
-      pokemons = originalPokemons;
+      pokemons = capturedPokemonProvider.originalPokemons;
       textEditingController.text = '';
     });
+  }
+
+  void capturePokemon(PokemonModel pokemon) {
+    capturedPokemonProvider.updateCapture(pokemon);
+    capturedPokemonProvider.updateCapturedPokemons(capturedPokemonProvider.originalPokemons);
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    capturedPokemonProvider = context.watch<PokemonCaptureProvider>();
     return Scaffold(
-      appBar: isSignedIn
+      appBar: !isSignedIn
           ? AppBar(
-              title: const Text("Pokedex Sample"),
+              title: Row(children: [
+                const Expanded(child: Text('Pokedex Sample')),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return CapturedPokemonScreen(
+                        capturedPokemonProvider: capturedPokemonProvider,
+                      );
+                    }));
+                  },
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.catching_pokemon_rounded,
+                        // ignore: todo
+                        //TODO: Add change to color when a pokemon is added to capture list
+                        color: capturedPokemonProvider.trainerStatus.color,
+                        size: 35,
+                      ),
+                      Text(
+                        '${capturedPokemonProvider.trainerStatus.status} trainer',
+                        style: const TextStyle(fontSize: 12),
+                      )
+                    ],
+                  ),
+                )
+              ]),
               backgroundColor: Colors.orange,
             )
           : null,
-      body: isSignedIn
+      body: !isSignedIn
           ? CustomScrollView(
               physics: const BouncingScrollPhysics(),
               controller: scrollController,
@@ -129,7 +167,11 @@ class _HomeState extends State<Home> {
                     crossAxisSpacing: 10.0,
                     crossAxisCount: 2,
                     children: <Widget>[
-                      ...pokemons.map((p) => PokemonCard(pokemon: p))
+                      ...pokemons.map((p) => PokemonCard(
+                            pokemon: p,
+                            capturePokemon: capturePokemon,
+                            capturedPokemonProvider: capturedPokemonProvider,
+                          ))
                     ],
                   )
               ],

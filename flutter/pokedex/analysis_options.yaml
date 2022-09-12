@@ -10,6 +10,20 @@
 include: package:flutter_lints/flutter.yaml
 
 linter:
+  rules:
+    - camel_case_types
+    - prefer_final_in_for_each
+    - prefer_single_quotes
+    - use_if_null_to_convert_nulls_to_bools
+    
+analyzer:
+  errors:
+    todo: ignore
+    invalid_null_aware_operator: error
+    prefer_const_constructors_in_immutables: ignore
+    must_be_immutable: ignore
+    unused_element: ignore
+    
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
   # included above or to enable additional rules. A list of all available lints
@@ -21,7 +35,6 @@ linter:
   # or a specific dart file by using the `// ignore: name_of_lint` and
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
-  rules:
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 

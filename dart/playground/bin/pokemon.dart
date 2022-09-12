@@ -75,7 +75,7 @@ class Pokemon {
 
   ///Call the method to restore all pokemon health up to [healBy]
   static pokemonCenter(List<Pokemon> pokemons, [double healBy = 10]) {
-    for (var p in pokemons) {
+    for (final p in pokemons) {
       p.hp = healBy;
       print('\u{1F4AA} ${p.name} healed up to ${p.hp} HP');
     }

@@ -1,5 +1,47 @@
 A simple command-line application.
 
+## **Week 4 Homework**
+## Assignment 1 - Nullable in dart
+To execute 
+```
+dart run playground_week_4_1.dart
+```
+___
+This is the code
+<img src="./assets/playground_week_4_1_code.png" width="420" height="500" />
+
+This is the code running.
+___
+<img src="./assets/playground_week_4_1_running_code.png" width="420" height="100" />
+
+## Assignment 2 - Sort Pokemon
+To execute 
+```
+dart run playground_week_4_2.dart
+```
+___
+This is the code
+<img src="./assets/playground_week_4_2_code.png" width="420" height="1200" />
+
+This is the code running.
+___
+<img src="./assets/playground_week_4_2_running_code.png" width="420" height="100" />
+
+## Assignment 2 - Implement Abstract Class
+To execute 
+```
+dart run playground_week_4_3.dart
+```
+___
+This is the code
+<img src="./assets/playground_week_4_3_code.png" width="420" height="1200" />
+
+This is the code running.
+___
+<img src="./assets/playground_week_4_3_running_code.png" width="420" height="800" />
+
+___
+
 ## **Week 3 Homework**
 
 ## Assignment 1 -  A girl who knows what she wants
