@@ -8,12 +8,15 @@ dart run playground_week_4_1.dart
 ```
 ___
 This is the code
+<br>
+<br>
 <img src="./assets/playground_week_4_1_code.png" width="420" height="500" />
 
 This is the code running.
-___
+
 <img src="./assets/playground_week_4_1_running_code.png" width="420" height="100" />
 
+___
 ## Assignment 2 - Sort Pokemon
 To execute 
 ```
@@ -21,6 +24,8 @@ dart run playground_week_4_2.dart
 ```
 ___
 This is the code
+<br>
+<br>
 <img src="./assets/playground_week_4_2_code.png" width="420" height="1200" />
 
 This is the code running.
@@ -34,10 +39,12 @@ dart run playground_week_4_3.dart
 ```
 ___
 This is the code
+<br>
+<br>
 <img src="./assets/playground_week_4_3_code.png" width="420" height="1200" />
 
 This is the code running.
-___
+
 <img src="./assets/playground_week_4_3_running_code.png" width="420" height="800" />
 
 ___
