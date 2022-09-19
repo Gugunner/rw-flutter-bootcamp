@@ -112,6 +112,38 @@ return GestureDetector(
       ),
     );
 ```
+To see how information is passed between widgets with Navigator.push() and Navigator.pop() check **Week 4 Homework - assignment 4**.
+
+Here is the code snippet of how the pokemon is captured. To see the full code check [pokemon_capture_provider.dart](lib/pokemon_capture_feature/provider/pokemon_capture_provider.dart)
+
+```
+void updateCapture(PokemonModel pokemon) {
+    pokemon.captured = !pokemon.captured;
+  }
+```
+
+To see how the pokemon is released, here is the snippet code. To see the full code check [captured_pokemon_screen.dart](lib/pokemon_capture_feature/ui/captured_pokemon_screen.dart)
+```
+    Dismissible(
+    key: ValueKey(capturedPokemon.num),
+    direction: DismissDirection.horizontal,
+    background: Container(...
+    ),
+    onDismissed: (direction) {
+        captureProvider.updateCapture(capturedPokemon);
+        captureProvider.updateCapturedPokemons(
+            captureProvider.capturedPokemons);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.orange,
+            content: Text(
+                'You have released ${capturedPokemon.name}!')));
+    },
+    child: PokemonCard(
+        pokemon: capturedPokemon,
+        captureProvider: captureProvider,
+    ))
+```
+
 
 ___
 
