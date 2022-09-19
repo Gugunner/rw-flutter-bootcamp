@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/model/pokemon_model.dart';
 import 'package:pokedex/general_app_feature/utils/string_extension.dart';
 
 enum TrainerStatus {
@@ -30,7 +30,6 @@ class PokemonCaptureProvider extends ChangeNotifier {
   TrainerStatus trainerStatus = TrainerStatus.starter;
 
   List<PokemonModel> capturedPokemons = [];
-  List<PokemonModel> originalPokemons = [];
 
   void updateCapture(PokemonModel pokemon) {
     pokemon.captured = !pokemon.captured;
@@ -38,19 +37,19 @@ class PokemonCaptureProvider extends ChangeNotifier {
 
   void updateCapturedPokemons(List<PokemonModel> pokemons) {
     capturedPokemons = pokemons.where((p) => p.captured).toList();
-    updateTrainer();
+    updateTrainer(pokemons);
     notifyListeners();
   }
 
-  void updateTrainer() {
+  void updateTrainer(List<PokemonModel> pokemons) {
     final numberOfCaptures = capturedPokemons.length;
-    if (numberOfCaptures == originalPokemons.length) {
+    if (numberOfCaptures >= 150) {
       trainerStatus = TrainerStatus.master;
-    } else if (numberOfCaptures >= originalPokemons.length ~/ 2) {
+    } else if (numberOfCaptures >= 100) {
       trainerStatus = TrainerStatus.veteran;
-    } else if (numberOfCaptures >= 1) {
+    } else if (numberOfCaptures >= 6) {
       trainerStatus = TrainerStatus.amateur;
-    } else if (numberOfCaptures == 0) {
+    } else if (numberOfCaptures >= 0) {
       trainerStatus = TrainerStatus.starter;
     }
   }

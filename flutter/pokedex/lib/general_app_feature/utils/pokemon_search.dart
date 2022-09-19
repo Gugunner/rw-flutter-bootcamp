@@ -1,4 +1,4 @@
-import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/model/pokemon_model.dart';
 
 enum SearchBy {
   name,

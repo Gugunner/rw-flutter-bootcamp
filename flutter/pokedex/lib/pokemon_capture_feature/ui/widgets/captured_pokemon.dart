@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
-import 'package:pokedex/pokemon_capture_feature/provider/pokemon_capture.dart';
+import 'package:pokedex/general_app_feature/utils/build_context.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/model/pokemon_model.dart';
+import 'package:pokedex/pokemon_capture_feature/provider/pokemon_capture_provider.dart';
 
 class CapturedPokemon extends StatelessWidget {
   const CapturedPokemon({
@@ -36,7 +37,7 @@ class CapturedPokemon extends StatelessWidget {
               ),
             ],
           ),
-          Image.asset(
+          Image.network(
             pokemon.img,
             width: 90,
           ),

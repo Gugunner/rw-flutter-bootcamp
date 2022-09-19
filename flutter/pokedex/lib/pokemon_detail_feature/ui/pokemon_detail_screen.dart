@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/pokemon_detail_feature/ui/widgets/pokemon_display.dart';
-import 'package:pokedex/pokemon_detail_feature/ui/widgets/pokemon_map.dart';
-import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
+// import 'package:pokedex/pokemon_detail_feature/ui/widgets/pokemon_map.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/model/pokemon_model.dart';
 import 'package:pokedex/pokemon_detail_feature/ui/widgets/pokemon_types.dart';
 
 class Detail extends StatelessWidget {
@@ -18,6 +18,15 @@ class Detail extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_new_outlined,
+              color: Colors.white,
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -33,9 +42,9 @@ class Detail extends StatelessWidget {
                 Header(pokemon: pokemon),
                 Display(pokemon: pokemon),
                 Types(types: pokemon.types),
-                Expanded(
-                  child: Location(locations: pokemon.locations),
-                )
+                // Expanded(
+                //   child: Location(locations: pokemon.locations),
+                // )
               ],
             ),
           ),

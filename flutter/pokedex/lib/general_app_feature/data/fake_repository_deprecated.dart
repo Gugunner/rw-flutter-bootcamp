@@ -1,5 +1,10 @@
-import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/model/pokemon_model.dart';
 
+
+
+
+@Deprecated('The class has been replaced by '
+'an api implementation and it is no longer in use')
 class FakePokemonRepository {
   List<PokemonModel> getFakePokedex() {
     return pokedexSample().map((p) => PokemonModel.fromJson(p)).toList();

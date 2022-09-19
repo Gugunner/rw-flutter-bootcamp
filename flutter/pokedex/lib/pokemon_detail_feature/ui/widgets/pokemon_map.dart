@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+@Deprecated('The class is no longe used since the api does not include any coordinates for the'
+'location of pokemon')
 class Location extends StatelessWidget {
   const Location({
     Key? key,

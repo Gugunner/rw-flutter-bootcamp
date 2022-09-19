@@ -5,29 +5,36 @@ part 'pokemon_model.g.dart';
 @JsonSerializable()
 class PokemonModel {
   PokemonModel({
-    required this.num,
     required this.name,
+    required this.num,
     required this.types,
-    required this.locations,
     required this.img,
+    required this.entry,
     this.captured = false,
-    this.entry,
   });
 
-  final String num;
   final String name;
   @JsonKey(
-    name: 'type',
+    name: 'id',
+  )
+  final String num;
+  @JsonKey(
+    name: 'typeofpokemon',
     fromJson: toPokemonType,
     toJson: fromPokemonType,
   )
   final List<PokemonType> types;
-  final List<List<double>> locations;
+  @JsonKey(
+    name: 'imageurl',
+  )
   final String img;
-  final String? entry;
+  @JsonKey(
+    name: 'xdescription',
+  )
+  final String entry;
   bool captured;
 
-  static List<PokemonType> toPokemonType(List<String> type) {
+  static List<PokemonType> toPokemonType(List<dynamic> type) {
     return type
         .map((t) => PokemonType.values.firstWhere(
             (v) => v.name == t.toLowerCase(),

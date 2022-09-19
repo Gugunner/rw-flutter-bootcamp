@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
+import 'package:pokedex/general_app_feature/utils/build_context.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/model/pokemon_model.dart';
 
 class Display extends StatelessWidget {
   const Display({
@@ -14,25 +15,30 @@ class Display extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 10,
-          ),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 227, 224, 249).withOpacity(0.3),
-            borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-          ),
-          width: 140,
-          height: 100,
-          child: Image.asset(
-            pokemon.img,
+        Hero(
+          tag: pokemon.num,
+          child: Card(
+            child: Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: 10,
+              ),
+              decoration: BoxDecoration(
+                color:
+                    const Color.fromARGB(255, 227, 224, 249).withOpacity(0.3),
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              ),
+              width: context.width * 0.386,
+              child: Image.network(
+                pokemon.img,
+              ),
+            ),
           ),
         ),
         Expanded(
           child: Container(
               margin: const EdgeInsets.all(8.0),
-              width: 140,
-              height: 100,
+              width: context.width * 0.338,
+              height: context.height * 0.146,
               child: Information(pokemon: pokemon)),
         )
       ],
@@ -63,7 +69,7 @@ class Information extends StatelessWidget {
           textAlign: TextAlign.start,
         ),
         Text(
-          entry(),
+          pokemon.entry,
           style: const TextStyle(
             fontWeight: FontWeight.w300,
             fontSize: 10,
@@ -74,13 +80,5 @@ class Information extends StatelessWidget {
         )
       ],
     );
-  }
-
-  String entry() {
-    return pokemon.entry ??
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-            'Praesent egestas elit eget nisl varius, a mollis sem placerat.'
-            'Donec felis erat, Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/provider/pokemon_provider.dart';
+import 'package:provider/provider.dart';
 
 class SearchBar extends StatelessWidget {
   const SearchBar({
@@ -20,14 +22,15 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pokemonProvider = context.watch<PokemonProvider>();
     return SliverAppBar(
       toolbarHeight: toolbarHeight ?? kToolbarHeight,
       pinned: true,
       snap: false,
-      floating: false,
+      floating: true,
       expandedHeight: expandedHeight ?? kToolbarHeight,
       collapsedHeight: collapseHeight ?? 0.0,
-      backgroundColor: Colors.white.withOpacity(0.2),
+      backgroundColor: Colors.white,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.symmetric(
           horizontal: 8,
@@ -39,7 +42,7 @@ class SearchBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 0),
               child: SearchField(
-                cleanSearch: cleanSearch,
+                cleanSearch: cleanSearch ?? pokemonProvider.cleanSearch,
                 controller: controller,
               ),
             )),
@@ -89,40 +92,40 @@ class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return TextFormField(
-      focusNode: focusNode,
-      controller: widget.controller,
-      textAlignVertical: TextAlignVertical.bottom,
-      style: TextStyle(color: focusColor),
-      toolbarOptions: const ToolbarOptions(
-          copy: true, paste: true, cut: true, selectAll: true),
-      decoration: InputDecoration(
-        isDense: true,
-        prefixIcon: Container(
-          margin: const EdgeInsets.only(right: 10, top: 10),
-          child: Icon(
+    return SizedBox(
+      height: 45,
+      child: TextFormField(
+        focusNode: focusNode,
+        controller: widget.controller,
+        textAlignVertical: TextAlignVertical.bottom,
+        style: TextStyle(color: focusColor),
+        toolbarOptions: const ToolbarOptions(
+            copy: true, paste: true, cut: true, selectAll: true),
+        decoration: InputDecoration(
+          isDense: true,
+          prefixIcon: Icon(
             Icons.search_outlined,
             size: screenWidth * 0.0625,
             color: focusColor,
           ),
-        ),
-        border: const UnderlineInputBorder(
-            borderSide: BorderSide(width: 1.0, color: Colors.grey)),
-        focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(width: 2.0, color: Colors.orange)),
-        hintText: 'Search',
-        hintStyle: TextStyle(color: focusColor),
-        suffixIcon: GestureDetector(
-          onTap: () {
-            focusNode.unfocus();
-            widget.cleanSearch?.call();
-          },
-          child: Container(
-            margin: const EdgeInsets.only(right: 10, top: 10),
-            child: Icon(
-              Icons.close,
-              size: screenWidth * 0.0625,
-              color: focusColor,
+          border: const UnderlineInputBorder(
+              borderSide: BorderSide(width: 1.0, color: Colors.grey)),
+          focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(width: 2.0, color: Colors.orange)),
+          hintText: 'Search',
+          hintStyle: TextStyle(color: focusColor),
+          suffixIcon: GestureDetector(
+            onTap: () {
+              focusNode.unfocus();
+              widget.cleanSearch?.call();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 10, top: 10),
+              child: Icon(
+                Icons.close,
+                size: screenWidth * 0.0625,
+                color: focusColor,
+              ),
             ),
           ),
         ),

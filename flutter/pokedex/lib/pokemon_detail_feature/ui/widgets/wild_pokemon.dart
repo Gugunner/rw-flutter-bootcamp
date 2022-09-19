@@ -1,29 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/pokemon_detail_feature/domain/pokemon_model.dart';
-import 'package:pokedex/pokemon_capture_feature/provider/pokemon_capture.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/model/pokemon_model.dart';
+import 'package:pokedex/pokemon_capture_feature/provider/pokemon_capture_provider.dart';
+import 'package:pokedex/pokemon_detail_feature/domain/provider/pokemon_provider.dart';
+import 'package:provider/provider.dart';
 
 class WildPokemon extends StatelessWidget {
   // ignore: prefer_const_constructors_in_immutables
   WildPokemon({
     Key? key,
     required this.pokemon,
-    this.capturePokemon,
-    required this.capturedPokemonProvider,
+    required this.captureProvider,
   }) : super(key: key);
 
   final PokemonModel pokemon;
-  final Function(PokemonModel pokemon)? capturePokemon;
-  final PokemonCaptureProvider capturedPokemonProvider;
-
-  Color get captured => pokemon.captured
-      ? capturedPokemonProvider.trainerStatus.color
-      : TrainerStatus.starter.color;
+  final PokemonCaptureProvider captureProvider;
 
   String get capturedText => pokemon.captured ? 'Captured' : '';
 
+  void capturePokemon(BuildContext context) {
+    final pokemonProvider = context.read<PokemonProvider>();
+    captureProvider.updateCapture(pokemon);
+    captureProvider
+        .updateCapturedPokemons(pokemonProvider.paginatedPokemons);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final captured = pokemon.captured
+        ? captureProvider.trainerStatus.color
+        : TrainerStatus.starter.color;
     return Container(
+      width: 150,
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 227, 224, 249).withOpacity(0.3),
         borderRadius: const BorderRadius.all(Radius.circular(20.0)),
@@ -40,7 +47,7 @@ class WildPokemon extends StatelessWidget {
               Column(
                 children: [
                   GestureDetector(
-                    onTap: () => capturePokemon?.call(pokemon),
+                    onTap: () => capturePokemon(context),
                     child: Icon(
                       Icons.catching_pokemon_outlined,
                       color: captured,
@@ -54,7 +61,7 @@ class WildPokemon extends StatelessWidget {
               ),
             ],
           ),
-          Image.asset(
+          Image.network(
             pokemon.img,
             width: 90,
           ),

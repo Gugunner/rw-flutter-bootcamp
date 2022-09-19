@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:pokedex/general_app_feature/utils/types.dart';
 
@@ -37,7 +35,7 @@ class TypeTag extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(6.0)),
       ),
       child: Container(
-        width: 50,
+        width: MediaQuery.of(context).size.width * 0.15,
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
         child: Text(
           displayName,
