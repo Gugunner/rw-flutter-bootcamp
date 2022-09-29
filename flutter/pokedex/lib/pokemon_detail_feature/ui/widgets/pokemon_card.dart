@@ -13,7 +13,7 @@ class PokemonCard extends StatelessWidget {
   }) : super(key: key);
 
   final PokemonModel pokemon;
-   final PokemonCaptureProvider captureProvider;
+  final PokemonCaptureProvider captureProvider;
 
   bool get isWild => !pokemon.captured;
 
@@ -22,7 +22,8 @@ class PokemonCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
-            transitionDuration: const Duration(milliseconds: 800),
+            transitionDuration: const Duration(seconds: 2),
+            reverseTransitionDuration: const Duration(seconds: 2),
             pageBuilder: (context2, animation1, animation2) {
               return Detail(pokemon: pokemon);
             }));
