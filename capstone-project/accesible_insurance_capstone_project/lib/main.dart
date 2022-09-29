@@ -45,7 +45,6 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return SignInScreen();
-    
+    return const SignInScreen();
   }
 }

@@ -53,7 +53,7 @@ class MasterPolicyCard extends StatelessWidget {
                         width: context.width * 0.187,
                         height: context.height * 0.161,
                         padding: EdgeInsets.zero,
-                        child: InsuranceType(),
+                        child: const InsuranceType(),
                       ),
                       const InsuranceMainInformation(),
                     ],

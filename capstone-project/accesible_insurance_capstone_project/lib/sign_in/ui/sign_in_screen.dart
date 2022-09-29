@@ -2,6 +2,7 @@ import 'package:accesible_insurance_capstone_project/master_policies/ui/master_p
 import 'package:accesible_insurance_capstone_project/sign_in/domain/provider/input_provider.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/widgets/email_input.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/widgets/password_input.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/logo.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/universal_constants.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
@@ -15,6 +16,8 @@ final signInFormKey = GlobalKey<FormState>();
 
 final inputProviderInstance = InputProvider.instance;
 
+final appProviderInstance = AppProvider.instance;
+
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
@@ -23,21 +26,43 @@ class SignInScreen extends ConsumerStatefulWidget {
 }
 
 class _SignInScreenState extends ConsumerState<SignInScreen> {
-  void onSignIn() {
+  InputErrorState get passwordInputState =>
+      ref.read(inputProviderInstance.passwordStateProvider.state).state;
+
+  InputErrorState get emaiInputState =>
+      ref.read(inputProviderInstance.emailStateProvider.state).state;
+
+  String? get email =>
+      ref.read(inputProviderInstance.emailProvider.state).state!;
+
+  String? get password =>
+      ref.read(inputProviderInstance.passwordProvider.state).state!;
+
+  void onSignIn() async {
     if (signInFormKey.currentState != null) {
       signInFormKey.currentState!.save();
-      final passwordInputState =
-          ref.read(inputProviderInstance.passwordStateProvider.state).state;
-      final emaiInputState =
-          ref.read(inputProviderInstance.emailStateProvider.state).state;
       if (passwordInputState == InputErrorState.idle &&
           emaiInputState == InputErrorState.idle) {
         if (signInFormKey.currentState!.validate()) {
-          //TODO: Implement sign in
-          signInFormKey.currentState!.reset();
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const MasterPolicyListScreen();
-          }));
+          final isSignIn = await ref
+              .read(appProviderInstance.userProvider.notifier)
+              .signInWithEmail(email!, password!);
+          if (isSignIn) {
+            //TODO: Implement Go Router to navigate to MasterPolicyListScreen
+            // signInFormKey.currentState!.reset();
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return const MasterPolicyListScreen();
+            // }));
+            //TODO: Update signedInProvider
+            debugPrint('User Signed In');
+            final userCredential = ref.read(appProviderInstance.userProvider);
+
+            if (userCredential != null) {
+              debugPrint('User Id - ${userCredential.user?.uid}');
+              debugPrint(
+                  'User Auth Token - ${userCredential.user?.getIdToken()}');
+            }
+          }
         }
       }
     }
@@ -46,24 +71,19 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   void checkForm(InputType type) {
     InputErrorState state = InputErrorState.idle;
     if (type == InputType.password) {
-      final passwordState =
-          ref.read(inputProviderInstance.passwordProvider.state).state;
-      if (passwordState!.isEmpty) {
+      if (password!.isEmpty) {
         state = InputErrorState.emptyPassword;
-      } else if (!RegExp(Regex.password).hasMatch(passwordState)) {
+      } else if (!RegExp(Regex.password).hasMatch(password!)) {
         state = InputErrorState.invalidPassword;
-      } else if (passwordState.length < UniversalConstants.passwordLength) {
+      } else if (password!.length < UniversalConstants.passwordLength) {
         state = InputErrorState.passwordLength;
       }
-      ref.watch(inputProviderInstance.passwordStateProvider.state).state =
-          state;
+      ref.watch(inputProviderInstance.passwordStateProvider.state).state = state;
     } else if (type == InputType.email) {
-      final emailState =
-          ref.read(inputProviderInstance.emailProvider.state).state;
-      if (emailState!.isEmpty) {
+      if (email!.isEmpty) {
         state = InputErrorState.emptyEmail;
-      } else if (emailState.isNotNullOrEmpty) {
-        if (!RegExp(Regex.email).hasMatch(emailState)) {
+      } else if (email!.isNotNullOrEmpty) {
+        if (!RegExp(Regex.email).hasMatch(email!)) {
           state = InputErrorState.invalidEmail;
         }
       }

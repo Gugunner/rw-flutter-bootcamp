@@ -97,23 +97,35 @@ class MasterPolicyListScreen extends ConsumerWidget {
                       isLoading: loading,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              PageRouteBuilder(pageBuilder: (
-                            context,
-                            animation,
-                            secondaryAnimation,
-                          ) {
-                            return const MasterPolicyScreen();
-                          }));
+                          Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                  transitionDuration:
+                                      const Duration(milliseconds: 800),
+                                  reverseTransitionDuration:
+                                      const Duration(milliseconds: 800),
+                                  pageBuilder: (
+                                    context,
+                                    animation,
+                                    secondaryAnimation,
+                                  ) {
+                                    return MasterPolicyScreen(
+                                      index: index,
+                                    );
+                                  }));
                         },
-                        child: Container(
-                          margin: EdgeInsets.only(top: context.height * 0.028),
-                          child: const MasterPolicyCard(),
+                        child: Hero(
+                          tag: 'master-policy $index',
+                          child: Container(
+                            margin:
+                                EdgeInsets.only(top: context.height * 0.028),
+                            child: const MasterPolicyCard(),
+                          ),
                         ),
                       ),
                     );
                   }), childCount: 10),
-                )
+                ),
               ],
             ),
           ),
