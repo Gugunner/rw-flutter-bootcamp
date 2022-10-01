@@ -15,36 +15,24 @@ void main() async {
   );
 }
 
-final appProvider = AppProvider.instance;
+final appProviderInstance = AppProvider.instance;
 
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
+    final router = ref.watch(appProviderInstance.goRouterProvider);
+    return MaterialApp.router(
       title: 'Kiwiik Insurance',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ref.watch(appProvider.themeProvider.state).state,
-      home: const MyHomePage(title: 'Flutter Capstone Project'),
+      themeMode: ref.watch(appProviderInstance.themeProvider.state).state,
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
+      routeInformationProvider: router.routeInformationProvider,
     );
   }
 }
 
-class MyHomePage extends ConsumerStatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  ConsumerState<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends ConsumerState<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const SignInScreen();
-  }
-}

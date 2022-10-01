@@ -11,11 +11,14 @@ class UserProvider extends StateNotifier<UserCredential?> {
   bool isAuthenticating = false;
   dynamic error;
 
-  Future<bool> signInWithEmail(String email, String password) async {
+  Future<UserCredential?> signInWithEmail(
+    String email,
+    String password,
+  ) async {
     try {
       state = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      return true;
+      return state;
     } catch (e) {
       if (e is FirebaseAuthException) {
         if (e.code == 'auth/invalid-email') {
@@ -28,6 +31,6 @@ class UserProvider extends StateNotifier<UserCredential?> {
         rethrow;
       }
     }
-    return false;
+    return null;
   }
 }

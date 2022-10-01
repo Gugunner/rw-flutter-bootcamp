@@ -15,4 +15,5 @@ class InputProvider {
       StateProvider<InputErrorState>((ref) => InputErrorState.idle);
 
   final showPasswordProvider = StateProvider<bool>((ref) => false);
+
 }

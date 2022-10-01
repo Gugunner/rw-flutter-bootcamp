@@ -1,3 +1,4 @@
+
 import 'package:accesible_insurance_capstone_project/sign_in/domain/provider/input_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
@@ -10,9 +11,11 @@ class PasswordInput extends ConsumerWidget {
   const PasswordInput({
     Key? key,
     this.onSaved,
+    this.enabled,
   }) : super(key: key);
 
   final Function(String?)? onSaved;
+  final bool? enabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,6 +29,7 @@ class PasswordInput extends ConsumerWidget {
           Container(
             padding: EdgeInsets.only(top: context.height * 0.021),
             child: TextFormField(
+              enabled: enabled,
               decoration: decoration(context, ref),
               onChanged: (String? value) {
                 passwordNotifier.state = value;
