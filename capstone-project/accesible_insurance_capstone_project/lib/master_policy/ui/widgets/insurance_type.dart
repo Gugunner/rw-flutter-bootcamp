@@ -14,7 +14,7 @@ class InsuranceType extends ConsumerWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           width: context.height * 0.09,
           height: context.height * 0.09,
           child: Placeholder(
@@ -26,7 +26,7 @@ class InsuranceType extends ConsumerWidget {
           height: context.height * 0.028,
           margin: EdgeInsets.only(top: context.height * 0.014),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+              borderRadius: const BorderRadius.all(Radius.circular(4)),
               border: Border.all(color: Colors.grey)),
           child: Center(
             child: Text(

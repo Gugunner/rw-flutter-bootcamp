@@ -1,4 +1,3 @@
-
 import 'package:accesible_insurance_capstone_project/sign_in/domain/provider/input_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
@@ -35,9 +34,9 @@ class PasswordInput extends ConsumerWidget {
                 passwordNotifier.state = value;
               },
               onSaved: onSaved,
-              obscureText: ref
+              obscureText: !(ref
                   .watch(inputProviderInstance.showPasswordProvider.state)
-                  .state,
+                  .state),
             ),
           ),
           Positioned(
@@ -67,10 +66,10 @@ extension _PasswordInputDecoration on PasswordInput {
 
   InputDecoration decoration(BuildContext context, WidgetRef ref) {
     final showPassword =
-        ref.watch(inputProviderInstance.showPasswordProvider.state).state;
+        ref.read(inputProviderInstance.showPasswordProvider.state).state;
     return InputDecoration(
       contentPadding: EdgeInsets.zero,
-      hintText: "password",
+      hintText: 'password',
       border: OutlineInputBorder(
           borderSide: BorderSide(
         width: 1,
@@ -88,8 +87,9 @@ extension _PasswordInputDecoration on PasswordInput {
           .errorText,
       suffixIcon: GestureDetector(
           onTap: () {
-            ref.read(inputProviderInstance.showPasswordProvider.state).state =
-                !showPassword;
+            ref
+                .read(inputProviderInstance.showPasswordProvider.notifier)
+                .state = !showPassword;
             // showPasswordNotifier.state = showPasswordNotifier.state;
           },
           child: Icon(

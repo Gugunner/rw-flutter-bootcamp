@@ -1,4 +1,3 @@
-import 'package:accesible_insurance_capstone_project/master_policies/ui/master_policy_list_screen.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/observers/logger.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/theme/theme.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
-import 'sign_in/ui/sign_in_screen.dart';
 
 void main() async {
   runApp(ProviderScope(observers: [Logger()], child: const MyApp()));
@@ -24,7 +22,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appProviderInstance.goRouterProvider);
     return MaterialApp.router(
-      title: 'Kiwiik Insurance',
+      title: 'Insurance Techdemo App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       darkTheme: AppTheme.darkTheme,

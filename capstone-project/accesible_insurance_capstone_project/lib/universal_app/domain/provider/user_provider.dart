@@ -21,13 +21,6 @@ class UserProvider extends StateNotifier<UserCredential?> {
       return state;
     } catch (e) {
       if (e is FirebaseAuthException) {
-        if (e.code == 'auth/invalid-email') {
-          throw ('The email address is not valid');
-        } else if (e.code == 'auth/user-not-found') {
-          throw ('The user provided was not found');
-        } else if (e.code == 'auth/wrong-password') {
-          throw ('The email and/or password is not correct');
-        }
         rethrow;
       }
     }

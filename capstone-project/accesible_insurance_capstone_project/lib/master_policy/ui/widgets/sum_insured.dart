@@ -11,7 +11,7 @@ class SumInsured extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Current Sum Insured',
           style: TextStyle(
             fontSize: 9,
@@ -20,7 +20,7 @@ class SumInsured extends StatelessWidget {
         SizedBox(
           height: context.height * 0.007,
         ),
-        Text(
+        const Text(
           '\$2,050.00',
           style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
         ),

@@ -1,6 +1,7 @@
 import 'package:accesible_insurance_capstone_project/master_policies/ui/master_policy_list_screen.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/sign_in_screen.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,26 +24,28 @@ class AppRouter extends ChangeNotifier {
       if (state.location == '/signin') {
         return null;
       }
-      return '/signin';
+      return AppRoutes.signInPath;
     } else if (signIn) {
       if (state.location == route) {
         return null;
       }
-      return '/';
+      return AppRoutes.homePath;
     }
     return null;
   }
 
   List<GoRoute> get routes => [
         GoRoute(
-          name: 'sign in',
-          path: '/signin',
-          builder: (context, state) => const SignInScreen(),
+          name: 'home',
+          path: AppRoutes.homePath,
+          builder: (BuildContext context, GoRouterState state) =>
+              const MasterPolicyListScreen(),
         ),
         GoRoute(
-          name: 'home',
-          path: '/',
-          builder: (context, state) => const MasterPolicyListScreen(),
+          name: 'sign in',
+          path: AppRoutes.signInPath,
+          builder: (BuildContext context, GoRouterState state) =>
+              const SignInScreen(),
         ),
       ];
 }

@@ -69,7 +69,7 @@ extension _EmailInputDecoration on EmailInput {
   InputDecoration decoration(BuildContext context, WidgetRef ref) =>
       InputDecoration(
         contentPadding: EdgeInsets.zero,
-        hintText: "email address",
+        hintText: 'email address',
         hintStyle: const TextStyle(),
         border: const OutlineInputBorder(
             borderSide: BorderSide(

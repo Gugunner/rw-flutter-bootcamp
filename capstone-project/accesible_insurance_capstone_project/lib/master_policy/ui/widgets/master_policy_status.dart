@@ -8,14 +8,14 @@ class MasterPolicyStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: context.width * 0.162,
       child: Row(
         children: [
           Container(
             width: context.width * 0.025,
             height: context.height * 0.014,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.green,
               shape: BoxShape.circle,
             ),

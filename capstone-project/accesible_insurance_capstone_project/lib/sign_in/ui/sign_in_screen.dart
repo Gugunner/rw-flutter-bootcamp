@@ -24,25 +24,25 @@ class SignInScreen extends ConsumerWidget {
   void onSignIn({
     required WidgetRef ref,
   }) async {
-    final emailInputState =
-        ref.read(inputProviderInstance.emailStateProvider.state).state;
-    final passwordInputState =
-        ref.read(inputProviderInstance.passwordStateProvider.state).state;
-    final email = ref.read(inputProviderInstance.emailProvider.state).state;
-    final password =
-        ref.read(inputProviderInstance.passwordProvider.state).state;
-    ref.read(inputProviderInstance.submitProvider.state).state = true;
     if (signInFormKey.currentState != null) {
       signInFormKey.currentState!.save();
+      final emailInputState =
+          ref.read(inputProviderInstance.emailStateProvider.state).state;
+      final passwordInputState =
+          ref.read(inputProviderInstance.passwordStateProvider.state).state;
+      final email = ref.read(inputProviderInstance.emailProvider.state).state;
+      final password =
+          ref.read(inputProviderInstance.passwordProvider.state).state;
+      ref.read(inputProviderInstance.submitProvider.state).state = true;
       if (passwordInputState == InputErrorState.idle &&
           emailInputState == InputErrorState.idle) {
         if (signInFormKey.currentState!.validate()) {
           ref.watch(appProviderInstance
               .signInProvider(UserModel(password: password!, email: email!)));
-          ref.read(inputProviderInstance.submitProvider.state).state = false;
         }
       }
     }
+    ref.read(inputProviderInstance.submitProvider.state).state = false;
   }
 
   void checkForm(InputType type, WidgetRef ref) {
@@ -53,22 +53,22 @@ class SignInScreen extends ConsumerWidget {
     if (type == InputType.password) {
       if (password!.isEmpty) {
         state = InputErrorState.emptyPassword;
-      } else if (!RegExp(Regex.password).hasMatch(password!)) {
+      } else if (!RegExp(Regex.password).hasMatch(password)) {
         state = InputErrorState.invalidPassword;
-      } else if (password!.length < UniversalConstants.passwordLength) {
+      } else if (password.length < UniversalConstants.passwordLength) {
         state = InputErrorState.passwordLength;
       }
-      ref.watch(inputProviderInstance.passwordStateProvider.state).state =
+      ref.read(inputProviderInstance.passwordStateProvider.notifier).state =
           state;
     } else if (type == InputType.email) {
       if (email!.isEmpty) {
         state = InputErrorState.emptyEmail;
-      } else if (email!.isNotNullOrEmpty) {
-        if (!RegExp(Regex.email).hasMatch(email!)) {
+      } else if (email.isNotNullOrEmpty) {
+        if (!RegExp(Regex.email).hasMatch(email)) {
           state = InputErrorState.invalidEmail;
         }
       }
-      ref.watch(inputProviderInstance.emailStateProvider.state).state = state;
+      ref.read(inputProviderInstance.emailStateProvider.notifier).state = state;
     }
   }
 

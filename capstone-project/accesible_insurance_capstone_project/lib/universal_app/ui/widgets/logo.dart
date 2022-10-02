@@ -14,7 +14,7 @@ class Logo extends StatelessWidget {
       ),
       width: context.width * 0.562,
       height: context.height * 0.14,
-      child: Placeholder(),
+      child: const Placeholder(),
     );
   }
 }
