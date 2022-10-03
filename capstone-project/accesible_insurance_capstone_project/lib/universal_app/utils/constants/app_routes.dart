@@ -1,4 +1,4 @@
 class AppRoutes {
-  static const homePath = '/';
-  static const signInPath = '/signin';
+  static const homeRoute = '/';
+  static const signInRoute = '/signin';
 }

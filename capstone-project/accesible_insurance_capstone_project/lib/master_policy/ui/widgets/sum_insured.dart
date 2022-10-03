@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 class SumInsured extends StatelessWidget {
   const SumInsured({
     Key? key,
+    required this.currentSI,
   }) : super(key: key);
+
+  final num currentSI;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +23,8 @@ class SumInsured extends StatelessWidget {
         SizedBox(
           height: context.height * 0.007,
         ),
-        const Text(
-          '\$2,050.00',
+        Text(
+          '\$${currentSI.toDouble()}',
           style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
         ),
       ],

@@ -24,12 +24,12 @@ class AppRouter extends ChangeNotifier {
       if (state.location == '/signin') {
         return null;
       }
-      return AppRoutes.signInPath;
+      return AppRoutes.signInRoute;
     } else if (signIn) {
       if (state.location == route) {
         return null;
       }
-      return AppRoutes.homePath;
+      return AppRoutes.homeRoute;
     }
     return null;
   }
@@ -37,13 +37,13 @@ class AppRouter extends ChangeNotifier {
   List<GoRoute> get routes => [
         GoRoute(
           name: 'home',
-          path: AppRoutes.homePath,
+          path: AppRoutes.homeRoute,
           builder: (BuildContext context, GoRouterState state) =>
               const MasterPolicyListScreen(),
         ),
         GoRoute(
           name: 'sign in',
-          path: AppRoutes.signInPath,
+          path: AppRoutes.signInRoute,
           builder: (BuildContext context, GoRouterState state) =>
               const SignInScreen(),
         ),

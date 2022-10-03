@@ -25,6 +25,12 @@ class AppProvider {
         ref.watch(AppProvider.instance.firebaseAutProvider).authStateChanges(),
   );
 
+  final authTokenProvider = FutureProvider.autoDispose<String?>((ref) async {
+    final user = ref.watch(appProviderInstance.authStateChangesProvider);
+    final userValue = user.asData?.value;
+    return await userValue?.getIdToken();
+  });
+
   final userProvider =
       StateNotifierProvider<UserProvider, UserCredential?>((ref) {
     return UserProvider(
@@ -34,18 +40,25 @@ class AppProvider {
     );
   });
 
+  //Makes all changes to depending providers when the user signs in
   final signInProvider = Provider.family<void, UserModel>((ref, user) async {
     try {
+      //Signs the user in with an email and password
       final userCredential = await ref
           .watch(AppProvider.instance.userProvider.notifier)
           .signInWithEmail(user.email, user.password);
+      //Changes the state of the sign in when the user signIn provider
+      //changes state
       final signIn = ref.watch(AppProvider.instance.signIn.notifier).state =
-          userCredential?.user != null &&
-              userCredential!.user?.getIdToken() != null;
+          userCredential?.user?.getIdToken() != null;
+      //If the user is able to sign in, the route changes to "Home" ('/')
       if (signIn) {
-        ref.read(routeProvider.notifier).state = AppRoutes.homePath;
+        ref.read(routeProvider.notifier).state = AppRoutes.homeRoute;
       }
     } on FirebaseAuthException catch (e) {
+      //If an error occurs and since the app know that any possible error
+      //comes from the firebase sign in call it maps the corresponding InputErrorState
+      //to be shown to te user.
       final inputProviderInstance = InputProvider.instance;
       if (e.code.contains('invalid-email')) {
         ref.read(inputProviderInstance.emailStateProvider.notifier).state =

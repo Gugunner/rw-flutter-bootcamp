@@ -1,3 +1,4 @@
+import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final appProvider = AppProvider.instance;
 
 class InsuranceType extends ConsumerWidget {
-  const InsuranceType({Key? key}) : super(key: key);
+  const InsuranceType({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+
+  final PolicyType type;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,6 +23,7 @@ class InsuranceType extends ConsumerWidget {
         SizedBox(
           width: context.height * 0.09,
           height: context.height * 0.09,
+          //TODO: Change image according to type
           child: Placeholder(
             color: themeState == ThemeMode.dark ? Colors.white : Colors.black,
           ),
@@ -30,7 +37,7 @@ class InsuranceType extends ConsumerWidget {
               border: Border.all(color: Colors.grey)),
           child: Center(
             child: Text(
-              'Property',
+              type.name.toUpperCase(),
               style: Theme.of(context).textTheme.displaySmall,
             ),
           ),

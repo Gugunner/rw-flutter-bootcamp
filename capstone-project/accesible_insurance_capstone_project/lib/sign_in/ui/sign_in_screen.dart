@@ -21,27 +21,39 @@ final appProviderInstance = AppProvider.instance;
 class SignInScreen extends ConsumerWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
+  //Calls everything needed to sign the user in
   void onSignIn({
     required WidgetRef ref,
   }) async {
+    //Checks if the Form widget attached to this key is in the tree
     if (signInFormKey.currentState != null) {
+      //Calls any onSave method of a FormField
       signInFormKey.currentState!.save();
+      //Retrieves curren InpurErrorState for the email input
       final emailInputState =
           ref.read(inputProviderInstance.emailStateProvider.state).state;
+      //Retrieves curren InpurErrorState for the password input
       final passwordInputState =
           ref.read(inputProviderInstance.passwordStateProvider.state).state;
+      //Retrieves current email value for the email input
       final email = ref.read(inputProviderInstance.emailProvider.state).state;
+      //Retrieves current password value for the password input
       final password =
           ref.read(inputProviderInstance.passwordProvider.state).state;
+      //Disables working inputs to avoid the user from making any other interaction with the submit flag
       ref.read(inputProviderInstance.submitProvider.state).state = true;
+      //Checks if there is no input validation error and the form can be validated
       if (passwordInputState == InputErrorState.idle &&
           emailInputState == InputErrorState.idle) {
         if (signInFormKey.currentState!.validate()) {
-          ref.watch(appProviderInstance
+          //Calls the signInProvider with a family argument of UserModel
+          ref.read(appProviderInstance
               .signInProvider(UserModel(password: password!, email: email!)));
         }
       }
     }
+    //Releases the inputs so the user can continue interacting with the screen, only works
+    //if the form could not be sent
     ref.read(inputProviderInstance.submitProvider.state).state = false;
   }
 

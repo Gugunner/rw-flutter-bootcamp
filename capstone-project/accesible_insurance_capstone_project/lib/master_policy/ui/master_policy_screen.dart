@@ -1,3 +1,4 @@
+import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/master_policy_card.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,11 @@ class MasterPolicyScreen extends ConsumerWidget {
   const MasterPolicyScreen({
     Key? key,
     required this.index,
+    required this.masterPolicy,
   }) : super(key: key);
 
   final int index;
+  final MasterPolicyModel masterPolicy;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,7 +24,7 @@ class MasterPolicyScreen extends ConsumerWidget {
           child: SizedBox(
             width: context.width,
             height: context.height,
-            child: const MasterPolicyCard(isScreen: true),
+            child: MasterPolicyCard(masterPolicy: masterPolicy, isScreen: true),
           ),
         ),
       ),
