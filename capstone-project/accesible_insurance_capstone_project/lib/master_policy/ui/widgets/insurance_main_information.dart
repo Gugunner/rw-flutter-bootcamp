@@ -16,7 +16,7 @@ class InsuranceMainInformation extends StatelessWidget {
           width: context.width * 0.525,
           height: context.height * 0.063,
           padding: EdgeInsets.zero,
-          child: Text(
+          child: const Text(
             'Mama\'s home in Jalisco',
             maxLines: 2,
             style: TextStyle(

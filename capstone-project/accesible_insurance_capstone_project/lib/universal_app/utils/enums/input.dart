@@ -7,6 +7,8 @@ enum InputErrorState {
   passwordLength,
   emptyEmail,
   invalidEmail,
+  userNotFound,
+  wrongCredentials,
 }
 
 extension InputErrorStateMessage on InputErrorState {
@@ -22,6 +24,10 @@ extension InputErrorStateMessage on InputErrorState {
         return EnglishCopies.emptyEmailError;
       case InputErrorState.invalidEmail:
         return EnglishCopies.emailError;
+      case InputErrorState.userNotFound:
+      return EnglishCopies.userNotFound;
+      case InputErrorState.wrongCredentials:
+        return EnglishCopies.wrongCredentials;
       default:
         return null;
     }

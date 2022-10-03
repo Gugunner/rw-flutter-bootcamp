@@ -10,9 +10,11 @@ class PasswordInput extends ConsumerWidget {
   const PasswordInput({
     Key? key,
     this.onSaved,
+    this.enabled,
   }) : super(key: key);
 
   final Function(String?)? onSaved;
+  final bool? enabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,14 +28,15 @@ class PasswordInput extends ConsumerWidget {
           Container(
             padding: EdgeInsets.only(top: context.height * 0.021),
             child: TextFormField(
+              enabled: enabled,
               decoration: decoration(context, ref),
               onChanged: (String? value) {
                 passwordNotifier.state = value;
               },
               onSaved: onSaved,
-              obscureText: ref
+              obscureText: !(ref
                   .watch(inputProviderInstance.showPasswordProvider.state)
-                  .state,
+                  .state),
             ),
           ),
           Positioned(
@@ -63,10 +66,10 @@ extension _PasswordInputDecoration on PasswordInput {
 
   InputDecoration decoration(BuildContext context, WidgetRef ref) {
     final showPassword =
-        ref.watch(inputProviderInstance.showPasswordProvider.state).state;
+        ref.read(inputProviderInstance.showPasswordProvider.state).state;
     return InputDecoration(
       contentPadding: EdgeInsets.zero,
-      hintText: "password",
+      hintText: 'password',
       border: OutlineInputBorder(
           borderSide: BorderSide(
         width: 1,
@@ -84,8 +87,9 @@ extension _PasswordInputDecoration on PasswordInput {
           .errorText,
       suffixIcon: GestureDetector(
           onTap: () {
-            ref.read(inputProviderInstance.showPasswordProvider.state).state =
-                !showPassword;
+            ref
+                .read(inputProviderInstance.showPasswordProvider.notifier)
+                .state = !showPassword;
             // showPasswordNotifier.state = showPasswordNotifier.state;
           },
           child: Icon(
