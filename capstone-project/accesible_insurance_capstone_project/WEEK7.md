@@ -10,7 +10,7 @@ Here is the implementation of the onSignIn method and how it works.
 
 The code can be found in [sign_in_screen.dart](/capstone-project/accesible_insurance_capstone_project/lib/sign_in/ui/sign_in_screen.dart)
 
-```
+```dart
 //Calls everything needed to sign the user in
   void onSignIn({
     required WidgetRef ref,
@@ -54,7 +54,7 @@ Here is the main implementation of the signInProvider and how it works.
 
 The code can be found in [app_provider.dart](/capstone-project/accesible_insurance_capstone_project/lib/universal_app/domain/provider/app_provider.dart)
 
-```
+```dart
 //Makes all changes to depending providers when the user signs in
   final signInProvider = Provider.family<void, UserModel>((ref, user) async {
     try {
@@ -99,7 +99,7 @@ Here is the implementation of the masterPolicyDbProvider collection method and h
 
 The code can be found in [database_provider.dart](/capstone-project/accesible_insurance_capstone_project/lib/universal_app/domain/provider/database_provider.dart)
 
-```
+```dart
 ///Returns a new instance of a [MasterPolicyDataBase] with
   ///the current userId and user the [AppFirestoreService] global
   ///instance.
@@ -134,7 +134,7 @@ Here is the implementation of policiesStreamer collection method and how it work
 
 The code can be found in [master_policies_provider.dart](/capstone-project/accesible_insurance_capstone_project/lib/master_policies/domain/provider/master_policies_provider.dart)
 
-```
+```dart
 //Uses a stream to obtain the master policies collection
   final policiesStreamer =
       StreamProvider.autoDispose<List<MasterPolicyModel>>((ref) {
@@ -168,7 +168,7 @@ Here is the implementation of the *"AppFireStoreService"* collection method and 
 
 The code can be found in [app_firestore_service.dart](/capstone-project/accesible_insurance_capstone_project/lib/universal_app/data/service/app_firestore_service.dart)
 
-```
+```dart
 /// Returns a stream for a FirestoreCollection of Type.
   /// 
   /// Use the [snapshotBuilder] to pass a fromFirestore factory method
