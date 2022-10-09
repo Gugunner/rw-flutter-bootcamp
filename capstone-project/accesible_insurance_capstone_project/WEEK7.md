@@ -176,7 +176,7 @@ The code can be found in [app_firestore_service.dart](/capstone-project/accesibl
   /// https://firebase.google.com/docs/firestore/query-data/get-data#custom_objects
   /// 
   /// A [queryBuilder] can be called by calling the [where] method of a 
-  /// [CollectionReference] for example ```collectionRef.where('currentSI', isGreaterThan: 2000)```
+  /// [CollectionReference] for example collectionRef.where('currentSI', isGreaterThan: 2000)
   /// Since it is a closure the ref is obtained inside this method so there is no need
   /// to get the reference before.
   Stream<List<T>> collection<T>({
