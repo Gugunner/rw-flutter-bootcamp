@@ -7,7 +7,7 @@ import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
 // ignore: depend_on_referenced_packages
 import 'package:google_sign_in/google_sign_in.dart';
 
-main() async {
+void main() async {
   const fakeEmail = 'test@yopmail.com';
   const fakePassword = 'Test#1234';
   const uid = 'rquNKEPunYhcsK0o59SHuECM3al3';
@@ -32,8 +32,8 @@ main() async {
     });
 
     test(
-        'should return error code wrong-password if firebase throws an exception',
-        () async {
+        'should return error code wrong-password if firebase throws '
+        'an exception', () async {
       const errorCode = 'wrong-password';
       const errorMessage = EnglishCopies.wrongCredentials;
       final auth = MockFirebaseAuth(
@@ -46,6 +46,7 @@ main() async {
         ),
       );
       try {
+        // ignore: unused_local_variable
         final userCredential = await auth.signInWithEmailAndPassword(
           email: fakeEmail,
           password: fakePassword,
@@ -60,8 +61,8 @@ main() async {
 
   group('sign in unit tests', () {
     test(
-        'should return uid and idToken when authenticated user is authenticated by email',
-        () async {
+        'should return uid and idToken when authenticated user is '
+        'authenticated by email', () async {
       final auth = MockFirebaseAuth(
         mockUser: mockUser,
       );
@@ -78,8 +79,8 @@ main() async {
   });
 
   test(
-      'should return error code wrong-password if firebase throws an exception when authenticating user',
-      () async {
+      'should return error code wrong-password if firebase throws an exception '
+      'when authenticating user', () async {
     const errorCode = 'wrong-password';
     const errorMessage = EnglishCopies.wrongCredentials;
     final auth = MockFirebaseAuth(
@@ -93,6 +94,7 @@ main() async {
     );
     final appUser = AppUser(auth: auth);
     try {
+      // ignore: unused_local_variable
       final userCredential = await appUser.signInWithEmail(
         fakeEmail,
         fakePassword,
@@ -107,4 +109,4 @@ main() async {
 
 Future<GoogleSignInAccount?> getWith(
         {required MockGoogleSignIn mockGoogleSignIn}) async =>
-    await mockGoogleSignIn.signIn();
+    mockGoogleSignIn.signIn();

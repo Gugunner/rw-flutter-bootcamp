@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:accesible_insurance_capstone_project/main.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/utils/constants/widget_keys.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
@@ -24,7 +21,6 @@ void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
   await SharedPreferencesProvider.instance.setupSharedPreferences();
-  final fakeSharedPreferences = SharedPreferencesProvider.instance.preferences;
   const uid = 'rquNKEPunYhcsK0o59SHuECM3al3';
   const pid = 'qfrgafACPuaYdGnVVTaE';
 
@@ -54,14 +50,9 @@ void main() async {
       'type': 'property',
     },
   );
-  final snapshot = await firestoreInstance
-      .collection('users')
-      .doc(uid)
-      .collection('master-policies')
-      .get();
 
-  String fakeEmail = 'test@yopmail.com';
-  String fakePassword = 'Test#1234';
+  var fakeEmail = 'test@yopmail.com';
+  var fakePassword = 'Test#1234';
   // const uid = 'rquNKEPunYhcsK0o59SHuECM3al3';
   final mockUser = MockUser(
     isAnonymous: false,
@@ -159,17 +150,17 @@ void main() async {
       expect(emailInput, findsOneWidget);
       expect(passwordInput, findsOneWidget);
       expect(loginButton, findsOneWidget);
-      Color? emailBorderColor = tester
+      var emailBorderColor = tester
           .widget<TextField>(emailInput)
           .decoration
           ?.enabledBorder
           ?.borderSide
           .color;
-      String? emailInputError =
+      var emailInputError =
           tester.widget<TextField>(emailInput).decoration?.errorText;
-      String? passwordInputError =
+      var passwordInputError =
           tester.widget<TextField>(passwordInput).decoration?.errorText;
-      Color? passwordBorderColor = tester
+      var passwordBorderColor = tester
           .widget<TextField>(emailInput)
           .decoration
           ?.enabledBorder
@@ -219,9 +210,9 @@ void main() async {
         matching: find.byType(TextField),
       );
       final loginButton = find.byKey(SigninWidgetKeys.signinButtonKey);
-      String? emailInputError =
+      var emailInputError =
           tester.widget<TextField>(emailInput).decoration?.errorText;
-      String? passwordInputError =
+      var passwordInputError =
           tester.widget<TextField>(passwordInput).decoration?.errorText;
       expect(emailInputError, InputErrorState.idle.errorText);
       expect(passwordInputError, InputErrorState.idle.errorText);
@@ -229,13 +220,13 @@ void main() async {
       await tester.enterText(passwordInput, fakePassword);
       await tester.tap(loginButton);
       await tester.pump();
-      Color? emailBorderColor = tester
+      final emailBorderColor = tester
           .widget<TextField>(emailInput)
           .decoration
           ?.enabledBorder
           ?.borderSide
           .color;
-      Color? passwordBorderColor = tester
+      final passwordBorderColor = tester
           .widget<TextField>(emailInput)
           .decoration
           ?.enabledBorder
@@ -253,11 +244,12 @@ void main() async {
 
     testWidgets(
         'when the user enters a correct valid email and coreect valid password,'
-        'the user signs in and is redirected to the master policies list screen',
+        'the user signs in and is redirected to the '
+        'master policies list screen',
         (tester) async {});
   });
 }
 
 Future<GoogleSignInAccount?> getWith(
         {required MockGoogleSignIn mockGoogleSignIn}) async =>
-    await mockGoogleSignIn.signIn();
+    mockGoogleSignIn.signIn();

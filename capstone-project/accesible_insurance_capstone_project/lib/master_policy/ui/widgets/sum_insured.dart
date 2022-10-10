@@ -25,7 +25,7 @@ class SumInsured extends StatelessWidget {
         ),
         Text(
           '\$${currentSI.toDouble()}',
-          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
         ),
       ],
     );

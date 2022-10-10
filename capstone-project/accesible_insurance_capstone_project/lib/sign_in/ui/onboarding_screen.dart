@@ -22,7 +22,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _setupPages();
     // pageController.addListener(() => _handleCurrentPageSelect(index));
     super.initState();
@@ -61,129 +60,130 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     return Scaffold(
       body: PageView.builder(
         itemBuilder: (context, index) {
-          return SafeArea(
-            child: Stack(
-              children: [
-                Container(
+          return Stack(
+            children: [
+              Container(
+                height: context.height,
+                width: context.width,
+                color: Colors.white,
+                padding: EdgeInsets.fromLTRB(
+                  context.width * 0.025,
+                  context.height * 0.07,
+                  context.width * 0.025,
+                  context.height * 0.028,
+                ),
+                child: SizedBox(
                   height: context.height,
-                  width: context.width,
-                  color: Colors.white,
-                  padding: EdgeInsets.fromLTRB(
-                    context.width * 0.025,
-                    context.height * 0.07,
-                    context.width * 0.025,
-                    context.height * 0.028,
-                  ),
-                  child: SizedBox(
-                    height: context.height,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            width: context.width * 0.81,
-                            height: context.height * 0.563,
-                            child: const Placeholder(),
-                          ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          width: context.width * 0.81,
+                          height: context.height * 0.563,
+                          child: const Placeholder(),
                         ),
-                        Container(
-                          width: context.width * 0.75,
-                          height: context.height * 0.063,
-                          margin: EdgeInsets.symmetric(
-                            vertical: context.height * 0.014,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: pages.asMap().keys.map(
-                              (key) {
-                                final pageIndex = key;
-                                return GestureDetector(
-                                  onTap: () {
-                                    //Updates the currentPage widget state
-                                    _handleCurrentPageSelect(pageIndex);
-                                    //Creates tha animation flow to move to the selected page
-                                    pageController.animateToPage(
-                                      currentPage,
-                                      duration:
-                                          const Duration(milliseconds: 400),
-                                      curve: Curves.easeInOut,
-                                    );
-                                  },
-                                  //Builds the navigator selector
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: context.width * 0.014,
-                                    ),
-                                    width: context.height * 0.035,
-                                    height: context.height * 0.035,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      //Changes the color of the navigator selector
-                                      color: pageIndex == currentPage
-                                          ? Theme.of(context).primaryColor
-                                          : Theme.of(context)
-                                              .primaryColor
-                                              .withOpacity(0.6),
-                                    ),
+                      ),
+                      Container(
+                        width: context.width * 0.75,
+                        height: context.height * 0.063,
+                        margin: EdgeInsets.symmetric(
+                          vertical: context.height * 0.014,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: pages.asMap().keys.map(
+                            (key) {
+                              final pageIndex = key;
+                              return GestureDetector(
+                                onTap: () {
+                                  //Updates the currentPage widget state
+                                  _handleCurrentPageSelect(pageIndex);
+                                  ///Creates tha animation flow to move to
+                                  ///the selected page
+                                  pageController.animateToPage(
+                                    currentPage,
+                                    duration:
+                                        const Duration(milliseconds: 400),
+                                    curve: Curves.easeInOut,
+                                  );
+                                },
+                                //Builds the navigator selector
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(
+                                    horizontal: context.width * 0.014,
                                   ),
-                                );
-                              },
-                            ).toList(),
-                          ),
+                                  width: context.height * 0.035,
+                                  height: context.height * 0.035,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    ///Changes the color of the navigator 
+                                    ///selector
+                                    color: pageIndex == currentPage
+                                        ? Theme.of(context).primaryColor
+                                        : Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.6),
+                                  ),
+                                ),
+                              );
+                            },
+                          ).toList(),
                         ),
-                        SizedBox(
-                          width: context.width * 0.9,
-                          height: context.height * 0.101,
+                      ),
+                      SizedBox(
+                        width: context.width * 0.9,
+                        height: context.height * 0.101,
+                        child: Text(
+                          pages[index].description,
+                          overflow: TextOverflow.fade,
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
+                      ),
+                      //Builds the skip/finish button that navigates to Home ('/')
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: context.height * 0.028,
+                        ),
+                        width: context.width * 0.437,
+                        height: context.height * 0.07,
+                        child: ElevatedButton(
+                          //Changes routeProvider and starts redirection to Home ('/')
+                          onPressed: _handleEndOnboarding,
                           child: Text(
-                            pages[index].description,
-                            overflow: TextOverflow.fade,
-                            style: Theme.of(context).textTheme.displayMedium,
+                            currentPage == pages.length - 1
+                                ? 'FINISH'
+                                : 'SKIP',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(color: Colors.white),
                           ),
                         ),
-                        //Builds the skip/finish button that navigates to Home ('/')
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: context.height * 0.028,
-                          ),
-                          width: context.width * 0.437,
-                          height: context.height * 0.07,
-                          child: ElevatedButton(
-                            //Changes routeProvider and starts redirection to Home ('/')
-                            onPressed: _handleEndOnboarding,
-                            child: Text(
-                              currentPage == pages.length - 1
-                                  ? 'FINISH'
-                                  : 'SKIP',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium
-                                  ?.copyWith(color: Colors.white),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
-                //A simple close icon button that navigates to Home ('/')
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: _handleEndOnboarding,
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                    iconSize: context.height * 0.042,
+              ),
+              //A simple close icon button that navigates to Home ('/')
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: _handleEndOnboarding,
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.red,
                   ),
-                )
-              ],
-            ),
+                  iconSize: context.height * 0.042,
+                ),
+              )
+            ],
           );
         },
         itemCount: pages.length,
         controller: pageController,
-        //Makes sure the navigator selector changes color by updating currentPage state when swiping left or right
+        ///Makes sure the navigator selector changes color by updating 
+        ///currentPage state when swiping left or right
         onPageChanged: _handleCurrentPageSelect,
       ),
     );

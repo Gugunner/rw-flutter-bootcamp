@@ -1,5 +1,4 @@
 import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/master_policies_provider.dart';
-import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/master_policy_screen.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/master_policy_card.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
@@ -22,7 +21,7 @@ class MasterPolicyListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<MasterPolicyModel> masterPolicies = ref
+    final masterPolicies = ref
         .watch(masterPoliciesProviderInstance.policiesStreamer)
         .when(data: (p) {
       return p;
@@ -36,25 +35,25 @@ class MasterPolicyListScreen extends ConsumerWidget {
     ref.watch(masterPoliciesProviderInstance.loadingPolicies);
     final loading =
         ref.watch(masterPoliciesProviderInstance.isLoading.state).state;
-    return SafeArea(
-      child: Scaffold(
-        body: IgnorePointer(
-          ignoring: loading,
-          child: Shimmer(
-            linearGradient: AppColors.shimmerGradient,
-            child: CustomScrollView(
-              physics: const BouncingScrollPhysics(),
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              slivers: <Widget>[
-                SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: loading ? Colors.transparent : null,
-                  toolbarHeight: context.height * 0.056,
-                  pinned: true,
-                  floating: true,
-                  expandedHeight: context.height * 0.112,
-                  collapsedHeight: context.height * 0.077,
-                  flexibleSpace: LoadingShaderShimmer(
+    return Scaffold(
+      body: IgnorePointer(
+        ignoring: loading,
+        child: Shimmer(
+          linearGradient: AppColors.shimmerGradient,
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            slivers: <Widget>[
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: loading ? Colors.transparent : null,
+                toolbarHeight: context.height * 0.056,
+                pinned: true,
+                floating: true,
+                expandedHeight: context.height * 0.112,
+                collapsedHeight: context.height * 0.077,
+                flexibleSpace: SafeArea(
+                  child: LoadingShaderShimmer(
                     isLoading: loading,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -69,46 +68,45 @@ class MasterPolicyListScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(((context, index) {
-                    return LoadingShaderShimmer(
-                      isLoading: loading,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                  transitionDuration:
-                                      const Duration(milliseconds: 800),
-                                  reverseTransitionDuration:
-                                      const Duration(milliseconds: 800),
-                                  pageBuilder: (
-                                    context,
-                                    animation,
-                                    secondaryAnimation,
-                                  ) {
-                                    return MasterPolicyScreen(
-                                      masterPolicy: masterPolicies[index],
-                                      index: index,
-                                    );
-                                  }));
-                        },
-                        child: Hero(
-                          tag: 'master-policy $index',
-                          child: Container(
-                            margin:
-                                EdgeInsets.only(top: context.height * 0.028),
-                            child: MasterPolicyCard(
-                              masterPolicy: masterPolicies[index],
-                            ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(((context, index) {
+                  return LoadingShaderShimmer(
+                    isLoading: loading,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                                transitionDuration:
+                                    const Duration(milliseconds: 800),
+                                reverseTransitionDuration:
+                                    const Duration(milliseconds: 800),
+                                pageBuilder: (
+                                  context,
+                                  animation,
+                                  secondaryAnimation,
+                                ) {
+                                  return MasterPolicyScreen(
+                                    masterPolicy: masterPolicies[index],
+                                    index: index,
+                                  );
+                                }));
+                      },
+                      child: Hero(
+                        tag: 'master-policy $index',
+                        child: Container(
+                          margin: EdgeInsets.only(top: context.height * 0.028),
+                          child: MasterPolicyCard(
+                            masterPolicy: masterPolicies[index],
                           ),
                         ),
                       ),
-                    );
-                  }), childCount: masterPolicies.length),
-                ),
-              ],
-            ),
+                    ),
+                  );
+                }), childCount: masterPolicies.length),
+              ),
+            ],
           ),
         ),
       ),
@@ -134,7 +132,6 @@ class ThemeModeSwitch extends ConsumerWidget {
           padding: EdgeInsets.zero,
           onPressed: () {
             SharedPreferencesProvider.instance.setIsSignedIn(false);
-            //TODO: Add Firebase signout logic
             ref.read(AppProvider.instance.firebaseAuthProvider).signOut();
             ref.read(routeProvider.notifier).state = AppRoutes.signin.route;
           },

@@ -2,7 +2,7 @@ import 'package:accesible_insurance_capstone_project/universal_app/utils/constan
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static get theme => ThemeData(
+  static ThemeData get theme => ThemeData(
       primarySwatch: AppColors.primarySwatchColor,
       primaryColor: AppColors.primarySwatchColor,
       backgroundColor: AppColors.backgroundColor,
@@ -94,7 +94,7 @@ class AppTheme {
         ),
       ));
 
-  static get darkTheme => ThemeData(
+  static ThemeData get darkTheme => ThemeData(
         primarySwatch: AppColors.primarySwatchColor,
         primaryColor: AppColors.primarySwatchColor,
         backgroundColor: AppColors.darkBackGroundColor,

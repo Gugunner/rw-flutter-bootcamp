@@ -41,9 +41,11 @@ class SignInScreen extends ConsumerWidget {
       //Retrieves current password value for the password input
       final password =
           ref.read(inputProviderInstance.passwordProvider.state).state;
-      //Disables working inputs to avoid the user from making any other interaction with the submit flag
+      ///Disables working inputs to avoid the user from making any other 
+      ///interaction with the submit flag
       ref.read(inputProviderInstance.submitProvider.state).state = true;
-      //Checks if there is no input validation error and the form can be validated
+      ///Checks if there is no input validation error and the form can 
+      ///be validated
       if (passwordInputState == InputErrorState.idle &&
           emailInputState == InputErrorState.idle) {
         if (signInFormKey.currentState!.validate()) {
@@ -53,8 +55,8 @@ class SignInScreen extends ConsumerWidget {
         }
       }
     }
-    //Releases the inputs so the user can continue interacting with the screen, only works
-    //if the form could not be sent
+    ///Releases the inputs so the user can continue interacting with the screen,
+    ///only works if the form could not be sent
     ref.read(inputProviderInstance.submitProvider.state).state = false;
   }
 
@@ -62,7 +64,7 @@ class SignInScreen extends ConsumerWidget {
     final email = ref.read(inputProviderInstance.emailProvider.state).state;
     final password =
         ref.read(inputProviderInstance.passwordProvider.state).state;
-    InputErrorState state = InputErrorState.idle;
+    var state = InputErrorState.idle;
     if (type == InputType.password) {
       if (password!.isEmpty) {
         state = InputErrorState.emptyPassword;

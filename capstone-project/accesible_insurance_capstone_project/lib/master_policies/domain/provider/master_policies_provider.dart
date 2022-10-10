@@ -20,11 +20,13 @@ class MasterPoliciesProvider {
     final database = ref.watch(databaseProviderInstance.masterPolicyDbProvider);
     try {
       if (database != null) {
-        //If there is a database the collection of master policies of the user is called
+        ///If there is a database the collection of master policies of the user 
+        ///is called
         final collection = database.masterPolicyCollection();
         return collection;
       }
-      //If there is still no database the stream comes empty until a value changes
+      ///If there is still no database the stream comes empty until a 
+      ///value changes
       return const Stream.empty();
     } catch (e) {
       //Any following error is forwarded

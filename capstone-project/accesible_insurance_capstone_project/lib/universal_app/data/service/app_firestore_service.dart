@@ -10,9 +10,10 @@ class AppFirestoreService {
   /// https://firebase.google.com/docs/firestore/query-data/get-data#custom_objects
   /// 
   /// A [queryBuilder] can be called by calling the [where] method of a 
-  /// [CollectionReference] for example ```collectionRef.where('currentSI', isGreaterThan: 2000)```
-  /// Since it is a closure the ref is obtained inside this method so there is no need
-  /// to get the reference before.
+  /// [CollectionReference] for example 
+  /// collectionRef.where('currentSI', isGreaterThan: 2000)
+  /// Since it is a closure the ref is obtained inside this method so there 
+  /// is no need to get the reference before.
   Stream<List<T>> collection<T>({
     required String collectionPath,
     required T Function(DocumentSnapshot<Map<String, dynamic>>? snapshot,
@@ -23,14 +24,14 @@ class AppFirestoreService {
         queryBuilder,
   }) {
     ///Obtains the [CollectionReference] with the query formed
-    CollectionReference<Map<String, dynamic>> query =
+    var query =
         FirebaseFirestore.instance.collection(collectionPath);
     //If a [queryBuilder] is passed the new formed compound query is returned
     if (queryBuilder != null) {
       query = queryBuilder(query);
     }
     //Retrieves only documents inside the collection that exist
-    final Stream<QuerySnapshot<Map<String, dynamic>>> snapshots =
+    final snapshots =
         query.snapshots();
     return snapshots.map((snapshot) {
       return snapshot.docs

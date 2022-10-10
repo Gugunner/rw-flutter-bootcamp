@@ -48,7 +48,8 @@ class CustomTransitions {
 
   ///Use to create a custom scaling transition animation
   ///
-  ///Defaults to scaling from horizontal and vertical center of screen up to each screen edge.
+  ///Defaults to scaling from horizontal and vertical center of screen up to 
+  ///each screen edge.
   static CustomTransitionPage<T> scaleFromTo<T>({
     required BuildContext context,
     required GoRouterState state,
