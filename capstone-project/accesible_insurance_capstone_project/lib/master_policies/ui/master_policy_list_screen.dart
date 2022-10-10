@@ -3,8 +3,11 @@ import 'package:accesible_insurance_capstone_project/master_policy/domain/model/
 import 'package:accesible_insurance_capstone_project/master_policy/ui/master_policy_screen.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/master_policy_card.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/shimmer/loading_shader_shimmer.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/shimmer/shimmer.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/colors.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/icons.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
@@ -33,9 +36,9 @@ class MasterPolicyListScreen extends ConsumerWidget {
     ref.watch(masterPoliciesProviderInstance.loadingPolicies);
     final loading =
         ref.watch(masterPoliciesProviderInstance.isLoading.state).state;
-    return Scaffold(
-      body: SafeArea(
-        child: IgnorePointer(
+    return SafeArea(
+      child: Scaffold(
+        body: IgnorePointer(
           ignoring: loading,
           child: Shimmer(
             linearGradient: AppColors.shimmerGradient,
@@ -59,47 +62,8 @@ class MasterPolicyListScreen extends ConsumerWidget {
                       ),
                       width: context.width,
                       child: Column(
-                        children: [
-                          //Begins theme toggle implementation
-                          Row(
-                            children: [
-                              const Expanded(child: SizedBox()),
-                              if (ref
-                                      .watch(appProviderInstance
-                                          .themeProvider.state)
-                                      .state ==
-                                  ThemeMode.light)
-                                IconButton(
-                                  onPressed: () {
-                                    ref
-                                        .read(appProviderInstance
-                                            .themeProvider.notifier)
-                                        .state = ThemeMode.dark;
-                                  },
-                                  icon: const Icon(
-                                    AppIcons.ligthTheme,
-                                    size: 32,
-                                  ),
-                                ),
-                              if (ref
-                                      .watch(appProviderInstance
-                                          .themeProvider.state)
-                                      .state ==
-                                  ThemeMode.dark)
-                                IconButton(
-                                  onPressed: () {
-                                    ref
-                                        .read(appProviderInstance
-                                            .themeProvider.notifier)
-                                        .state = ThemeMode.light;
-                                  },
-                                  icon: const Icon(
-                                    AppIcons.darkTheme,
-                                    size: 32,
-                                  ),
-                                ),
-                            ],
-                          )
+                        children: const [
+                          ThemeModeSwitch(),
                         ],
                       ),
                     ),
@@ -148,6 +112,51 @@ class MasterPolicyListScreen extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ThemeModeSwitch extends ConsumerWidget {
+  const ThemeModeSwitch({Key? key}) : super(key: key);
+
+  void _handleChange(bool state, WidgetRef ref) =>
+      ref.read(appProviderInstance.themeProvider.notifier).state =
+          state ? ThemeMode.light : ThemeMode.dark;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(appProviderInstance.themeProvider.state).state;
+    return Row(
+      children: [
+        //Temporal button
+        //TODO: Delete and add logic in profile screen
+        IconButton(
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            SharedPreferencesProvider.instance.setIsSignedIn(false);
+            //TODO: Add Firebase signout logic
+            ref.read(AppProvider.instance.firebaseAuthProvider).signOut();
+            ref.read(routeProvider.notifier).state = AppRoutes.signin.route;
+          },
+          icon: const Icon(
+            Icons.power_settings_new_rounded,
+            color: Colors.white,
+          ),
+          iconSize: 24,
+        ),
+        const Expanded(child: SizedBox()),
+        Switch(
+          activeColor: Colors.white,
+          value: themeMode == ThemeMode.light,
+          onChanged: (state) => _handleChange(state, ref),
+        ),
+        Icon(
+          themeMode == ThemeMode.light
+              ? AppIcons.ligthTheme
+              : AppIcons.darkTheme,
+          size: 32,
+        ),
+      ],
     );
   }
 }

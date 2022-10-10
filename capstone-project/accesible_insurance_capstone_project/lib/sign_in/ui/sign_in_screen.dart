@@ -1,6 +1,7 @@
 import 'package:accesible_insurance_capstone_project/sign_in/domain/provider/input_provider.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/widgets/email_input.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/widgets/password_input.dart';
+import 'package:accesible_insurance_capstone_project/sign_in/utils/constants/widget_keys.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/model/user.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/logo.dart';
@@ -88,6 +89,7 @@ class SignInScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final submit = ref.watch(inputProviderInstance.submitProvider.state).state;
     return Scaffold(
+      key: SigninWidgetKeys.screenKey,
       body: SingleChildScrollView(
         child: SizedBox(
           width: context.width,
@@ -118,11 +120,13 @@ class SignInScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
+                //Sign in button
                 Container(
                   width: context.width * 0.5625,
                   height: context.height * 0.07,
                   margin: EdgeInsets.only(top: context.height * 0.028),
                   child: ElevatedButton(
+                    key: SigninWidgetKeys.signinButtonKey,
                     onPressed: !submit ? () => onSignIn(ref: ref) : null,
                     child: const Text(
                       'SIGN IN',

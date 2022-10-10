@@ -16,10 +16,10 @@ class MasterPolicyScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SafeArea(
-        child: Hero(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Hero(
           tag: 'master-policy $index',
           child: SizedBox(
             width: context.width,

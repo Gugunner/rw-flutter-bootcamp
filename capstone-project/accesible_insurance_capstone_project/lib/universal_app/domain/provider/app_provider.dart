@@ -1,6 +1,8 @@
+import 'package:accesible_insurance_capstone_project/main.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/domain/provider/input_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/model/user.dart';
-import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/user_provider.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_user.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
@@ -15,14 +17,16 @@ class AppProvider {
   final themeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.light);
 
   //TODO: Load from Shared Preferences when initializing
-  final signIn = StateProvider<bool>((ref) => false);
+  final signIn = StateProvider<bool>(
+      (ref) => SharedPreferencesProvider.instance.isSignedIn());
 
-  final firebaseAutProvider =
+  final firebaseAuthProvider =
+      // Provider<FirebaseAuth>((ref) => getIt<AppAuth>().auth);
       Provider<FirebaseAuth>((ref) => FirebaseAuth.instance);
 
   final authStateChangesProvider = StreamProvider.autoDispose<User?>(
     (ref) =>
-        ref.watch(AppProvider.instance.firebaseAutProvider).authStateChanges(),
+        ref.watch(AppProvider.instance.firebaseAuthProvider).authStateChanges(),
   );
 
   final authTokenProvider = FutureProvider.autoDispose<String?>((ref) async {
@@ -31,15 +35,13 @@ class AppProvider {
     return await userValue?.getIdToken();
   });
 
-  final userProvider =
-      StateNotifierProvider<UserProvider, UserCredential?>((ref) {
-    return UserProvider(
+  final userProvider = StateNotifierProvider<AppUser, UserCredential?>((ref) {
+    return AppUser(
       auth: ref.watch(
-        AppProvider.instance.firebaseAutProvider,
+        AppProvider.instance.firebaseAuthProvider,
       ),
     );
   });
-
   //Makes all changes to depending providers when the user signs in
   final signInProvider = Provider.family<void, UserModel>((ref, user) async {
     try {
@@ -47,13 +49,27 @@ class AppProvider {
       final userCredential = await ref
           .watch(AppProvider.instance.userProvider.notifier)
           .signInWithEmail(user.email, user.password);
+      //TODO: Store auth token
       //Changes the state of the sign in when the user signIn provider
       //changes state
-      final signIn = ref.watch(AppProvider.instance.signIn.notifier).state =
-          userCredential?.user?.getIdToken() != null;
+      final signInState = ref.read(AppProvider.instance.signIn.state);
+      final idToken = await userCredential?.user?.getIdToken();
+      if (!signInState.state) {
+        signInState.state = ref
+            .watch(AppProvider.instance.signIn.notifier)
+            .state = idToken != null;
+      }
       //If the user is able to sign in, the route changes to "Home" ('/')
-      if (signIn) {
-        ref.read(routeProvider.notifier).state = AppRoutes.homeRoute;
+      if (signInState.state) {
+         await SharedPreferencesProvider.instance.saveIdToken(idToken ?? '');
+         await SharedPreferencesProvider.instance.setIsSignedIn(signInState.state);
+
+        final isOnboarding =  SharedPreferencesProvider.instance.isOnboarding();
+        if (isOnboarding) {
+          ref.read(routeProvider.notifier).state = AppRoutes.onboarding.route;
+          return;
+        }
+        ref.read(routeProvider.notifier).state = AppRoutes.home.route;
       }
     } on FirebaseAuthException catch (e) {
       //If an error occurs and since the app know that any possible error

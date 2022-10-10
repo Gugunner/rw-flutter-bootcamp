@@ -11,7 +11,8 @@ class MasterPolicyDataBase {
   final String uid;
   final AppFirestoreService firestoreService;
 
-  Stream<List<MasterPolicyModel>> masterPolicyCollection() {
+  Stream<List<MasterPolicyModel>> 
+  masterPolicyCollection() {
     final collectionPath = FireStorePaths.allMasterPolicies(uid);
     return firestoreService.collection(
       collectionPath: collectionPath,

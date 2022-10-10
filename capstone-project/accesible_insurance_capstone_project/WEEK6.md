@@ -7,7 +7,8 @@ The basis for the reusable Card widget for the Master Policy was implemented, th
 Here is the main implementation for the card and how it works.
 
 The code can be found in [master_policy_card.dart](/capstone-project/accesible_insurance_capstone_project/lib/master_policy/ui/widgets/master_policy_card.dart) file.
-```
+
+```dart
 //Widget Constructor
 const MasterPolicyCard({
     Key? key,
@@ -42,7 +43,8 @@ The app implements a SliverAppBar that scales and collapses when the user scroll
 Here is the code for the SliverAppBar implementation.
 
 The code can be found in [master_policy_list_screen.dart](/capstone-project/accesible_insurance_capstone_project/lib/master_policies/ui/master_policy_list_screen.dart) file.
-```
+
+```dart
 SliverAppBar(
     automaticallyImplyLeading: false,
     backgroundColor: loading ? Colors.transparent : null,
@@ -77,7 +79,7 @@ The code for toggling the theme can be found in side the flexibleSpace property 
 
 Here is the code for the Theme toggle implementation.
 
-```
+```dart
 SliverAppBar(
     ...
     child: Container(
@@ -144,7 +146,7 @@ The project has the basic structure and the way Riverpod is handled through diff
 
 Here is the example of the AppProvider class which calls the Riverpods providers.
 
-```
+```dart
 class AppProvider {
   static final instance = AppProvider();
 

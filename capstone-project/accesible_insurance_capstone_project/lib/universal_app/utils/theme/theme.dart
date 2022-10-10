@@ -7,7 +7,8 @@ class AppTheme {
       primaryColor: AppColors.primarySwatchColor,
       backgroundColor: AppColors.backgroundColor,
       scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
-      iconTheme: const IconThemeData().copyWith(color: AppColors.primaryIconColor),
+      iconTheme:
+          const IconThemeData().copyWith(color: AppColors.primaryIconColor),
       cardTheme: const CardTheme().copyWith(
         color: Colors.white,
         shadowColor: AppColors.primarySwatchColor,
@@ -37,7 +38,7 @@ class AppTheme {
           fontWeight: FontWeight.w500,
         ),
         displayMedium: const TextStyle(
-          fontSize: 12,
+          fontSize: 14,
           fontWeight: FontWeight.w600,
           height: 1.2,
         ),
@@ -67,8 +68,8 @@ class AppTheme {
           height: 1.2,
         ),
         headlineMedium: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
           height: 1.2,
         ),
         headlineLarge: const TextStyle(
@@ -98,7 +99,8 @@ class AppTheme {
         primaryColor: AppColors.primarySwatchColor,
         backgroundColor: AppColors.darkBackGroundColor,
         scaffoldBackgroundColor: AppColors.darkBackGroundColor,
-        iconTheme: const IconThemeData().copyWith(color: AppColors.primaryIconColor),
+        iconTheme:
+            const IconThemeData().copyWith(color: AppColors.primaryIconColor),
         cardTheme: const CardTheme().copyWith(
           color: AppColors.primarySwatchColor,
           shadowColor: AppColors.primarySwatchColor,
