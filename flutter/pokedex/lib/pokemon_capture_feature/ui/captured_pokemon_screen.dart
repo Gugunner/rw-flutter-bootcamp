@@ -28,46 +28,47 @@ class CapturedPokemonScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Dismissible(
-                        key: ValueKey(capturedPokemon.num),
-                        direction: DismissDirection.horizontal,
-                        background: Container(
-                          width: context.width,
-                          color: const Color.fromARGB(255, 255, 140, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SwipeBackground(),
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Bye Bye!\n ${capturedPokemon.name.toUpperCase()}',
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white),
-                                  ),
+                      key: ValueKey(capturedPokemon.num),
+                      direction: DismissDirection.horizontal,
+                      background: Container(
+                        width: context.width,
+                        color: const Color.fromARGB(255, 255, 140, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SwipeBackground(),
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Bye Bye!\n ${capturedPokemon.name.toUpperCase()}',
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
                                 ),
                               ),
-                              const SwipeBackground(),
-                            ],
-                          ),
+                            ),
+                            const SwipeBackground(),
+                          ],
                         ),
-                        onDismissed: (direction) {
-                          captureProvider.updateCapture(capturedPokemon);
-                          captureProvider.updateCapturedPokemons(
-                              captureProvider.capturedPokemons);
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              backgroundColor: Colors.orange,
-                              content: Text(
-                                  'You have released ${capturedPokemon.name}!')));
-                        },
-                        child: PokemonCard(
-                          pokemon: capturedPokemon,
-                          captureProvider: captureProvider,
-                        )),
+                      ),
+                      onDismissed: (direction) {
+                        captureProvider.updateCapture(capturedPokemon);
+                        captureProvider.updateCapturedPokemons(
+                            captureProvider.capturedPokemons);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.orange,
+                            content: Text(
+                                'You have released ${capturedPokemon.name}!')));
+                      },
+                      child: PokemonCard(
+                        pokemon: capturedPokemon,
+                        captureProvider: captureProvider,
+                      ),
+                    ),
                   ),
                 ],
               ),

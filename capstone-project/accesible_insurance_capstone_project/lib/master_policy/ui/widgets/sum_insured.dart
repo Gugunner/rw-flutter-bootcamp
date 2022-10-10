@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 class SumInsured extends StatelessWidget {
   const SumInsured({
     Key? key,
+    required this.currentSI,
   }) : super(key: key);
+
+  final num currentSI;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Current Sum Insured',
           style: TextStyle(
             fontSize: 9,
@@ -21,7 +24,7 @@ class SumInsured extends StatelessWidget {
           height: context.height * 0.007,
         ),
         Text(
-          '\$2,050.00',
+          '\$${currentSI.toDouble()}',
           style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
         ),
       ],

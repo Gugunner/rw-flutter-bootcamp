@@ -1,4 +1,5 @@
-import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/load_master_policies_provider.dart';
+import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/master_policies_provider.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/master_policy_screen.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/master_policy_card.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
@@ -10,17 +11,28 @@ import 'package:accesible_insurance_capstone_project/universal_app/utils/extensi
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final loadingMasterProvider = LoadMastersProvider.instance;
-final appProvider = AppProvider.instance;
+final masterPoliciesProviderInstance = MasterPoliciesProvider.instance;
+final appProviderInstance = AppProvider.instance;
 
 class MasterPolicyListScreen extends ConsumerWidget {
   const MasterPolicyListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(loadingMasterProvider.loadingProvider);
+    final List<MasterPolicyModel> masterPolicies = ref
+        .watch(masterPoliciesProviderInstance.policiesStreamer)
+        .when(data: (p) {
+      return p;
+    }, error: (error, __) {
+      debugPrint('error');
+      return [];
+    }, loading: () {
+      debugPrint('loading');
+      return [];
+    });
+    ref.watch(masterPoliciesProviderInstance.loadingPolicies);
     final loading =
-        ref.watch(loadingMasterProvider.isLoadingProvider.state).state;
+        ref.watch(masterPoliciesProviderInstance.isLoading.state).state;
     return Scaffold(
       body: SafeArea(
         child: IgnorePointer(
@@ -53,14 +65,15 @@ class MasterPolicyListScreen extends ConsumerWidget {
                             children: [
                               const Expanded(child: SizedBox()),
                               if (ref
-                                      .watch(appProvider.themeProvider.state)
+                                      .watch(appProviderInstance
+                                          .themeProvider.state)
                                       .state ==
                                   ThemeMode.light)
                                 IconButton(
                                   onPressed: () {
                                     ref
-                                        .read(
-                                            appProvider.themeProvider.notifier)
+                                        .read(appProviderInstance
+                                            .themeProvider.notifier)
                                         .state = ThemeMode.dark;
                                   },
                                   icon: const Icon(
@@ -69,14 +82,15 @@ class MasterPolicyListScreen extends ConsumerWidget {
                                   ),
                                 ),
                               if (ref
-                                      .watch(appProvider.themeProvider.state)
+                                      .watch(appProviderInstance
+                                          .themeProvider.state)
                                       .state ==
                                   ThemeMode.dark)
                                 IconButton(
                                   onPressed: () {
                                     ref
-                                        .read(
-                                            appProvider.themeProvider.notifier)
+                                        .read(appProviderInstance
+                                            .themeProvider.notifier)
                                         .state = ThemeMode.light;
                                   },
                                   icon: const Icon(
@@ -97,23 +111,38 @@ class MasterPolicyListScreen extends ConsumerWidget {
                       isLoading: loading,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              PageRouteBuilder(pageBuilder: (
-                            context,
-                            animation,
-                            secondaryAnimation,
-                          ) {
-                            return const MasterPolicyScreen();
-                          }));
+                          Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                  transitionDuration:
+                                      const Duration(milliseconds: 800),
+                                  reverseTransitionDuration:
+                                      const Duration(milliseconds: 800),
+                                  pageBuilder: (
+                                    context,
+                                    animation,
+                                    secondaryAnimation,
+                                  ) {
+                                    return MasterPolicyScreen(
+                                      masterPolicy: masterPolicies[index],
+                                      index: index,
+                                    );
+                                  }));
                         },
-                        child: Container(
-                          margin: EdgeInsets.only(top: context.height * 0.028),
-                          child: const MasterPolicyCard(),
+                        child: Hero(
+                          tag: 'master-policy $index',
+                          child: Container(
+                            margin:
+                                EdgeInsets.only(top: context.height * 0.028),
+                            child: MasterPolicyCard(
+                              masterPolicy: masterPolicies[index],
+                            ),
+                          ),
                         ),
                       ),
                     );
-                  }), childCount: 10),
-                )
+                  }), childCount: masterPolicies.length),
+                ),
               ],
             ),
           ),

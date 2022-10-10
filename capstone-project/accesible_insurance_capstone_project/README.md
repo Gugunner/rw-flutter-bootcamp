@@ -94,3 +94,9 @@ Note that the app follows a repository pattern and MVVM pattern for the app, whi
 The first deliverable is focused on testing riverpod and connecting SIGN IN with MASTER POLICIES screens.
 
 Check the progress in [WEEK 6](/capstone-project/accesible_insurance_capstone_project/WEEK6.md).
+
+### Second deliverable 
+
+The second deliverable is focused on integrating Firebase Authentication and Firestore, this includes a sign in with a predefined account and retrieving a mocked policy document with some basic fields.
+
+Check the progress in [WEEK 7](/capstone-project/accesible_insurance_capstone_project/WEEK7.md).

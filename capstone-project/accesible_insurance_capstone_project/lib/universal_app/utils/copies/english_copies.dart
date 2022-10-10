@@ -9,4 +9,6 @@ class EnglishCopies {
   static const lengthPasswordError =
       'The password must have minimum ${UniversalConstants.passwordLength} characters';
   static const passwordError = 'Please enter a valid password';
+  static const userNotFound = 'The user provided was not found';
+  static const wrongCredentials = 'The email and/or password is not correct';
 }

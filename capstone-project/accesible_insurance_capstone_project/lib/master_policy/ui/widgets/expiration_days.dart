@@ -8,7 +8,7 @@ class ExpirationDays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: context.width * 0.15,
       child: Text(
         'Expires in \n284 days',
