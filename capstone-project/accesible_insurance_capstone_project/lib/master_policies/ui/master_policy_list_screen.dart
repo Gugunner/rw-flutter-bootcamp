@@ -22,16 +22,7 @@ class MasterPolicyListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final masterPolicies = ref
-        .watch(masterPoliciesProviderInstance.policiesStreamer)
-        .when(data: (p) {
-      return p;
-    }, error: (error, __) {
-      debugPrint('error');
-      return [];
-    }, loading: () {
-      debugPrint('loading');
-      return [];
-    });
+        .watch(masterPoliciesProviderInstance.masterPolicies);
     ref.watch(masterPoliciesProviderInstance.loadingPolicies);
     final loading =
         ref.watch(masterPoliciesProviderInstance.isLoading.state).state;
@@ -76,22 +67,24 @@ class MasterPolicyListScreen extends ConsumerWidget {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                                transitionDuration:
-                                    const Duration(milliseconds: 300),
-                                reverseTransitionDuration:
-                                    const Duration(milliseconds: 300),
-                                pageBuilder: (
-                                  context,
-                                  animation,
-                                  secondaryAnimation,
-                                ) {
-                                  return MasterPolicyScreen(
-                                    masterPolicy: masterPolicies[index],
-                                    index: index,
-                                  );
-                                }));
+                          context,
+                          PageRouteBuilder(
+                            transitionDuration:
+                                const Duration(milliseconds: 300),
+                            reverseTransitionDuration:
+                                const Duration(milliseconds: 300),
+                            pageBuilder: (
+                              context,
+                              animation,
+                              secondaryAnimation,
+                            ) {
+                              return MasterPolicyScreen(
+                                masterPolicy: masterPolicies[index],
+                                index: index,
+                              );
+                            },
+                          ),
+                        );
                       },
                       child: Hero(
                         tag: 'master-policy $index',
@@ -157,5 +150,3 @@ class ThemeModeSwitch extends ConsumerWidget {
     );
   }
 }
-
-

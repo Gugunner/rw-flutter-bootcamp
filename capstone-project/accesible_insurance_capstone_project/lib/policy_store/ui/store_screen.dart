@@ -3,15 +3,15 @@ import 'package:accesible_insurance_capstone_project/universal_app/utils/extensi
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class StoreScreen extends ConsumerWidget {
-  const StoreScreen({super.key});
+class UpgradePolicyScreen extends ConsumerWidget {
+  const UpgradePolicyScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new_sharp,
           ),
           onPressed: () {
@@ -22,7 +22,7 @@ class StoreScreen extends ConsumerWidget {
       body: SizedBox(
         width: context.width,
         height: context.height,
-        child: Center(
+        child: const Center(
           child: AnimatedLogoMatrix(),
         ),
       ),

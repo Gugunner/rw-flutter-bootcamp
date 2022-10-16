@@ -1,4 +1,5 @@
 import 'package:accesible_insurance_capstone_project/master_policies/ui/master_policy_list_screen.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/ui/master_policy_screen.dart';
 import 'package:accesible_insurance_capstone_project/policy_store/ui/store_screen.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/onboarding_screen.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/sign_in_screen.dart';
@@ -77,11 +78,19 @@ class AppRouter extends ChangeNotifier {
             return const MasterPolicyListScreen();
           },
         ),
+        // GoRoute(
+        //   name: AppRoutes.policy.name,
+        //   path: AppRoutes.policy.route,
+        //   builder: (BuildContext context,  GoRouterState state) {
+        //     return const MasterPolicyScreen(index: index,
+        //masterPolicy: masterPolicy)
+        //   },
+        //   )
         GoRoute(
-          name: AppRoutes.store.name,
-          path: AppRoutes.store.route,
+          name: AppRoutes.upgrade.name,
+          path: AppRoutes.upgrade.route,
           builder: (BuildContext context, GoRouterState state) {
-            return const StoreScreen();
+            return const UpgradePolicyScreen();
           },
         ),
       ];

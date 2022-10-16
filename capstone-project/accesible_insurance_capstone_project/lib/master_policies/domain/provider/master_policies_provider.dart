@@ -41,6 +41,9 @@ class MasterPoliciesProvider {
       Future.delayed(const Duration(seconds: 2), () {
         ref.watch(MasterPoliciesProvider.instance.isLoading.notifier).state =
             false;
+        ref
+            .read(MasterPoliciesProvider.instance.masterPolicies.notifier)
+            .state = policies;
       });
     }, onError: (_, __) {
       ref.watch(MasterPoliciesProvider.instance.isLoading.notifier).state =
@@ -50,4 +53,6 @@ class MasterPoliciesProvider {
           false;
     });
   });
+
+  final masterPolicies = StateProvider<List<MasterPolicyModel>>((ref) => []);
 }

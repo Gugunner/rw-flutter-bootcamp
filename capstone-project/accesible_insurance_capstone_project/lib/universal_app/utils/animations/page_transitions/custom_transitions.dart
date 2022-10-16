@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 ///Calls predefined transitions to be used inside the app.
 class CustomTransitions {
-
   ///Use to create a custom sliding transition animation/
   ///
   ///Defaults to sliding from bottom to top.
@@ -11,12 +10,16 @@ class CustomTransitions {
     required BuildContext context,
     required GoRouterState state,
     required Widget child,
+
     ///Use duration to change how long it takes to animate
     Duration? duration,
+
     ///Intiial [dx,dy] position of screen defaults to [0.0, 1.0]
     Offset? begin,
+
     ///Final [dx,dy] position of screen defaults to [0.0, 0.0]
     Offset? end,
+
     ///The curve animation uses values of [Curves]
     Curve? curve,
   }) {
@@ -48,18 +51,22 @@ class CustomTransitions {
 
   ///Use to create a custom scaling transition animation
   ///
-  ///Defaults to scaling from horizontal and vertical center of screen up to 
+  ///Defaults to scaling from horizontal and vertical center of screen up to
   ///each screen edge.
   static CustomTransitionPage<T> scaleFromTo<T>({
     required BuildContext context,
     required GoRouterState state,
     required Widget child,
+
     ///Use duration to change how long it takes to animate
     Duration? duration,
+
     ///Intiial size of screen defaults to 0.0
     double? begin,
+
     ///Final size of screen defaults to 1.0
     double? end,
+
     ///The curve animation uses values of [Curves]
     Curve? curve,
   }) {
@@ -84,6 +91,24 @@ class CustomTransitions {
           scale: animation.drive(tween),
           child: child,
         );
+      },
+    );
+  }
+
+  static PageRouteBuilder<T> defaultTransition<T>({
+    required Widget child,
+    Duration? transitionDuration,
+    Duration? reverseTransitionDuration,
+  }) {
+    return PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 300),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (
+        context,
+        animation,
+        secondaryAnimation,
+      ) {
+        return child;
       },
     );
   }

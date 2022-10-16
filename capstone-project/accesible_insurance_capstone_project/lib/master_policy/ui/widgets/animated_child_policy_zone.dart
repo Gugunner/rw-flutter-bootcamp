@@ -104,7 +104,7 @@ class ChildPolicyZoneContent extends ConsumerWidget {
     return SizedBox(
       child: ElevatedButton(
         onPressed: () {
-          ref.read(routeProvider.notifier).state = AppRoutes.store.route;
+          ref.read(routeProvider.notifier).state = AppRoutes.upgrade.route;
         },
         child: Text(
           'Go to Store',
