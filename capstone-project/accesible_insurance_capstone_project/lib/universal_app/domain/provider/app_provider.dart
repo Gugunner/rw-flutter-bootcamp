@@ -4,7 +4,6 @@ import 'package:accesible_insurance_capstone_project/universal_app/domain/model/
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_user.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
-import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -63,13 +62,6 @@ class AppProvider {
         await SharedPreferencesProvider.instance.setIsSignedIn(
           signInState.state,
         );
-
-        final isOnboarding = SharedPreferencesProvider.instance.isOnboarding();
-        if (isOnboarding) {
-          ref.read(routeProvider.notifier).state = AppRoutes.onboarding.route;
-          return;
-        }
-        ref.read(routeProvider.notifier).state = AppRoutes.home.route;
       }
     } on FirebaseAuthException catch (e) {
       ///If an error occurs and since the app know that any possible error

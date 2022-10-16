@@ -79,9 +79,9 @@ class MasterPolicyListScreen extends ConsumerWidget {
                             context,
                             PageRouteBuilder(
                                 transitionDuration:
-                                    const Duration(milliseconds: 800),
+                                    const Duration(milliseconds: 300),
                                 reverseTransitionDuration:
-                                    const Duration(milliseconds: 800),
+                                    const Duration(milliseconds: 300),
                                 pageBuilder: (
                                   context,
                                   animation,
@@ -157,3 +157,5 @@ class ThemeModeSwitch extends ConsumerWidget {
     );
   }
 }
+
+

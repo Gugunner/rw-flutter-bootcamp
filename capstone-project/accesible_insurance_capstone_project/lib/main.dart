@@ -22,14 +22,12 @@ void main() async {
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor:
-          Colors.white, // navigation bar doesn't accept Colors.transparent
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
   await SharedPreferencesProvider.instance.setupSharedPreferences();
-  SharedPreferencesProvider.instance.preferences.clear();
+  // await SharedPreferencesProvider.instance.preferences.clear();
   runApp(ProviderScope(observers: [Logger()], child: const MyApp()));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

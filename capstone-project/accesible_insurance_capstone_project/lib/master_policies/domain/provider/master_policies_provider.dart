@@ -20,12 +20,13 @@ class MasterPoliciesProvider {
     final database = ref.watch(databaseProviderInstance.masterPolicyDbProvider);
     try {
       if (database != null) {
-        ///If there is a database the collection of master policies of the user 
+        ///If there is a database the collection of master policies of the user
         ///is called
         final collection = database.masterPolicyCollection();
         return collection;
       }
-      ///If there is still no database the stream comes empty until a 
+
+      ///If there is still no database the stream comes empty until a
       ///value changes
       return const Stream.empty();
     } catch (e) {
@@ -37,8 +38,10 @@ class MasterPoliciesProvider {
   final loadingPolicies = StateProvider.autoDispose((ref) {
     ref.watch(MasterPoliciesProvider.instance.policiesStreamer.stream).listen(
         (policies) {
+      Future.delayed(const Duration(seconds: 2), () {
         ref.watch(MasterPoliciesProvider.instance.isLoading.notifier).state =
             false;
+      });
     }, onError: (_, __) {
       ref.watch(MasterPoliciesProvider.instance.isLoading.notifier).state =
           false;

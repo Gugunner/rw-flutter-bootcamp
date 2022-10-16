@@ -6,12 +6,15 @@ import 'package:accesible_insurance_capstone_project/universal_app/domain/model/
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/logo.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/universal_constants.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/copies/english_copies.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/regex.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'widgets/animated_sign_in_logo.dart';
 
 final signInFormKey = GlobalKey<FormState>();
 
@@ -41,20 +44,27 @@ class SignInScreen extends ConsumerWidget {
       //Retrieves current password value for the password input
       final password =
           ref.read(inputProviderInstance.passwordProvider.state).state;
-      ///Disables working inputs to avoid the user from making any other 
+      ///Disables working inputs to avoid the user from making any other
       ///interaction with the submit flag
       ref.read(inputProviderInstance.submitProvider.state).state = true;
-      ///Checks if there is no input validation error and the form can 
+      ///Checks if there is no input validation error and the form can
       ///be validated
       if (passwordInputState == InputErrorState.idle &&
           emailInputState == InputErrorState.idle) {
         if (signInFormKey.currentState!.validate()) {
           //Calls the signInProvider with a family argument of UserModel
-          ref.read(appProviderInstance
-              .signInProvider(UserModel(password: password!, email: email!)));
+          ref.read(
+            appProviderInstance.signInProvider(
+              UserModel(
+                password: password!,
+                email: email!,
+              ),
+            ),
+          );
         }
       }
     }
+
     ///Releases the inputs so the user can continue interacting with the screen,
     ///only works if the form could not be sent
     ref.read(inputProviderInstance.submitProvider.state).state = false;
@@ -90,68 +100,78 @@ class SignInScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final submit = ref.watch(inputProviderInstance.submitProvider.state).state;
+    final signIn = ref.watch(AppProvider.instance.signIn.state).state;
     return Scaffold(
       key: SigninWidgetKeys.screenKey,
       body: SingleChildScrollView(
-        child: SizedBox(
-          width: context.width,
-          height: context.height,
-          child: Form(
-            key: signInFormKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Logo(),
-                EmailInput(
-                  enabled: !submit,
-                  onSaved: (_) => checkForm(InputType.email, ref),
+        child: Stack(
+          children: [
+            SizedBox(
+              width: context.width,
+              height: context.height,
+              child: Form(
+                key: signInFormKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (!signIn) ...[
+                      const Logo(),
+                      EmailInput(
+                        enabled: !submit,
+                        onSaved: (_) => checkForm(InputType.email, ref),
+                      ),
+                      PasswordInput(
+                        enabled: !submit,
+                        onSaved: (_) => checkForm(InputType.password, ref),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: context.height * 0.014),
+                        child: TextButton(
+                          onPressed: () {
+                            debugPrint(EnglishCopies.forgotPassword);
+                          },
+                          child: const Text(
+                            EnglishCopies.forgotPassword,
+                          ),
+                        ),
+                      ),
+                      //Sign in button
+                      Container(
+                        width: context.width * 0.5625,
+                        height: context.height * 0.07,
+                        margin: EdgeInsets.only(top: context.height * 0.014),
+                        child: ElevatedButton(
+                          key: SigninWidgetKeys.signinButtonKey,
+                          onPressed: !submit ? () => onSignIn(ref: ref) : null,
+                          child: Text(
+                            EnglishCopies.signin.toUpperCase(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(top: context.height * 0.028),
+                          child: TextButton(
+                            onPressed: () {
+                              //TODO: Implement real logic
+                              debugPrint(EnglishCopies.joinNow);
+                            },
+                            child: const Text(
+                              EnglishCopies.joinNow,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]
+                  ],
                 ),
-                PasswordInput(
-                  enabled: !submit,
-                  onSaved: (_) => checkForm(InputType.password, ref),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: context.height * 0.028),
-                  child: TextButton(
-                    onPressed: () {
-                      debugPrint('Forgot Password');
-                    },
-                    child: const Text(
-                      'Forgot Password?',
-                    ),
-                  ),
-                ),
-                //Sign in button
-                Container(
-                  width: context.width * 0.5625,
-                  height: context.height * 0.07,
-                  margin: EdgeInsets.only(top: context.height * 0.028),
-                  child: ElevatedButton(
-                    key: SigninWidgetKeys.signinButtonKey,
-                    onPressed: !submit ? () => onSignIn(ref: ref) : null,
-                    child: const Text(
-                      'SIGN IN',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: context.height * 0.028),
-                  child: TextButton(
-                    onPressed: () {
-                      //TODO: Implement real logic
-                      debugPrint('Join now');
-                    },
-                    child: const Text(
-                      'Don\'t have an account?\n Join now.',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
-          ),
+            if (signIn) const AnimatedSignInLogo(),
+          ],
         ),
       ),
     );

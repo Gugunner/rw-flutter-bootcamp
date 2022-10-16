@@ -43,8 +43,8 @@ class AppTheme {
           height: 1.2,
         ),
         displayLarge: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
           height: 1.2,
         ),
         labelSmall: const TextStyle(
