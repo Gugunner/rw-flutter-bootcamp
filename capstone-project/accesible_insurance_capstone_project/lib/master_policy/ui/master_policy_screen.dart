@@ -18,14 +18,12 @@ class MasterPolicyScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(),
-      body: SafeArea(
-        child: Hero(
-          tag: 'master-policy $index',
-          child: SizedBox(
-            width: context.width,
-            height: context.height,
-            child: MasterPolicyCard(masterPolicy: masterPolicy, isScreen: true),
-          ),
+      body: Hero(
+        tag: 'master-policy $index',
+        child: SizedBox(
+          width: context.width,
+          height: context.height,
+          child: MasterPolicyCard(masterPolicy: masterPolicy, isScreen: true),
         ),
       ),
     );

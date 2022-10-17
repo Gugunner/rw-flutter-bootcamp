@@ -3,13 +3,10 @@ import 'package:accesible_insurance_capstone_project/universal_app/domain/provid
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserProvider extends StateNotifier<UserCredential?> {
-  UserProvider({required this.auth}) : super(null);
+class AppUser extends StateNotifier<UserCredential?> {
+  AppUser({required this.auth}) : super(null);
 
-  String? authToken;
   final FirebaseAuth auth;
-  bool isAuthenticating = false;
-  dynamic error;
 
   Future<UserCredential?> signInWithEmail(
     String email,

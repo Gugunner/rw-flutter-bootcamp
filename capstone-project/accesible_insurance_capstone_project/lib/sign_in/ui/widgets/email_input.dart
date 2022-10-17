@@ -1,4 +1,5 @@
 import 'package:accesible_insurance_capstone_project/sign_in/domain/provider/input_provider.dart';
+import 'package:accesible_insurance_capstone_project/sign_in/utils/constants/widget_keys.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class EmailInput extends ConsumerWidget {
           Container(
             padding: EdgeInsets.only(top: context.height * 0.021),
             child: TextFormField(
+              key: SigninWidgetKeys.emailInputKey,
               enabled: enabled,
               textAlignVertical: TextAlignVertical.center,
               decoration: decoration(context, ref),

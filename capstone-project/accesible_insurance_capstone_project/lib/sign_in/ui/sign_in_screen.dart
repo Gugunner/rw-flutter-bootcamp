@@ -1,6 +1,7 @@
 import 'package:accesible_insurance_capstone_project/sign_in/domain/provider/input_provider.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/widgets/email_input.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/widgets/password_input.dart';
+import 'package:accesible_insurance_capstone_project/sign_in/utils/constants/widget_keys.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/model/user.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/logo.dart';
@@ -40,9 +41,11 @@ class SignInScreen extends ConsumerWidget {
       //Retrieves current password value for the password input
       final password =
           ref.read(inputProviderInstance.passwordProvider.state).state;
-      //Disables working inputs to avoid the user from making any other interaction with the submit flag
+      ///Disables working inputs to avoid the user from making any other 
+      ///interaction with the submit flag
       ref.read(inputProviderInstance.submitProvider.state).state = true;
-      //Checks if there is no input validation error and the form can be validated
+      ///Checks if there is no input validation error and the form can 
+      ///be validated
       if (passwordInputState == InputErrorState.idle &&
           emailInputState == InputErrorState.idle) {
         if (signInFormKey.currentState!.validate()) {
@@ -52,8 +55,8 @@ class SignInScreen extends ConsumerWidget {
         }
       }
     }
-    //Releases the inputs so the user can continue interacting with the screen, only works
-    //if the form could not be sent
+    ///Releases the inputs so the user can continue interacting with the screen,
+    ///only works if the form could not be sent
     ref.read(inputProviderInstance.submitProvider.state).state = false;
   }
 
@@ -61,7 +64,7 @@ class SignInScreen extends ConsumerWidget {
     final email = ref.read(inputProviderInstance.emailProvider.state).state;
     final password =
         ref.read(inputProviderInstance.passwordProvider.state).state;
-    InputErrorState state = InputErrorState.idle;
+    var state = InputErrorState.idle;
     if (type == InputType.password) {
       if (password!.isEmpty) {
         state = InputErrorState.emptyPassword;
@@ -88,6 +91,7 @@ class SignInScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final submit = ref.watch(inputProviderInstance.submitProvider.state).state;
     return Scaffold(
+      key: SigninWidgetKeys.screenKey,
       body: SingleChildScrollView(
         child: SizedBox(
           width: context.width,
@@ -118,11 +122,13 @@ class SignInScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
+                //Sign in button
                 Container(
                   width: context.width * 0.5625,
                   height: context.height * 0.07,
                   margin: EdgeInsets.only(top: context.height * 0.028),
                   child: ElevatedButton(
+                    key: SigninWidgetKeys.signinButtonKey,
                     onPressed: !submit ? () => onSignIn(ref: ref) : null,
                     child: const Text(
                       'SIGN IN',

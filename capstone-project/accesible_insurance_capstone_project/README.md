@@ -100,3 +100,10 @@ Check the progress in [WEEK 6](/capstone-project/accesible_insurance_capstone_pr
 The second deliverable is focused on integrating Firebase Authentication and Firestore, this includes a sign in with a predefined account and retrieving a mocked policy document with some basic fields.
 
 Check the progress in [WEEK 7](/capstone-project/accesible_insurance_capstone_project/WEEK7.md).
+
+### Third deliverable 
+
+The third deliverable is focused on adding some unit tests and some widget tests for the SignInScreen, it also focuses on code coverage and reports and finally creates an onboarding process with some GoRouter custom transition implementations. 
+
+Check the progress in [WEEK 8](/capstone-project/accesible_insurance_capstone_project/WEEK8.md).
+

@@ -25,3 +25,9 @@ doc/api/
 # Flutter FVM
 capstone-project/accesible_insurance_capstone_project/.fvm/
 flutter/pokedex/.fvm/
+
+capstone-project/accesible_insurance_capstone_project/cover/
+
+capstone-project/accesible_insurance_capstone_project/coverage/html/
+
+capstone-project/accesible_insurance_capstone_project/coverage/lcov.info
