@@ -35,16 +35,21 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
 
   @override
   void initState() {
+    //An initial animation controller is set that will be used for
+    //the rotation of the widget.
     controller = AnimationController(
       duration: Duration(milliseconds: rotationCycle),
       vsync: this,
     );
-
+    //An animation is set with the controller which handles the
+    //the ticker (frame per second) is assigned to control any state 
+    //changes.
     animation = CurvedAnimation(
       parent: controller,
       curve: Curves.linear,
     );
-
+    //Simple delay timer so the logo starts at top position
+    //before starting to move.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
           Duration(
@@ -74,10 +79,13 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
         milliseconds: moveCycle,
       ),
       onEnd: () {
-        controller.repeat();
+        //Once the widget is completely moved it is shown
         setState(() {
           opacity = 1;
         });
+        //Gives enough time for the user to see the whole animation
+        //before changing the route to show the onboarding or to
+        //redirect to home path ('/')
         Future.delayed(Duration(seconds: delaySignIn), () {
           var route = '';
           controller.stop();
@@ -92,6 +100,7 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
       curve: Curves.fastOutSlowIn,
       child: Column(
         children: [
+          //The rotation animation is used with an explicit animation
           RotationTransition(
             turns: animation,
             child: RotateTransition(
@@ -99,6 +108,7 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
               child: const Imago(),
             ),
           ),
+          //The text fades in after the logo starts rotating
           AnimatedOpacity(
             opacity: opacity,
             duration: Duration(

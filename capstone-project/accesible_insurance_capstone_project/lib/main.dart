@@ -27,7 +27,8 @@ void main() async {
     ),
   );
   await SharedPreferencesProvider.instance.setupSharedPreferences();
-  // await SharedPreferencesProvider.instance.preferences.clear();
+  //TODO: Delete the next expression for production
+  await SharedPreferencesProvider.instance.preferences.clear();
   runApp(ProviderScope(observers: [Logger()], child: const MyApp()));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -42,7 +42,7 @@ class MasterPoliciesProvider {
         ref.watch(MasterPoliciesProvider.instance.isLoading.notifier).state =
             false;
         ref
-            .read(MasterPoliciesProvider.instance.masterPolicies.notifier)
+            .watch(MasterPoliciesProvider.instance.masterPolicies.notifier)
             .state = policies;
       });
     }, onError: (_, __) {

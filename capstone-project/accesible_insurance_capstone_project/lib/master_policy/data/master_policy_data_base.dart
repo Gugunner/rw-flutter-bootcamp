@@ -11,13 +11,15 @@ class MasterPolicyDataBase {
   final String uid;
   final AppFirestoreService firestoreService;
 
-  Stream<List<MasterPolicyModel>> 
-  masterPolicyCollection() {
+  Stream<List<MasterPolicyModel>> masterPolicyCollection() {
+    var index = -1;
     final collectionPath = FireStorePaths.allMasterPolicies(uid);
     return firestoreService.collection(
       collectionPath: collectionPath,
-      snapshotBuilder: ((snapshot, options) =>
-          MasterPolicyModel.fromFirestore(snapshot!, options)),
+      snapshotBuilder: ((snapshot, options) {
+        index++;
+        return MasterPolicyModel.fromFirestore(snapshot!, options, index);
+      }),
     );
   }
 }

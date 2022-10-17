@@ -3,9 +3,12 @@ import 'package:accesible_insurance_capstone_project/universal_app/utils/constan
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AnimatedChildPolicyZone extends ConsumerStatefulWidget {
-  const AnimatedChildPolicyZone({super.key});
+  const AnimatedChildPolicyZone({super.key, required this.index});
+
+  final int index;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -40,6 +43,10 @@ class _AnimatedChildPoliciesState
   }
 
   void animateIt() {
+    //Once the widget has been built the first time a timer starts
+    //to change width, height and opacity. The timer is to
+    //prevent any animation from ocurring while the Hero animation finishes
+    //due to the layer building while transitioning. 
     Future.delayed(const Duration(milliseconds: 180), () {
       if (mounted) {
         setState(() {
@@ -48,7 +55,10 @@ class _AnimatedChildPoliciesState
           opacity = 1;
         });
       }
-    }).then((_) {
+    })
+    //After the initial values are set, the widget starts
+    //to change size and create a radius to look as a rounded shape
+    .then((_) {
       if (mounted) {
         setState(() {
           width = context.width;
@@ -62,6 +72,8 @@ class _AnimatedChildPoliciesState
 
   @override
   Widget build(BuildContext context) {
+    //Uses animated align since it is wrapped by a Stack widget
+    //The animation is created by stacking several AnimatedImplicitWidgets
     return AnimatedAlign(
       duration: const Duration(seconds: 0),
       alignment: Alignment.bottomCenter,
@@ -89,7 +101,9 @@ class _AnimatedChildPoliciesState
             debugPrint('End');
           },
           curve: Curves.elasticOut,
-          child: ChildPolicyZoneContent(),
+          child: ChildPolicyZoneContent(
+            index: widget.index,
+          ),
         ),
       ),
     );
@@ -97,14 +111,21 @@ class _AnimatedChildPoliciesState
 }
 
 class ChildPolicyZoneContent extends ConsumerWidget {
-  const ChildPolicyZoneContent({super.key});
+  const ChildPolicyZoneContent({
+    super.key,
+    required this.index,
+  });
+
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       child: ElevatedButton(
         onPressed: () {
-          ref.read(routeProvider.notifier).state = AppRoutes.upgrade.route;
+          final route = AppRoutes.upgrade.upgradePolicyRoute(index);
+          context.go(route);
+          ref.read(routeProvider.notifier).state = route;
         },
         child: Text(
           'Go to Store',

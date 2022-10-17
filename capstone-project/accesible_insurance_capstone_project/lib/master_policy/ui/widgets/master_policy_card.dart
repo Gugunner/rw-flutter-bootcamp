@@ -84,7 +84,9 @@ class MasterPolicyCard extends StatelessWidget {
             ),
           ),
           if (isScreen) ...[
-            const AnimatedChildPolicyZone(),
+            AnimatedChildPolicyZone(
+              index: masterPolicy.index,
+            ),
             Positioned(
               right: context.width * 0.025,
               bottom: context.height * 0.028,
