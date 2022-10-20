@@ -79,6 +79,7 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
         milliseconds: moveCycle,
       ),
       onEnd: () {
+        controller.repeat();
         //Once the widget is completely moved it is shown
         setState(() {
           opacity = 1;
