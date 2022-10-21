@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 enum PolicyStatus {
   inactive,
@@ -43,7 +44,8 @@ class MasterPolicyModel {
 
   factory MasterPolicyModel.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options, int index) {
+      SnapshotOptions? options,
+      int index) {
     final data = snapshot.data();
     return MasterPolicyModel(
       policyId: data?['policyId'] as String,
@@ -130,3 +132,4 @@ class RoomDescription {
   //TODO: Add copyWith for mutable states
 
 }
+

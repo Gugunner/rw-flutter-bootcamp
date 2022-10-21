@@ -42,7 +42,7 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
       vsync: this,
     );
     //An animation is set with the controller which handles the
-    //the ticker (frame per second) is assigned to control any state 
+    //the ticker (frame per second) is assigned to control any state
     //changes.
     animation = CurvedAnimation(
       parent: controller,
@@ -79,6 +79,7 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
         milliseconds: moveCycle,
       ),
       onEnd: () {
+        controller.repeat();
         //Once the widget is completely moved it is shown
         setState(() {
           opacity = 1;

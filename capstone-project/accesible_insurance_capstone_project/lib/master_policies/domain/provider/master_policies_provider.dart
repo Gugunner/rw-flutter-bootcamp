@@ -6,7 +6,7 @@ import 'package:accesible_insurance_capstone_project/universal_app/domain/provid
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final appProviderInstance = AppProvider.instance;
-final databaseProviderInstance = DatabaseProvider.instance;
+
 
 class MasterPoliciesProvider {
   static final instance = MasterPoliciesProvider();
@@ -17,7 +17,8 @@ class MasterPoliciesProvider {
   final policiesStreamer =
       StreamProvider.autoDispose<List<MasterPolicyModel>>((ref) {
     //Retrieves the database
-    final database = ref.watch(databaseProviderInstance.masterPolicyDbProvider);
+    final database =
+        ref.watch(databaseProviderInstance.masterPolicyDatabaseProvider);
     try {
       if (database != null) {
         ///If there is a database the collection of master policies of the user

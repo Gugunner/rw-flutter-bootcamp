@@ -23,6 +23,7 @@ class AppRouter extends ChangeNotifier {
     );
   }
 
+
   ///Reads a [GoRouterState] and compares it to the [routeProvider] state.
   ///
   ///If it is the same it returns null.
