@@ -80,7 +80,8 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
       ),
       onEnd: () {
         controller.repeat();
-        //Once the widget is completely moved it is shown
+        //Once the widget is has completed its animation the
+        //text 'Let's start!' or 'Welcome back!' is shown
         setState(() {
           opacity = 1;
         });

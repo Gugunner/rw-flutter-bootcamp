@@ -7,8 +7,9 @@ import 'package:synchronized/synchronized.dart';
 class DatabaseHelper {
   static const _databaseName = 'Policied.db';
   static const _databaseVersion = 1;
-  static const childPolicyTable = 'ChildPolicy';
-  static const childPolicyId = 'childPolicyId';
+  static const _childPolicyTable = 'ChildPolicy';
+  static const _childPolicyId = 'childPolicyId';
+  static const _masterPolicyId = 'masterPolicyId';
   static late BriteDatabase _streamDatabase;
   DatabaseHelper._();
   static final instance = DatabaseHelper._();
@@ -17,8 +18,8 @@ class DatabaseHelper {
 
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE $childPolicyTable (
-        $childPolicyId INTEGER PRIMARY KEY,
+      CREATE TABLE $_childPolicyTable (
+        $_childPolicyId INTEGER PRIMARY KEY,
         masterPolicyId TEXT,
         premiumPaid REAL, 
         sumInsured REAL,
@@ -64,9 +65,7 @@ class DatabaseHelper {
   void close() {
     _streamDatabase.close();
   }
-}
 
-extension ChildPolicyHelper on DatabaseHelper {
   List<ChildPolicyModel> parseChildPolicies(
     List<Map<String, dynamic>> childPolicyList,
   ) {
@@ -82,7 +81,7 @@ extension ChildPolicyHelper on DatabaseHelper {
       String masterPolicyId) async {
     final db = await DatabaseHelper.instance.streamDatabase;
     final childPolicyList = await db.query(
-      DatabaseHelper.childPolicyTable,
+      DatabaseHelper._childPolicyTable,
       where: 'masterPolicyId = $masterPolicyId',
     );
     final childPolicies = parseChildPolicies(childPolicyList);
@@ -92,21 +91,36 @@ extension ChildPolicyHelper on DatabaseHelper {
   Stream<List<ChildPolicyModel>> watchAllChildPoliciesByMasterPolicyId(
       String masterPolicyId) async* {
     final db = await DatabaseHelper.instance.streamDatabase;
-    final childPolicies = db
-        .createQuery(
-          DatabaseHelper.childPolicyTable,
-          where: 'masterPolicyId = ?',
-          whereArgs: [masterPolicyId],
-        )
-        .mapToList((row) => ChildPolicyModel.fromJson(row));
+    final childPolicies = db.createQuery(
+      DatabaseHelper._childPolicyTable,
+      where: '$_masterPolicyId = ?',
+      whereArgs: [masterPolicyId],
+    ).mapToList((row) => ChildPolicyModel.fromJson(row));
 
+    yield* childPolicies;
+  }
+
+  Stream<List<ChildPolicyModel>>
+      watchAllChildPoliciesByMasterPolicyIdAndPremiumPaidRange(
+    String masterPolicyId, [
+    double minPremium = 0,
+    double maxPremium = 9999999,
+  ]) async* {
+    final db = await DatabaseHelper.instance.streamDatabase;
+    final childPolicies = db.createQuery(
+      DatabaseHelper._childPolicyTable,
+      where: '$_masterPolicyId = ? '
+          'AND premiumPaid >= ? '
+          'AND premiumPaid <= ?',
+      whereArgs: [masterPolicyId, minPremium, maxPremium],
+    ).mapToList((row) => ChildPolicyModel.fromJson(row));
     yield* childPolicies.asBroadcastStream();
   }
 
   Future<ChildPolicyModel> findChilPolicyById(int id) async {
     final db = await DatabaseHelper.instance.streamDatabase;
     final childPolicyList = await db.query(
-      DatabaseHelper.childPolicyTable,
+      DatabaseHelper._childPolicyTable,
       where: 'id = $id',
     );
     final childPolicies = parseChildPolicies(childPolicyList);
@@ -120,7 +134,7 @@ extension ChildPolicyHelper on DatabaseHelper {
 
   Future<int> insertChildPolicy(ChildPolicyModel childPolicy) {
     return _insert(
-      DatabaseHelper.childPolicyTable,
+      DatabaseHelper._childPolicyTable,
       childPolicy.toJson(),
     );
   }
@@ -136,8 +150,8 @@ extension ChildPolicyHelper on DatabaseHelper {
 
   Future<int> deleteChildPolicy(int id) {
     return _delete(
-      DatabaseHelper.childPolicyTable,
-      DatabaseHelper.childPolicyId,
+      DatabaseHelper._childPolicyTable,
+      DatabaseHelper._childPolicyId,
       id,
     );
   }
@@ -159,9 +173,9 @@ extension ChildPolicyHelper on DatabaseHelper {
 
   Future<int> updateChildPolicy(ChildPolicyModel childPolicy) async {
     return _update(
-      DatabaseHelper.childPolicyTable,
+      DatabaseHelper._childPolicyTable,
       childPolicy.toJson(),
-      DatabaseHelper.childPolicyId,
+      DatabaseHelper._childPolicyId,
       childPolicy.childPolicyId!,
     );
   }

@@ -12,10 +12,15 @@ class ChildPolicyDatabase {
   }
 
   Stream<List<ChildPolicyModel>> watchAllChildPoliciesByMasterPolicyId(
-      masterPolicyId) {
-    return dbHelper
-        .watchAllChildPoliciesByMasterPolicyId(masterPolicyId)
-        .asBroadcastStream();
+      String masterPolicyId) {
+    return dbHelper.watchAllChildPoliciesByMasterPolicyId(masterPolicyId);
+  }
+
+  Stream<List<ChildPolicyModel>>
+      watchAllChildPoliciesByMasterPolicyIdAndPremiumPaidRange(
+          String masterPolicyId, [double minimumPremium = 0]) {
+    return dbHelper.watchAllChildPoliciesByMasterPolicyIdAndPremiumPaidRange(
+        masterPolicyId, minimumPremium).asBroadcastStream();
   }
 
   Future<ChildPolicyModel> findChildPolicyById(int id) {
@@ -31,6 +36,10 @@ class ChildPolicyDatabase {
   Future<void> deleteChildPolicy(int id) {
     dbHelper.deleteChildPolicy(id);
     return Future.value();
+  }
+
+  Future<int> updateChildPolicy(ChildPolicyModel childPolicy) {
+    return dbHelper.updateChildPolicy(childPolicy);
   }
 
   Future init() async {

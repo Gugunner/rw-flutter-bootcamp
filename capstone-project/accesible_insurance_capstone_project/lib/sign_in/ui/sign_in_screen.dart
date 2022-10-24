@@ -64,7 +64,6 @@ class SignInScreen extends ConsumerWidget {
         }
       }
     }
-
     ///Releases the inputs so the user can continue interacting with the screen,
     ///only works if the form could not be sent
     ref.read(inputProviderInstance.submitProvider.state).state = false;

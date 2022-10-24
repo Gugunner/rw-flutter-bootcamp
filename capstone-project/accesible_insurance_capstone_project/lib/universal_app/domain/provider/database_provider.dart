@@ -39,6 +39,7 @@ class DatabaseProvider {
     return null;
   });
 
+  ///Manages the instance of the ChildPolicyDatabase
   final childPolicyDatabaseProvider = Provider<ChildPolicyDatabase>(
     (ref) => ChildPolicyDatabase(),
   );

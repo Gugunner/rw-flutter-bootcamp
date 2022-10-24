@@ -85,7 +85,7 @@ class MasterPolicyCard extends StatelessWidget {
           ),
           if (isScreen) ...[
             AnimatedChildPolicyZone(
-              index: masterPolicy.index,
+              masterPolicyId: masterPolicy.policyId,
             ),
             Positioned(
               right: context.width * 0.025,
@@ -106,5 +106,3 @@ extension MasterPolicyCardDecoration on MasterPolicyCard {
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       border: Border.all(color: Colors.transparent));
 }
-
-

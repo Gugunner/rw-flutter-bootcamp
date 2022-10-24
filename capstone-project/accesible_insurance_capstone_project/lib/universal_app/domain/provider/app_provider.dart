@@ -15,7 +15,8 @@ import 'package:go_router/go_router.dart';
 class AppProvider {
   static final instance = AppProvider();
 
-  final themeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.light);
+  final themeProvider = StateProvider<ThemeMode>(
+      (ref) => SharedPreferencesProvider.instance.restoreTheme());
 
   final signIn = StateProvider<bool>(
       (ref) => SharedPreferencesProvider.instance.isSignedIn());
@@ -36,8 +37,6 @@ class AppProvider {
     SharedPreferencesProvider.instance.saveIdToken(token ?? '');
     return token;
   });
-
-  
 
   final userProvider = StateNotifierProvider<AppUser, User?>((ref) {
     return AppUser(

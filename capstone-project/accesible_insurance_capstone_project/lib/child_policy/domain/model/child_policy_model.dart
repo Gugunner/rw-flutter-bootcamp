@@ -5,7 +5,7 @@ part 'child_policy_model.g.dart';
 @JsonSerializable()
 class ChildPolicyModel extends Equatable {
   const ChildPolicyModel({
-    required this.childPolicyId,
+    this.childPolicyId,
     required this.masterPolicyId,
     required this.premiumPaid,
     required this.sumInsured,
@@ -13,7 +13,7 @@ class ChildPolicyModel extends Equatable {
     required this.expirationDate,
   });
 
-  final int childPolicyId;
+  final int? childPolicyId;
   final String masterPolicyId;
   final double premiumPaid;
   final double sumInsured;
@@ -21,18 +21,22 @@ class ChildPolicyModel extends Equatable {
     fromJson: toDateTime,
     toJson: toIsoString,
   )
-  final DateTime activeSinceDate;
+  final DateTime? activeSinceDate;
   @JsonKey(
     fromJson: toDateTime,
     toJson: toIsoString,
   )
-  final DateTime expirationDate;
+  final DateTime? expirationDate;
+
+  //TODO: Add registerDate
+  //TODO: Add updateDate
 
   factory ChildPolicyModel.fromJson(Map<String, dynamic> json) =>
       _$ChildPolicyModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChildPolicyModelToJson(this);
 
+  //All the different properties that can be compared
   @override
   List<Object?> get props => [
         childPolicyId,
@@ -61,6 +65,8 @@ class ChildPolicyModel extends Equatable {
       );
 }
 
-DateTime toDateTime(String date) => DateTime.parse(date);
+DateTime? toDateTime(String? date) =>
+    date != null ? DateTime.parse(date) : null;
 
-String toIsoString(DateTime date) => date.toIso8601String();
+String? toIsoString(DateTime? date) =>
+    date?.toIso8601String();
