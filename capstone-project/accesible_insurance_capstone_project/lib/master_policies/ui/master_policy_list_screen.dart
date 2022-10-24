@@ -1,5 +1,4 @@
 import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/master_policies_provider.dart';
-import 'package:accesible_insurance_capstone_project/master_policy/ui/master_policy_screen.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/master_policy_card.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
@@ -12,6 +11,7 @@ import 'package:accesible_insurance_capstone_project/universal_app/utils/constan
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 final masterPoliciesProviderInstance = MasterPoliciesProvider.instance;
 final appProviderInstance = AppProvider.instance;
@@ -23,8 +23,8 @@ class MasterPolicyListScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final masterPolicies = ref
         .watch(masterPoliciesProviderInstance.policiesStreamer)
-        .when(data: (p) {
-      return p;
+        .when(data: (policies) {
+      return policies;
     }, error: (error, __) {
       debugPrint('error');
       return [];
@@ -75,23 +75,9 @@ class MasterPolicyListScreen extends ConsumerWidget {
                     isLoading: loading,
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                                transitionDuration:
-                                    const Duration(milliseconds: 800),
-                                reverseTransitionDuration:
-                                    const Duration(milliseconds: 800),
-                                pageBuilder: (
-                                  context,
-                                  animation,
-                                  secondaryAnimation,
-                                ) {
-                                  return MasterPolicyScreen(
-                                    masterPolicy: masterPolicies[index],
-                                    index: index,
-                                  );
-                                }));
+                        final route = '${AppRoutes.policy.policyRoute}$index';
+                        context.go(route);
+                        ref.read(routeProvider.notifier).state = route;
                       },
                       child: Hero(
                         tag: 'master-policy $index',

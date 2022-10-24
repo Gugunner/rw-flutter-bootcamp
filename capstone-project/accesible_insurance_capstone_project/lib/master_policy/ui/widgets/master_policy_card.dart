@@ -1,4 +1,5 @@
 import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/animated_child_policy_zone.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/expiration_days.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/insurance_main_information.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/insurance_type.dart';
@@ -6,6 +7,7 @@ import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/ma
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/sum_insured.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MasterPolicyCard extends StatelessWidget {
   const MasterPolicyCard({
@@ -32,11 +34,13 @@ class MasterPolicyCard extends StatelessWidget {
           Positioned(
             top: context.height * 0.028,
             right: context.width * 0.025,
-            child: MasterPolicyStatus(status: masterPolicy.status!,),
+            child: MasterPolicyStatus(
+              status: masterPolicy.status!,
+            ),
           ),
           Container(
             width: context.width,
-            height: context.height * 0.267,
+            height: isScreen ? context.height : context.height * 0.267,
             padding: EdgeInsets.zero,
             child: Column(
               children: [
@@ -56,7 +60,9 @@ class MasterPolicyCard extends StatelessWidget {
                         width: context.width * 0.187,
                         height: context.height * 0.161,
                         padding: EdgeInsets.zero,
-                        child: InsuranceType(type: masterPolicy.type,),
+                        child: InsuranceType(
+                          type: masterPolicy.type,
+                        ),
                       ),
                       const InsuranceMainInformation(),
                     ],
@@ -70,16 +76,25 @@ class MasterPolicyCard extends StatelessWidget {
                     context.width * 0.025,
                   ),
                   width: context.width,
-                  child: SumInsured(currentSI: masterPolicy.currentSI,),
-                )
+                  child: SumInsured(
+                    currentSI: masterPolicy.currentSI,
+                  ),
+                ),
               ],
             ),
           ),
-          Positioned(
-            right: context.width * 0.025,
-            bottom: context.height * 0.028,
-            child: const ExpirationDays(),
-          ),
+          if (isScreen) ...[
+            AnimatedChildPolicyZone(
+              index: masterPolicy.index,
+            ),
+            Positioned(
+              right: context.width * 0.025,
+              bottom: context.height * 0.028,
+              child: ExpirationDays(
+                isScreen: isScreen,
+              ),
+            )
+          ],
         ],
       ),
     );
@@ -91,3 +106,5 @@ extension MasterPolicyCardDecoration on MasterPolicyCard {
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       border: Border.all(color: Colors.transparent));
 }
+
+

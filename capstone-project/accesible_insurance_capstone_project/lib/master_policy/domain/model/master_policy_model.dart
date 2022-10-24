@@ -23,6 +23,7 @@ class MasterPolicyModel {
     required this.type,
     this.location,
     this.roomDescription,
+    required this.index,
   });
 
   final String policyId;
@@ -32,6 +33,7 @@ class MasterPolicyModel {
   final PolicyType type;
   final LocationModel? location;
   final RoomDescription? roomDescription;
+  final int index;
 
   static PolicyType getType(String type) => PolicyType.values
       .firstWhere((v) => v.name == type, orElse: () => PolicyType.unknown);
@@ -41,7 +43,7 @@ class MasterPolicyModel {
 
   factory MasterPolicyModel.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options) {
+      SnapshotOptions? options, int index) {
     final data = snapshot.data();
     return MasterPolicyModel(
       policyId: data?['policyId'] as String,
@@ -57,6 +59,7 @@ class MasterPolicyModel {
       roomDescription: data?['roomDescription'] != null
           ? RoomDescription.fromMap(data!['roomDescription'])
           : null,
+      index: index,
     );
   }
 
