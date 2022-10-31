@@ -151,7 +151,6 @@ class SignInScreen extends ConsumerWidget {
                             ),
                             ElevatedButton.icon(
                               onPressed: () {
-                                debugPrint('Sign in with google');
                                 ref.read(
                                     appProviderInstance.googleSignInProvider);
                               },

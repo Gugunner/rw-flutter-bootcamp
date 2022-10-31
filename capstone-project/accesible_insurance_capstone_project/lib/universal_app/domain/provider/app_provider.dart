@@ -56,7 +56,7 @@ class AppProvider {
     }
   });
 
-  final googleSignInProvider = Provider<void>((ref) async {
+  final googleSignInProvider = Provider.autoDispose<void>((ref) async {
     try {
       final user = await ref
           .watch(AppProvider.instance.userProvider.notifier)
@@ -86,8 +86,8 @@ class AppProvider {
   });
 
   //Makes all changes to depending providers when the user signs in
-  final signInProvider =
-      Provider.family<void, UserModel>((ref, userCredentials) async {
+  final signInProvider = Provider.family
+      .autoDispose<void, UserModel>((ref, userCredentials) async {
     try {
       //Signs the user in with an email and password
       final user = await ref
@@ -133,9 +133,9 @@ class AppProvider {
   });
 
   final signUpProvider =
-      Provider.family<void, UserModel>((ref, userCredential) async {
+      Provider.family.autoDispose<void, UserModel>((ref, userCredential) async {
     try {
-      ///Signs up with the email and password using firebase 
+      ///Signs up with the email and password using firebase
       final user = await ref
           .read(AppProvider.instance.userProvider.notifier)
           .signUpWithEmail(
