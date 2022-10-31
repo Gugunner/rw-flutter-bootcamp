@@ -49,4 +49,9 @@ class SharedPreferencesProvider {
     return ThemeMode.values.firstWhere((t) => t.index == themeIndex,
         orElse: () => ThemeMode.light);
   }
+
+  void clear() {
+    setIsSignedIn(false);
+    saveIdToken('');
+  }
 }

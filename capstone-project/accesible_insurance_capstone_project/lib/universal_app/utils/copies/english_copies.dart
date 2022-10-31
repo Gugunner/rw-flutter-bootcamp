@@ -6,6 +6,9 @@ class EnglishCopies {
   static const forgotPassword = 'Forgot Password?';
   static const signin = 'Sign in';
   static const joinNow = 'Don\'t have an account?\n Join now.';
+  //*******Signup screen copies**********
+  static const signup = 'Sign up';
+  static const haveAccount = 'Already have an account?\n Sign in';
   //*******Successful sign in*********
   static const start = 'Let\'s Start!';
   static const welcomeBack = 'Welcome Back!';
@@ -19,6 +22,9 @@ class EnglishCopies {
   static const passwordError = 'Please enter a valid password';
   static const userNotFound = 'The user provided was not found';
   static const wrongCredentials = 'The email and/or password is not correct';
+  static const emailInUse = 'The email is already registered';
+  static const notAllowed = 'Could not complete the register process';
+  static const weakPassword = 'The password provided is not secure enough';
   //*******Onboarding general copies********
   static const skip = 'Skip';
   //*******Onboarding page descriptions********

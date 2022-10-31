@@ -120,3 +120,10 @@ The fifth deliverable is focused on data persistence by using a simple storage s
 
 Check the progress in [WEEK 10](/capstone-project/accesible_insurance_capstone_project/WEEK10.md).
 
+### Sixth deliverable 
+
+The sixth deliverable targets the use of Firebase integration which includes Firebase Auth, Firebase Firestore basic CRUD operations and Firebase Cloud Storage.
+
+Check the progress in [WEEK 11](/capstone-project/accesible_insurance_capstone_project/WEEK11.md). 
+
+

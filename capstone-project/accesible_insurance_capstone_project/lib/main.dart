@@ -27,13 +27,13 @@ void main() async {
     ),
   );
   await SharedPreferencesProvider.instance.setupSharedPreferences();
-  //TODO: Delete the next expression for production
-  // await SharedPreferencesProvider.instance.preferences.clear();
-  runApp(ProviderScope(observers: [Logger()], child: const MyApp()));
+    // await SharedPreferencesProvider.instance.preferences.clear();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  setup();
+    setup();
+  //TODO: Delete the next expression for production
+  runApp(ProviderScope(observers: [Logger()], child: const MyApp()));
 }
 
 class MyApp extends ConsumerWidget {

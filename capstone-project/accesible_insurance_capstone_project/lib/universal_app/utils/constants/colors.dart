@@ -16,6 +16,8 @@ class AppColors {
     900: Color(0xFF4B59C0),
   });
   static const backgroundColor = Color(0XFFF2F3F7);
+  static const errorColor = Color(0xffdb5858);
+  static const correctColor = Colors.green;
   static const scaffoldBackgroundColor = AppColors.backgroundColor;
 
   //***************Dark Theme colors****************/
@@ -33,6 +35,7 @@ class AppColors {
     900: Color(0xFF5E60DD),
   });
   static const darkBackGroundColor = Colors.black;
+  static const darkCorrectColor = Colors.green;
   static const darkScaffoldBackgroundColor = AppColors.darkBackGroundColor;
   static const primaryIconColor = Colors.white;
 

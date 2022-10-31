@@ -7,18 +7,47 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final appProviderInstance = AppProvider.instance;
 
-
 class MasterPoliciesProvider {
   static final instance = MasterPoliciesProvider();
 
   final isLoading = StateProvider<bool>((ref) => true);
+
+  final createMasterPolicyProvider = FutureProvider.family
+      .autoDispose<void, MasterPolicyModel>((ref, masterPolicy) async {
+    final database =
+        ref.watch(databaseProviderInstance.appFirebaseDataBaseProvider);
+    try {
+      if (database != null) {
+        await database.setMasterPolicyDocument(
+          masterPolicy,
+        );
+      }
+    } catch (e) {
+      rethrow;
+    }
+  });
+
+  final updateMasterPolicyProvider = FutureProvider.autoDispose
+      .family<void, MasterPolicyModel>((ref, masterPolicy) async {
+    final database =
+        ref.watch(databaseProviderInstance.appFirebaseDataBaseProvider);
+    try {
+      if (database != null) {
+        await database.updateMasterPolicyDocument(
+          masterPolicy,
+        );
+      }
+    } catch (e) {
+      rethrow;
+    }
+  });
 
   //Uses a stream to obtain the master policies collection
   final policiesStreamer =
       StreamProvider.autoDispose<List<MasterPolicyModel>>((ref) {
     //Retrieves the database
     final database =
-        ref.watch(databaseProviderInstance.masterPolicyDatabaseProvider);
+        ref.watch(databaseProviderInstance.appFirebaseDataBaseProvider);
     try {
       if (database != null) {
         ///If there is a database the collection of master policies of the user

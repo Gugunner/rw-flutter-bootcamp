@@ -6,6 +6,7 @@ class AppTheme {
       primarySwatch: AppColors.primarySwatchColor,
       primaryColor: AppColors.primarySwatchColor,
       backgroundColor: AppColors.backgroundColor,
+      errorColor: AppColors.errorColor,
       scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
       iconTheme:
           const IconThemeData().copyWith(color: AppColors.primaryIconColor),
@@ -110,6 +111,7 @@ class AppTheme {
         primarySwatch: AppColors.darkPrimarySwatchColor,
         primaryColor: AppColors.darkPrimaryColor,
         backgroundColor: AppColors.darkBackGroundColor,
+        errorColor: AppColors.errorColor,
         scaffoldBackgroundColor: AppColors.darkBackGroundColor,
         iconTheme:
             const IconThemeData().copyWith(color: AppColors.primaryIconColor),

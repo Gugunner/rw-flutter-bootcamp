@@ -72,9 +72,9 @@ void main() async {
         fakePassword,
       );
       expect(userCredential, isNotNull);
-      expect(userCredential!.user, isNotNull);
-      expect(userCredential.user!.uid, 'rquNKEPunYhcsK0o59SHuECM3al3');
-      expect(await userCredential.user!.getIdToken(), isNotEmpty);
+      expect(userCredential, isNotNull);
+      expect(userCredential?.uid, 'rquNKEPunYhcsK0o59SHuECM3al3');
+      expect(await userCredential?.getIdToken(), isNotEmpty);
     });
   });
 

@@ -27,11 +27,17 @@ class ThemeModeSwitch extends ConsumerWidget {
         //TODO: Move logic to profile screen
         IconButton(
           padding: EdgeInsets.zero,
-          onPressed: () {
-            SharedPreferencesProvider.instance.setIsSignedIn(false);
+          onPressed: () async {
+            SharedPreferencesProvider.instance.clear();
             ref.read(AppProvider.instance.signIn.state).state = false;
-            ref.read(AppProvider.instance.firebaseAuthProvider).signOut();
             ref.read(routeProvider.notifier).state = AppRoutes.signin.route;
+            ref
+                .read(
+                    DatabaseProvider.instance.appFirebaseDataBaseProvider.state)
+                .state = null;
+            ref
+                .read(AppProvider.instance.userProvider.notifier)
+                .signOutFromGoogle();
           },
           icon: const Icon(
             Icons.power_settings_new_rounded,

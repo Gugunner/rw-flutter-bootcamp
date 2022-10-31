@@ -78,8 +78,26 @@ class MasterPolicyListScreen extends ConsumerWidget {
                       ),
                       width: context.width,
                       child: Column(
-                        children: const [
-                          ThemeModeSwitch(),
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () async {
+                                  final route = AppRoutes.profile.profileRoute;
+                                  ref.read(routeProvider.notifier).state =
+                                      route;
+                                  context.go(route);
+                                },
+                                icon: const Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                ),
+                                iconSize: 24,
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),

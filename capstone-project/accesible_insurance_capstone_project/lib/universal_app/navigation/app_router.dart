@@ -2,8 +2,10 @@ import 'package:accesible_insurance_capstone_project/master_policies/domain/prov
 import 'package:accesible_insurance_capstone_project/master_policies/ui/master_policy_list_screen.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/master_policy_screen.dart';
 import 'package:accesible_insurance_capstone_project/policy_store/ui/upgrade_policy_screen.dart';
+import 'package:accesible_insurance_capstone_project/profile/ui/profile_screen.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/onboarding_screen.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/sign_in_screen.dart';
+import 'package:accesible_insurance_capstone_project/sign_up/ui/sign_up_screen.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/animations/page_transitions/custom_transitions.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
@@ -23,7 +25,6 @@ class AppRouter extends ChangeNotifier {
     );
   }
 
-
   ///Reads a [GoRouterState] and compares it to the [routeProvider] state.
   ///
   ///If it is the same it returns null.
@@ -39,9 +40,15 @@ class AppRouter extends ChangeNotifier {
     if (state.location == stateRoute) {
       return null;
     }
+    //TODO: Check if signIn is no longer needed adn instead read auth
+    //changes for firebase user
     //Redirects to [signin] route only if user ahs not signed in
     if (!signIn) {
-      return AppRoutes.signin.route;
+      if (state.location == AppRoutes.signin.route) {
+        return AppRoutes.signin.route;
+      } else if (state.location == AppRoutes.signup.route) {
+        return AppRoutes.signup.route;
+      }
     }
     //Returns the route to navigate to
     return stateRoute;
@@ -55,6 +62,14 @@ class AppRouter extends ChangeNotifier {
           //Use builder if default transition is used
           builder: (BuildContext context, GoRouterState state) {
             return const SignInScreen();
+          },
+        ),
+        GoRoute(
+          name: AppRoutes.signup.name,
+          path: AppRoutes.signup.route,
+          //Use builder if default transition is used
+          builder: (BuildContext context, GoRouterState state) {
+            return const SignUpScreen();
           },
         ),
         GoRoute(
@@ -80,6 +95,13 @@ class AppRouter extends ChangeNotifier {
             return const MasterPolicyListScreen();
           },
           routes: <GoRoute>[
+            GoRoute(
+              name: AppRoutes.profile.name,
+              path: AppRoutes.profile.route,
+              builder: (BuildContext context, GoRouterState state) {
+                return const ProfileScreen();
+              },
+            ),
             GoRoute(
                 name: AppRoutes.policy.name,
                 path: '${AppRoutes.policy.route}:index',

@@ -1,3 +1,4 @@
+import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/database_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/imago.dart';
@@ -7,6 +8,7 @@ import 'package:accesible_insurance_capstone_project/universal_app/utils/copies/
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AnimatedSignInLogo extends ConsumerStatefulWidget {
   const AnimatedSignInLogo({super.key});
@@ -71,10 +73,12 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Check why it is being called three times?
+    ref.watch(DatabaseProvider.instance.loadingDatabase);
     final isOnboarding = SharedPreferencesProvider.instance.isOnboarding();
     return AnimatedPositioned(
       left: context.width * 0.375,
-      top: top ?? context.height * 0.1128,
+      top: top ?? context.height * 0.046,
       duration: Duration(
         milliseconds: moveCycle,
       ),
@@ -97,6 +101,7 @@ class _AnimatedLogoState extends ConsumerState<AnimatedSignInLogo>
             route = AppRoutes.home.route;
           }
           ref.read(routeProvider.notifier).state = route;
+          context.go(route);
         });
       },
       curve: Curves.fastOutSlowIn,
