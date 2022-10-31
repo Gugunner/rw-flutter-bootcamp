@@ -14,7 +14,8 @@ class Imago extends StatelessWidget {
       child: SvgPicture.asset(
         logo,
         fit: BoxFit.contain,
-        placeholderBuilder: (context) => const Placeholder(),
+        color: Theme.of(context).primaryColor,
+        placeholderBuilder: (context) => const SizedBox(),
       ),
     );
   }

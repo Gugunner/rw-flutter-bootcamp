@@ -113,3 +113,17 @@ The fourth deliverable is focused on basic animations for the app using implicit
 
 Check the progress in [WEEK 9](/capstone-project/accesible_insurance_capstone_project/WEEK9.md).
 
+
+### Fifth deliverable
+
+The fifth deliverable is focused on data persistence by using a simple storage solution such as SharedPreferences and a more complex and robust one with SQLite using SQFlite and SQLBrite.
+
+Check the progress in [WEEK 10](/capstone-project/accesible_insurance_capstone_project/WEEK10.md).
+
+### Sixth deliverable 
+
+The sixth deliverable targets the use of Firebase integration which includes Firebase Auth, Firebase Firestore basic CRUD operations and Firebase Cloud Storage.
+
+Check the progress in [WEEK 11](/capstone-project/accesible_insurance_capstone_project/WEEK11.md). 
+
+

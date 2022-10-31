@@ -6,6 +6,7 @@ class AppTheme {
       primarySwatch: AppColors.primarySwatchColor,
       primaryColor: AppColors.primarySwatchColor,
       backgroundColor: AppColors.backgroundColor,
+      errorColor: AppColors.errorColor,
       scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
       iconTheme:
           const IconThemeData().copyWith(color: AppColors.primaryIconColor),
@@ -18,6 +19,18 @@ class AppTheme {
             color: AppColors.primarySwatchColor,
           ),
         ),
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData().copyWith(
+        backgroundColor: Colors.white,
+        unselectedItemColor: Colors.grey.shade400,
+        elevation: 4,
+        selectedItemColor: AppColors.primaryColor,
+        selectedIconTheme: IconThemeData().copyWith(
+          color: AppColors.primaryColor,
+        ),
+      ),
+      primaryIconTheme: IconThemeData().copyWith(
+        color: AppColors.primaryColor,
       ),
       textTheme: const TextTheme().copyWith(
         bodySmall: const TextStyle(
@@ -95,21 +108,33 @@ class AppTheme {
       ));
 
   static ThemeData get darkTheme => ThemeData(
-        primarySwatch: AppColors.primarySwatchColor,
-        primaryColor: AppColors.primarySwatchColor,
+        primarySwatch: AppColors.darkPrimarySwatchColor,
+        primaryColor: AppColors.darkPrimaryColor,
         backgroundColor: AppColors.darkBackGroundColor,
+        errorColor: AppColors.errorColor,
         scaffoldBackgroundColor: AppColors.darkBackGroundColor,
         iconTheme:
             const IconThemeData().copyWith(color: AppColors.primaryIconColor),
         cardTheme: const CardTheme().copyWith(
-          color: AppColors.primarySwatchColor,
-          shadowColor: AppColors.primarySwatchColor,
+          color: AppColors.darkPrimarySwatchColor,
+          shadowColor: AppColors.darkPrimaryColor,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             side: BorderSide(
               color: Colors.white,
             ),
           ),
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData().copyWith(
+          backgroundColor: Color.fromARGB(255, 11, 12, 26),
+          unselectedItemColor: Colors.grey.shade400,
+          selectedItemColor: AppColors.darkPrimaryColor,
+          selectedIconTheme: IconThemeData().copyWith(
+            color: AppColors.darkPrimaryColor,
+          ),
+        ),
+        primaryIconTheme: IconThemeData().copyWith(
+          color: AppColors.darkPrimaryColor,
         ),
         textTheme: const TextTheme().copyWith(
           bodySmall: const TextStyle(
@@ -131,16 +156,19 @@ class AppTheme {
           ),
           displayMedium: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
           displayLarge: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
           labelSmall: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
@@ -151,36 +179,43 @@ class AppTheme {
           ),
           labelLarge: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
           headlineSmall: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
           headlineMedium: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
           headlineLarge: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
           titleSmall: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
           titleMedium: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),
           titleLarge: const TextStyle(
             fontSize: 12,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
             height: 1.2,
           ),

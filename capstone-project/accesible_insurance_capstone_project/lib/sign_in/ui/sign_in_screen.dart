@@ -4,15 +4,17 @@ import 'package:accesible_insurance_capstone_project/sign_in/ui/widgets/password
 import 'package:accesible_insurance_capstone_project/sign_in/utils/constants/widget_keys.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/model/user.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/logo.dart';
-import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/universal_constants.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/auth_utils.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/copies/english_copies.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
-import 'package:accesible_insurance_capstone_project/universal_app/utils/regex.dart';
-import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 import 'widgets/animated_sign_in_logo.dart';
 
@@ -44,9 +46,11 @@ class SignInScreen extends ConsumerWidget {
       //Retrieves current password value for the password input
       final password =
           ref.read(inputProviderInstance.passwordProvider.state).state;
+
       ///Disables working inputs to avoid the user from making any other
       ///interaction with the submit flag
       ref.read(inputProviderInstance.submitProvider.state).state = true;
+
       ///Checks if there is no input validation error and the form can
       ///be validated
       if (passwordInputState == InputErrorState.idle &&
@@ -68,33 +72,6 @@ class SignInScreen extends ConsumerWidget {
     ///Releases the inputs so the user can continue interacting with the screen,
     ///only works if the form could not be sent
     ref.read(inputProviderInstance.submitProvider.state).state = false;
-  }
-
-  void checkForm(InputType type, WidgetRef ref) {
-    final email = ref.read(inputProviderInstance.emailProvider.state).state;
-    final password =
-        ref.read(inputProviderInstance.passwordProvider.state).state;
-    var state = InputErrorState.idle;
-    if (type == InputType.password) {
-      if (password!.isEmpty) {
-        state = InputErrorState.emptyPassword;
-      } else if (!RegExp(Regex.password).hasMatch(password)) {
-        state = InputErrorState.invalidPassword;
-      } else if (password.length < UniversalConstants.passwordLength) {
-        state = InputErrorState.passwordLength;
-      }
-      ref.read(inputProviderInstance.passwordStateProvider.notifier).state =
-          state;
-    } else if (type == InputType.email) {
-      if (email!.isEmpty) {
-        state = InputErrorState.emptyEmail;
-      } else if (email.isNotNullOrEmpty) {
-        if (!RegExp(Regex.email).hasMatch(email)) {
-          state = InputErrorState.invalidEmail;
-        }
-      }
-      ref.read(inputProviderInstance.emailStateProvider.notifier).state = state;
-    }
   }
 
   @override
@@ -119,11 +96,17 @@ class SignInScreen extends ConsumerWidget {
                       const Logo(),
                       EmailInput(
                         enabled: !submit,
-                        onSaved: (_) => checkForm(InputType.email, ref),
+                        onSaved: (_) => checkForm(
+                          InputType.email,
+                          ref,
+                        ),
                       ),
                       PasswordInput(
                         enabled: !submit,
-                        onSaved: (_) => checkForm(InputType.password, ref),
+                        onSaved: (_) => checkForm(
+                          InputType.password,
+                          ref,
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: context.height * 0.014),
@@ -150,13 +133,42 @@ class SignInScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: context.height * 0.023,
+                            ),
+                            Text(
+                              'Or',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium!
+                                  .copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                            ),
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                ref.read(
+                                    appProviderInstance.googleSignInProvider);
+                              },
+                              icon: const FaIcon(FontAwesomeIcons.google),
+                              label: const Text('Sign in with Google'),
+                            ),
+                          ],
+                        ),
+                      ),
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.only(top: context.height * 0.028),
                           child: TextButton(
                             onPressed: () {
-                              //TODO: Implement real logic
-                              debugPrint(EnglishCopies.joinNow);
+                              cleanInputProviders(ref);
+                              final route = AppRoutes.signup.route;
+                              context.go(route);
+                              ref.read(routeProvider.notifier).state = route;
                             },
                             child: const Text(
                               EnglishCopies.joinNow,

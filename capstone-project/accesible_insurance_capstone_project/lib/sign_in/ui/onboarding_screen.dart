@@ -1,11 +1,17 @@
+
+import 'package:accesible_insurance_capstone_project/master_policies/ui/master_policy_list_screen.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/domain/model/onboarding_page_model.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/auth_utils.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/copies/english_copies.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Points to the root reference
+
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -19,6 +25,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final pageController = PageController();
   late final List<OnboardingPageModel> pages;
   int currentPage = 0;
+  final masterPolicy = demoMasterPolicy();
 
   @override
   void initState() {
@@ -57,6 +64,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Delete provisional logic once the app has a store or a better
+    //Way of creating the demo master policy is decided
+    ref
+        .watch(masterPoliciesProviderInstance
+            .createMasterPolicyProvider(masterPolicy))
+        .when(data: (_) async {
+      debugPrint('created');
+    }, error: (error, stackTrace) {
+      debugPrint('error');
+    }, loading: () {
+      debugPrint('loading');
+    });
     return Scaffold(
       body: SafeArea(
         child: PageView.builder(

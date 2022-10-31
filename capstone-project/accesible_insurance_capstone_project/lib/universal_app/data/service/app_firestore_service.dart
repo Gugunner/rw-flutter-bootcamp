@@ -1,18 +1,19 @@
+import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/string_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AppFirestoreService {
   static final instance = AppFirestoreService();
 
   /// Returns a stream for a FirestoreCollection of Type.
-  /// 
+  ///
   /// Use the [snapshotBuilder] to pass a fromFirestore factory method
   /// from the model. For reference check the official documentation
   /// https://firebase.google.com/docs/firestore/query-data/get-data#custom_objects
-  /// 
-  /// A [queryBuilder] can be called by calling the [where] method of a 
-  /// [CollectionReference] for example 
+  ///
+  /// A [queryBuilder] can be called by calling the [where] method of a
+  /// [CollectionReference] for example
   /// collectionRef.where('currentSI', isGreaterThan: 2000)
-  /// Since it is a closure the ref is obtained inside this method so there 
+  /// Since it is a closure the ref is obtained inside this method so there
   /// is no need to get the reference before.
   Stream<List<T>> collection<T>({
     required String collectionPath,
@@ -24,15 +25,13 @@ class AppFirestoreService {
         queryBuilder,
   }) {
     ///Obtains the [CollectionReference] with the query formed
-    var query =
-        FirebaseFirestore.instance.collection(collectionPath);
+    var query = FirebaseFirestore.instance.collection(collectionPath);
     //If a [queryBuilder] is passed the new formed compound query is returned
     if (queryBuilder != null) {
       query = queryBuilder(query);
     }
     //Retrieves only documents inside the collection that exist
-    final snapshots =
-        query.snapshots();
+    final snapshots = query.snapshots();
     return snapshots.map((snapshot) {
       return snapshot.docs
           .where((document) => document.exists)
@@ -40,5 +39,23 @@ class AppFirestoreService {
           .map((document) => snapshotBuilder(document, SnapshotOptions()))
           .toList();
     });
+  }
+
+  ///A document can be set or updated with this method using [merge].
+  ///
+  ///Use either a [path] or [fromDocRef] but not both to manage
+  ///where the document is set.
+  Future<void> setDocument({
+    String? path,
+    required Map<String, dynamic> document,
+    bool merge = false,
+    DocumentReference? fromDocRef,
+  }) async {
+    if (fromDocRef != null) {
+      await fromDocRef.set(document, SetOptions(merge: merge));
+    } else if (path.isNotNullOrEmpty) {
+      final docRef = FirebaseFirestore.instance.doc(path!);
+      await docRef.set(document, SetOptions(merge: merge));
+    }
   }
 }

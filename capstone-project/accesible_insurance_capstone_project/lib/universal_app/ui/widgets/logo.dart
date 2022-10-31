@@ -23,7 +23,7 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        top: context.height * 0.1408,
+        top: context.height * 0.046,
         bottom: context.height * 0.025,
       ),
       width: width ?? context.width * 0.562,
@@ -60,5 +60,3 @@ class Logo extends StatelessWidget {
     );
   }
 }
-
-

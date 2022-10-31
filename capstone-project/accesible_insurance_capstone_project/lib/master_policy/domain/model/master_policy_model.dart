@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 enum PolicyStatus {
   inactive,
@@ -17,23 +18,31 @@ enum PolicyType {
 class MasterPolicyModel {
   const MasterPolicyModel({
     required this.policyId,
-    this.name,
+    required this.type,
     required this.currentSI,
     this.status = PolicyStatus.pending,
-    required this.type,
+    this.name,
     this.location,
     this.roomDescription,
-    required this.index,
+    this.index,
+    this.activeSince,
+    this.expires,
+    this.documentId,
+    this.userPicture,
   });
 
   final String policyId;
+  final String? documentId;
+  final String? userPicture;
+  final DateTime? activeSince;
+  final DateTime? expires;
   final String? name;
   final num currentSI;
   final PolicyStatus? status;
   final PolicyType type;
   final LocationModel? location;
   final RoomDescription? roomDescription;
-  final int index;
+  final int? index;
 
   static PolicyType getType(String type) => PolicyType.values
       .firstWhere((v) => v.name == type, orElse: () => PolicyType.unknown);
@@ -43,7 +52,8 @@ class MasterPolicyModel {
 
   factory MasterPolicyModel.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options, int index) {
+      SnapshotOptions? options,
+      int index) {
     final data = snapshot.data();
     return MasterPolicyModel(
       policyId: data?['policyId'] as String,
@@ -60,6 +70,7 @@ class MasterPolicyModel {
           ? RoomDescription.fromMap(data!['roomDescription'])
           : null,
       index: index,
+      documentId: snapshot.id,
     );
   }
 
@@ -69,12 +80,41 @@ class MasterPolicyModel {
       'name': name,
       'currentSI': currentSI,
       'status': status?.name ?? PolicyStatus.pending.name,
-      'type': type,
+      'type': type.name,
+      'location': location?.toMap(),
+      'roomDescription': roomDescription?.toMap(),
+      'activeSince': activeSince?.millisecondsSinceEpoch,
+      'expires': expires?.millisecondsSinceEpoch,
     };
   }
 
   //TODO: Add copyWith for mutable states
-
+  //TODO: Replace with freezed package usage
+  MasterPolicyModel copyWith({
+    String? policyId,
+    String? documentId,
+    DateTime? activeSince,
+    DateTime? expires,
+    String? name,
+    num? currentSI,
+    PolicyStatus? status,
+    PolicyType? type,
+    LocationModel? location,
+    RoomDescription? roomDescription,
+    int? index,
+  }) =>
+      MasterPolicyModel(
+        policyId: policyId ?? this.policyId,
+        documentId: documentId ?? this.documentId,
+        activeSince: activeSince ?? this.activeSince,
+        expires: expires ?? this.expires,
+        name: name ?? this.name,
+        currentSI: currentSI ?? this.currentSI,
+        status: status ?? this.status,
+        type: type ?? this.type,
+        location: location ?? this.location,
+        roomDescription: roomDescription ?? this.roomDescription,
+      );
 }
 
 class LocationModel {

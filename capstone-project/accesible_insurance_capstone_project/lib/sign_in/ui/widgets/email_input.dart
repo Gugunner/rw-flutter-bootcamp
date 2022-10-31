@@ -1,5 +1,6 @@
 import 'package:accesible_insurance_capstone_project/sign_in/domain/provider/input_provider.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/utils/constants/widget_keys.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/auth_utils.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class EmailInput extends ConsumerWidget {
               decoration: decoration(context, ref),
               onChanged: (String? value) {
                 emailNotifier.state = value;
+                checkForm(InputType.email, ref);
               },
               onSaved: onSaved,
             ),
@@ -68,28 +70,30 @@ extension _EmailInputDecoration on EmailInput {
           ? Theme.of(context).errorColor
           : Theme.of(context).textTheme.bodyText1!.color!;
 
-  InputDecoration decoration(BuildContext context, WidgetRef ref) =>
-      InputDecoration(
-        contentPadding: EdgeInsets.zero,
-        hintText: 'email address',
-        hintStyle: const TextStyle(),
-        border: const OutlineInputBorder(
-            borderSide: BorderSide(
-          width: 1,
-          color: Colors.grey,
-        )),
-        enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-          width: 1,
-          color: obtainStatusColor(context, ref),
-        )),
-        errorText: ref
-            .watch(inputProviderInstance.emailStateProvider.state)
-            .state
-            .errorText,
-        prefixIcon: Icon(
-          Icons.email_outlined,
-          color: obtainStatusColor(context, ref),
-        ),
-      );
+  InputDecoration decoration(BuildContext context, WidgetRef ref) {
+    final errorText = ref
+        .watch(inputProviderInstance.emailStateProvider.state)
+        .state
+        .errorText;
+    return InputDecoration(
+      contentPadding: EdgeInsets.zero,
+      hintText: 'email address',
+      hintStyle: const TextStyle(),
+      border: const OutlineInputBorder(
+          borderSide: BorderSide(
+        width: 1,
+        color: Colors.grey,
+      )),
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+        width: 1,
+        color: obtainStatusColor(context, ref),
+      )),
+      errorText: errorText,
+      prefixIcon: Icon(
+        Icons.email_outlined,
+        color: obtainStatusColor(context, ref),
+      ),
+    );
+  }
 }

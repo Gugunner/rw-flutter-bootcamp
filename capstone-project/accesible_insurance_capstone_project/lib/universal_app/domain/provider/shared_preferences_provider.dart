@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesProvider {
   final tokenKey = 'idToken';
   final onboardingKey = 'onboarding';
   final signedInKey = 'signedIn';
+  final themeKey = 'theme';
 
   late SharedPreferences preferences;
 
@@ -36,5 +38,20 @@ class SharedPreferencesProvider {
 
   Future<void> saveIdToken(String token) async {
     await preferences.setString(tokenKey, token);
+  }
+
+  Future<void> setTheme(ThemeMode theme) async {
+    await preferences.setInt(themeKey, theme.index);
+  }
+
+  ThemeMode restoreTheme() {
+    final themeIndex = preferences.getInt(themeKey);
+    return ThemeMode.values.firstWhere((t) => t.index == themeIndex,
+        orElse: () => ThemeMode.light);
+  }
+
+  void clear() {
+    setIsSignedIn(false);
+    saveIdToken('');
   }
 }

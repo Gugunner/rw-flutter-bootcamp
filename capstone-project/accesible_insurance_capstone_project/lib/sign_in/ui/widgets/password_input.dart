@@ -1,5 +1,10 @@
+// ignore: unused_import
+import 'dart:math';
+
 import 'package:accesible_insurance_capstone_project/sign_in/domain/provider/input_provider.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/utils/constants/widget_keys.dart';
+import 'package:accesible_insurance_capstone_project/sign_up/ui/sign_up_screen.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/auth_utils.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/enums/input.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +39,8 @@ class PasswordInput extends ConsumerWidget {
               decoration: decoration(context, ref),
               onChanged: (String? value) {
                 passwordNotifier.state = value;
+                ref.read(checkRulesProvider.notifier).state = false;
+                checkForm(InputType.password, ref);
               },
               onSaved: onSaved,
               obscureText: !(ref
@@ -67,6 +74,10 @@ extension _PasswordInputDecoration on PasswordInput {
           : Theme.of(context).textTheme.bodyText1!.color!;
 
   InputDecoration decoration(BuildContext context, WidgetRef ref) {
+    final errorText = ref
+        .watch(inputProviderInstance.passwordStateProvider.state)
+        .state
+        .errorText;
     final showPassword =
         ref.read(inputProviderInstance.showPasswordProvider.state).state;
     return InputDecoration(
@@ -83,10 +94,7 @@ extension _PasswordInputDecoration on PasswordInput {
         color: obtainStatusColor(context, ref),
       )),
       prefix: const SizedBox(width: 15),
-      errorText: ref
-          .watch(inputProviderInstance.passwordStateProvider.state)
-          .state
-          .errorText,
+      errorText: errorText,
       suffixIcon: GestureDetector(
           onTap: () {
             ref

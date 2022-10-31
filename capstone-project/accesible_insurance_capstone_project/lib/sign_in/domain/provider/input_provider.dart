@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class InputProvider {
   static final instance = InputProvider();
 
-  final emailProvider = StateProvider<String?>((ref) => 'ram2489@gmail.com');
-  final passwordProvider = StateProvider<String?>((ref) => 'Test#1234');
+  final emailProvider = StateProvider<String?>((ref) => '');
+  final passwordProvider = StateProvider<String?>((ref) => '');
   final submitProvider = StateProvider<bool>((ref) => false);
 
   final emailStateProvider =
@@ -15,5 +15,4 @@ class InputProvider {
       StateProvider<InputErrorState>((ref) => InputErrorState.idle);
 
   final showPasswordProvider = StateProvider<bool>((ref) => false);
-
 }
