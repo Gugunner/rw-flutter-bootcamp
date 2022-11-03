@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:accesible_insurance_capstone_project/child_policy/ui/widgets/child_policies_zone.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,10 +9,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class AnimatedChildPolicyZone extends ConsumerStatefulWidget {
   const AnimatedChildPolicyZone({
     super.key,
-    required this.masterPolicyId,
+    required this.masterPolicy,
   });
 
-  final String masterPolicyId;
+  final MasterPolicyModel masterPolicy;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -122,7 +123,7 @@ class _AnimatedChildPoliciesState
             //TODO: Make widget appear when container has finished growing
             //TODO: Make widget disappear when container has finished shrninking
             child: ChildPoliciesZone(
-              masterPolicyId: widget.masterPolicyId,
+              masterPolicy: widget.masterPolicy,
             ),
           ),
         ),

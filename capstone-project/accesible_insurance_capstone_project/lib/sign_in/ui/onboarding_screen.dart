@@ -1,17 +1,17 @@
-
 import 'package:accesible_insurance_capstone_project/master_policies/ui/master_policy_list_screen.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/domain/model/onboarding_page_model.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/auth_utils.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/assets.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/copies/english_copies.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Points to the root reference
-
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -25,12 +25,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final pageController = PageController();
   late final List<OnboardingPageModel> pages;
   int currentPage = 0;
-  final masterPolicy = demoMasterPolicy();
+  late MasterPolicyModel masterPolicy;
 
   @override
   void initState() {
     _setupPages();
     // pageController.addListener(() => _handleCurrentPageSelect(index));
+    masterPolicy = demoMasterPolicy(ref);
     super.initState();
   }
 
@@ -100,7 +101,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           child: SizedBox(
                             width: context.width * 0.81,
                             height: context.height * 0.563,
-                            child: const Placeholder(),
+                            child: Image.asset(
+                              onboardingImages[currentPage],
+                              errorBuilder: (context, obj, stackTrace) {
+                                return const Placeholder();
+                              },
+                            ),
                           ),
                         ),
                         Container(

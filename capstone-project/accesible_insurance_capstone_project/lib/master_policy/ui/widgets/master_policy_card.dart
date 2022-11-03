@@ -46,9 +46,10 @@ class MasterPolicyCard extends StatelessWidget {
               height: isScreen ? context.height : context.height * 0.267,
               padding: EdgeInsets.zero,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: context.height * 0.183,
+                    height: context.height * 0.223,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,32 +74,45 @@ class MasterPolicyCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(
-                      context.width * 0.05,
-                      0,
-                      context.width * 0.05,
-                      context.width * 0.025,
-                    ),
-                    width: context.width,
-                    child: SumInsured(
-                      currentSI: masterPolicy.currentSI,
-                    ),
-                  ),
                 ],
               ),
             ),
-            if (isScreen) ...[
-              AnimatedChildPolicyZone(
-                masterPolicyId: masterPolicy.policyId,
+            Positioned(
+              top: context.height * 0.2,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(
+                  context.width * 0.05,
+                  0,
+                  context.width * 0.05,
+                  0,
+                ),
+                width: context.width * 0.5,
+                child: SumInsured(
+                  masterPolicy: masterPolicy,
+                ),
               ),
+            ),
+            if (!isScreen)
               Positioned(
                 right: context.width * 0.025,
                 bottom: context.height * 0.028,
                 child: ExpirationDays(
                   isScreen: isScreen,
+                  expiredDate: masterPolicy.expires,
                 ),
-              )
+              ),
+            if (isScreen) ...[
+              AnimatedChildPolicyZone(
+                masterPolicy: masterPolicy,
+              ),
+              Positioned(
+                right: context.width * 0.025,
+                top: context.height * 0.219,
+                child: ExpirationDays(
+                  isScreen: isScreen,
+                  expiredDate: masterPolicy.expires,
+                ),
+              ),
             ],
           ],
         ),

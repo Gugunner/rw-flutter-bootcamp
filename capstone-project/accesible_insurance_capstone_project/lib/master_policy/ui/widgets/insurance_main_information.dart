@@ -16,7 +16,8 @@ class InsuranceMainInformation extends StatelessWidget {
   String get location {
     final location = masterPolicy.location;
     if (location != null) {
-      return '${location.city}, ${location.state}, ${location.country}';
+      return 'Location: ${location.city}, ${location.state}, '
+          '${location.country}';
     }
     return '';
   }
@@ -26,6 +27,22 @@ class InsuranceMainInformation extends StatelessWidget {
     if (roomDescription != null) {
       return 'Rooms: ${roomDescription.bedroom} bedrooms, '
           '${roomDescription.bathroom} bathrooms';
+    }
+    return '';
+  }
+
+  String get beneficiaryName {
+    final beneficiary = masterPolicy.beneficiary;
+    if (beneficiary != null) {
+      return 'Name: ${beneficiary.name} ${beneficiary.lastName}';
+    }
+    return '';
+  }
+
+  String get beneficiaryAge {
+    final beneficiary = masterPolicy.beneficiary;
+    if (beneficiary != null) {
+      return 'Age: ${beneficiary.age}';
     }
     return '';
   }
@@ -51,14 +68,58 @@ class InsuranceMainInformation extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (masterPolicy.type == PolicyType.property) ...[
+                Text(
+                  'SECURITY',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                SizedBox(
+                  height: context.height * 0.011,
+                ),
+                Text(
+                  location,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  roomDescription,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )
+              ] else ...[
+                Text(
+                  'BENEFICIARY',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                SizedBox(
+                  height: context.height * 0.011,
+                ),
+                Text(
+                  beneficiaryName,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  beneficiaryAge,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )
+              ],
+              SizedBox(
+                height: context.height * 0.011,
+              ),
               Text(
-                location,
+                'INSURED',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              SizedBox(
+                height: context.height * 0.005,
+              ),
+              Text(
+                'In: ${masterPolicy.insured.identificationNumber}',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               Text(
-                roomDescription,
+                'Name: ${masterPolicy.insured.name} '
+                '${masterPolicy.insured.lastName}',
                 style: Theme.of(context).textTheme.bodyLarge,
-              )
+              ),
             ],
           ),
         )

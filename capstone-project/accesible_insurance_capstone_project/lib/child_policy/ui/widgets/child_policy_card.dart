@@ -1,9 +1,9 @@
 import 'package:accesible_insurance_capstone_project/child_policy/domain/model/child_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/child_policy/utils/child_policy_utils.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 //Contains all the information of the ChildPolicyCard show
 //inside a ListView
@@ -11,9 +11,11 @@ class ChildPolicyCard extends ConsumerWidget {
   const ChildPolicyCard({
     super.key,
     required this.childPolicy,
+    required this.masterPolicy,
   });
 
   final ChildPolicyModel childPolicy;
+  final MasterPolicyModel masterPolicy;
 
   String get masterPolicyId => childPolicy.masterPolicyId;
 
@@ -98,8 +100,12 @@ class ChildPolicyCard extends ConsumerWidget {
             right: context.width * 0.02,
             child: IconButton(
               onPressed: () => childPolicy.childPolicyId != null
-                  ? onDeleteChildPolicy(ref,
-                      context: context, childPolicy: childPolicy)
+                  ? onDeleteChildPolicy(
+                      ref,
+                      context: context,
+                      childPolicy: childPolicy,
+                      masterPolicy: masterPolicy,
+                    )
                   : null,
               iconSize: context.height * 0.03,
               icon: const Icon(

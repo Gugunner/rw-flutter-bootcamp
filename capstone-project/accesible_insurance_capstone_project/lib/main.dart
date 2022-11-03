@@ -1,6 +1,7 @@
 import 'package:accesible_insurance_capstone_project/universal_app/di/get_it.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/colors.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/observers/logger.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -19,20 +20,18 @@ void main() async {
   ]);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.light,
+      statusBarColor: AppColors.primaryColor,
+      statusBarBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarIconBrightness: Brightness.dark,
       systemNavigationBarDividerColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
   await SharedPreferencesProvider.instance.setupSharedPreferences();
-    // await SharedPreferencesProvider.instance.preferences.clear();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-    setup();
-  //TODO: Delete the next expression for production
+  setup();
   runApp(ProviderScope(observers: [Logger()], child: const MyApp()));
 }
 

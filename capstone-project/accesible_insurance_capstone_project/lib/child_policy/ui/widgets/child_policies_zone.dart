@@ -2,22 +2,39 @@ import 'package:accesible_insurance_capstone_project/child_policies/domain/provi
 import 'package:accesible_insurance_capstone_project/child_policy/domain/model/child_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/child_policy/ui/widgets/dimissable_child_policy.dart';
 import 'package:accesible_insurance_capstone_project/child_policy/utils/child_policy_utils.dart';
+import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/master_policies_provider.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ChildPoliciesZone extends ConsumerWidget {
+class ChildPoliciesZone extends ConsumerStatefulWidget {
   const ChildPoliciesZone({
     super.key,
-    required this.masterPolicyId,
+    required this.masterPolicy,
   });
 
-  final String masterPolicyId;
+  final MasterPolicyModel masterPolicy;
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ChildPoliciesZoneState();
+}
+
+class _ChildPoliciesZoneState extends ConsumerState<ChildPoliciesZone> {
+  double totalSumInsured = 0;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    totalSumInsured = masterPolicy.currentSI.toDouble();
+    super.initState();
+  }
+
+  MasterPolicyModel get masterPolicy => widget.masterPolicy;
+
+  @override
+  Widget build(BuildContext context) {
     final childPolicies = ref.watch(childPoliciesProviderInstance
-        .childPoliciesSelectStreamer(masterPolicyId));
+        .childPoliciesSelectStreamer(masterPolicy.policyId));
 
     return Container(
       color: Colors.white,
@@ -51,7 +68,7 @@ class ChildPoliciesZone extends ConsumerWidget {
               SizedBox(
                 height: context.height * 0.025,
               ),
-              //If the user has no child policies the the user is alerted 
+              //If the user has no child policies the the user is alerted
               if (childPolicies.isEmpty) ...[
                 Center(
                   child: SizedBox(
@@ -126,7 +143,10 @@ class ChildPoliciesZone extends ConsumerWidget {
                   child: ListView.builder(
                     itemBuilder: (listViewContext, index) {
                       final childPolicy = childPolicies[index];
-                      return DismissableChildPolicy(childPolicy: childPolicy);
+                      return DismissableChildPolicy(
+                        childPolicy: childPolicy,
+                        masterPolicy: masterPolicy,
+                      );
                     },
                     itemCount: childPolicies.length,
                   ),
@@ -139,8 +159,9 @@ class ChildPoliciesZone extends ConsumerWidget {
                   width: context.width,
                   height: context.height * 0.06,
                   child: ElevatedButton(
-                    onPressed: () =>
-                        onCreateNewChildPolicy(ref, masterPolicyId),
+                    onPressed: () {
+                      onCreateNewChildPolicy(ref, masterPolicy, masterPolicySI);
+                    },
                     child: Text(
                       //TODO: Move text to English copies
                       'Acquire new child policy',
@@ -171,7 +192,7 @@ class ChildPoliciesZone extends ConsumerWidget {
 }
 
 //An extension to keep a cleaner code and logic for the drop down items
-extension _ChildPoliciesZoneDropdownMenuItem on ChildPoliciesZone {
+extension _ChildPoliciesZoneDropdownMenuItem on _ChildPoliciesZoneState {
   //TODO: Read all values of child policies from ref
   // not only the ones on the widget
   List<DropdownMenuItem<double>> obtainItems(

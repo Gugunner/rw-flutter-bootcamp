@@ -85,4 +85,40 @@ class MasterPoliciesProvider {
   });
 
   final masterPolicies = StateProvider<List<MasterPolicyModel>>((ref) => []);
+
+  final searchMasterPoliciesProvider =
+      FutureProvider.autoDispose.family<void, String>((ref, term) {
+    final masterPolicies =
+        ref.read(MasterPoliciesProvider.instance.masterPolicies.state).state;
+    if (term.isEmpty) {
+      Future.delayed(
+        const Duration(milliseconds: 20),
+        () {
+          ref
+              .read(MasterPoliciesProvider
+                  .instance.searchedMasterPolicies.notifier)
+              .state = null;
+        },
+      );
+      return;
+    }
+    Future.delayed(
+      const Duration(milliseconds: 20),
+      () {
+        ref.read(MasterPoliciesProvider.instance.searchedMasterPolicies.notifier).state =
+            masterPolicies
+                .where(
+                  (mP) => mP.name.toLowerCase().contains(
+                        term.toLowerCase(),
+                      ),
+                )
+                .toList();
+      },
+    );
+  });
+
+  final searchedMasterPolicies =
+      StateProvider<List<MasterPolicyModel>?>((ref) => null);
+
+  final selectedMasterPolicy = StateProvider<MasterPolicyModel?>((ref) => null);
 }

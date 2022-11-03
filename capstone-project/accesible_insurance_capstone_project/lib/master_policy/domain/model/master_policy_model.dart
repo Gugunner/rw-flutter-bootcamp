@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 enum PolicyStatus {
   inactive,
@@ -20,8 +19,9 @@ class MasterPolicyModel {
     required this.policyId,
     required this.type,
     required this.currentSI,
+    required this.insured,
+    required this.name,
     this.status = PolicyStatus.pending,
-    this.name,
     this.location,
     this.roomDescription,
     this.index,
@@ -29,26 +29,38 @@ class MasterPolicyModel {
     this.expires,
     this.documentId,
     this.userPicture,
+    this.age,
+    this.beneficiary,
   });
 
   final String policyId;
+  final num currentSI;
+  final InsuredModel insured;
+  final PolicyType type;
   final String? documentId;
   final String? userPicture;
   final DateTime? activeSince;
   final DateTime? expires;
-  final String? name;
-  final num currentSI;
+  final String name;
   final PolicyStatus? status;
-  final PolicyType type;
   final LocationModel? location;
   final RoomDescription? roomDescription;
+  final BeneficiaryModel? beneficiary;
   final int? index;
+
+  final BeneficiaryModel? age;
 
   static PolicyType getType(String type) => PolicyType.values
       .firstWhere((v) => v.name == type, orElse: () => PolicyType.unknown);
 
   static PolicyStatus getStatus(String status) => PolicyStatus.values
       .firstWhere((v) => v.name == status, orElse: () => PolicyStatus.unknown);
+
+  static DateTime? toDate(int? millisecondsSinceEpoch) {
+    return millisecondsSinceEpoch != null
+        ? DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch)
+        : null;
+  }
 
   factory MasterPolicyModel.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -57,20 +69,23 @@ class MasterPolicyModel {
     final data = snapshot.data();
     return MasterPolicyModel(
       policyId: data?['policyId'] as String,
-      name: data?['name'] as String?,
+      name: data?['name'] as String,
       currentSI: data?['currentSI'] as num,
-      // ignore: unnecessary_cast
-      status: getStatus(data?['status']) as PolicyStatus?,
-      // ignore: unnecessary_cast
-      type: getType(data?['type']) as PolicyType,
+      insured: InsuredModel.fromMap(data?['insured']),
+      status: getStatus(data?['status']),
+      type: getType(data?['type']),
       location: data?['location'] != null
           ? LocationModel.fromMap(data!['location'])
           : null,
       roomDescription: data?['roomDescription'] != null
           ? RoomDescription.fromMap(data!['roomDescription'])
           : null,
+      beneficiary: data?['beneficiary'] != null
+          ? BeneficiaryModel.fromMap(data!['beneficiary'])
+          : null,
       index: index,
       documentId: snapshot.id,
+      expires: toDate(data?['expires']),
     );
   }
 
@@ -79,10 +94,12 @@ class MasterPolicyModel {
       'policyId': policyId,
       'name': name,
       'currentSI': currentSI,
+      'insured': insured.toMap(),
       'status': status?.name ?? PolicyStatus.pending.name,
       'type': type.name,
       'location': location?.toMap(),
       'roomDescription': roomDescription?.toMap(),
+      'beneficiary': beneficiary?.toMap(),
       'activeSince': activeSince?.millisecondsSinceEpoch,
       'expires': expires?.millisecondsSinceEpoch,
     };
@@ -93,6 +110,7 @@ class MasterPolicyModel {
   MasterPolicyModel copyWith({
     String? policyId,
     String? documentId,
+    InsuredModel? insured,
     DateTime? activeSince,
     DateTime? expires,
     String? name,
@@ -101,11 +119,13 @@ class MasterPolicyModel {
     PolicyType? type,
     LocationModel? location,
     RoomDescription? roomDescription,
+    BeneficiaryModel? beneficiary,
     int? index,
   }) =>
       MasterPolicyModel(
         policyId: policyId ?? this.policyId,
         documentId: documentId ?? this.documentId,
+        insured: insured ?? this.insured,
         activeSince: activeSince ?? this.activeSince,
         expires: expires ?? this.expires,
         name: name ?? this.name,
@@ -114,7 +134,68 @@ class MasterPolicyModel {
         type: type ?? this.type,
         location: location ?? this.location,
         roomDescription: roomDescription ?? this.roomDescription,
+        beneficiary: beneficiary ?? this.beneficiary,
       );
+}
+
+class InsuredModel {
+  const InsuredModel({
+    required this.insuredId,
+    required this.name,
+    required this.lastName,
+    required this.identificationNumber,
+  });
+
+  final String insuredId;
+  final String name;
+  final String lastName;
+  final String identificationNumber;
+
+  factory InsuredModel.fromMap(Map<String, dynamic> data) {
+    return InsuredModel(
+      insuredId: data['insuredId'] as String,
+      name: data['name'] as String,
+      lastName: data['lastName'] as String,
+      identificationNumber: data['identificationNumber'] as String,
+    );
+  }
+
+  Map<String, dynamic> toMap() => {
+        'insuredId': insuredId,
+        'name': name,
+        'lastName': lastName,
+        'identificationNumber': identificationNumber,
+      };
+}
+
+class BeneficiaryModel {
+  const BeneficiaryModel({
+    required this.name,
+    required this.lastName,
+    required this.identificationNumber,
+    required this.age,
+  });
+
+  final String name;
+  final String lastName;
+  final String identificationNumber;
+  final int age;
+
+  factory BeneficiaryModel.fromMap(Map<String, dynamic> data) {
+    return BeneficiaryModel(
+      name: data['name'] as String,
+      lastName: data['lastName'] as String,
+      identificationNumber: data['identificationNumber'] as String,
+      age: data['age'] as int,
+    );
+  }
+
+  Map<String, dynamic> toMap() => {
+        'name': name,
+        'lastName': lastName,
+        'identificationNumber': identificationNumber,
+        'age': age,
+      };
 }
 
 class LocationModel {

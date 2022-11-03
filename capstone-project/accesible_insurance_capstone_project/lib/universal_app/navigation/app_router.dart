@@ -113,7 +113,8 @@ class AppRouter extends ChangeNotifier {
                   final index = num.parse(state.params['index']!) as int;
                   final masterPolicy = masterPolicies[index];
                   return MasterPolicyScreen(
-                      index: index, masterPolicy: masterPolicy);
+                    index: index,
+                  );
                 },
                 routes: [
                   GoRoute(

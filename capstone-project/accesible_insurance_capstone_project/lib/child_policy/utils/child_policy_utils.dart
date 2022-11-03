@@ -2,13 +2,16 @@ import 'dart:math';
 
 import 'package:accesible_insurance_capstone_project/child_policies/domain/provider/child_policies_provider.dart';
 import 'package:accesible_insurance_capstone_project/child_policy/domain/model/child_policy_model.dart';
+import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/master_policies_provider.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //Creates a new Child Policy based on the premium paid and the sum insured
 //calculated
-void onCreateNewChildPolicy(WidgetRef ref, String masterPolicyId) {
+void onCreateNewChildPolicy(
+    WidgetRef ref, MasterPolicyModel masterPolicy, double currenSI) {
   //TODO: Move logic after loader for purchase
   //TODO: Change random Check to a real premium calculation
   final randomPremiumPaid =
@@ -19,14 +22,25 @@ void onCreateNewChildPolicy(WidgetRef ref, String masterPolicyId) {
   final nowDate = DateTime.now();
   final nextDate = nowDate.add(const Duration(days: 365));
   final childPolicy = ChildPolicyModel(
-    masterPolicyId: masterPolicyId,
+    masterPolicyId: masterPolicy.policyId,
     premiumPaid: randomPremiumPaid,
     sumInsured: randomSumInsured,
     activeSinceDate: DateTime.now(),
     expirationDate: DateTime(nextDate.year, nextDate.month, nextDate.day),
   );
+  final newMasterPolicy = masterPolicy.copyWith(
+    currentSI: currenSI + randomSumInsured,
+  );
   ref.read(
       childPoliciesProviderInstance.childPolicyInsertProvider(childPolicy));
+  ref.read(
+    MasterPoliciesProvider.instance.updateMasterPolicyProvider(
+      newMasterPolicy,
+    ),
+  );
+  ref
+      .read(MasterPoliciesProvider.instance.selectedMasterPolicy.notifier)
+      .state = newMasterPolicy;
 }
 
 //Shows a dialog to confirm the delete of a child policy
@@ -34,6 +48,7 @@ Future<bool> onDeleteChildPolicy(
   WidgetRef ref, {
   required BuildContext context,
   required ChildPolicyModel childPolicy,
+  required MasterPolicyModel masterPolicy,
 }) async {
   final shouldDelete = await showDialog(
     context: context,
@@ -87,8 +102,24 @@ Future<bool> onDeleteChildPolicy(
   //Only calls the provider to delete the child policy if the
   //dialog if the user confirms and there is an id.
   if (shouldDelete && childPolicy.childPolicyId != null) {
-    ref.read(childPoliciesProviderInstance
-        .childPolicyDeleteProvider(childPolicy.childPolicyId!));
+    final currentSI = masterPolicy.currentSI;
+    final sumInsured = childPolicy.sumInsured;
+    final newCurrenSI = currentSI - sumInsured;
+    final newMasterPolicy = masterPolicy.copyWith(
+      currentSI: newCurrenSI,
+    );
+    ref.read(
+      MasterPoliciesProvider.instance.updateMasterPolicyProvider(
+        newMasterPolicy,
+      ),
+    );
+    ref.read(
+      childPoliciesProviderInstance
+          .childPolicyDeleteProvider(childPolicy.childPolicyId!),
+    );
+    ref
+        .read(MasterPoliciesProvider.instance.selectedMasterPolicy.notifier)
+        .state = newMasterPolicy;
   }
   return shouldDelete;
 }
