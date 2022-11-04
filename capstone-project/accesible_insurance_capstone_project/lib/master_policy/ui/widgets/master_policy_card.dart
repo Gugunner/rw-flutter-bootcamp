@@ -25,13 +25,12 @@ class MasterPolicyCard extends StatelessWidget {
     return Shimmer(
       linearGradient: AppColors.shimmerGradient,
       child: Card(
-        elevation: 2,
         child: Stack(
           children: [
             Container(
               width: context.width,
               //Implementation to scale card when used as part of the screen
-              height: context.height * (!isScreen ? 0.267 : 1),
+              height: context.height * (!isScreen ? 0.277 : 1),
               decoration: decoration,
             ),
             Positioned(
@@ -43,13 +42,13 @@ class MasterPolicyCard extends StatelessWidget {
             ),
             Container(
               width: context.width,
-              height: isScreen ? context.height : context.height * 0.267,
+              height: isScreen ? context.height : context.height * 0.277,
               padding: EdgeInsets.zero,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: context.height * 0.223,
+                    height: context.height * 0.277,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -62,7 +61,7 @@ class MasterPolicyCard extends StatelessWidget {
                             0,
                           ),
                           width: context.width * 0.187,
-                          height: context.height * 0.161,
+                          height: context.height * 0.181,
                           padding: EdgeInsets.zero,
                           child: InsuranceType(
                             type: masterPolicy.type,

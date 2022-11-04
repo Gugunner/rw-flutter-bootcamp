@@ -2,6 +2,7 @@ import 'package:accesible_insurance_capstone_project/master_policies/domain/prov
 import 'package:accesible_insurance_capstone_project/master_policy/ui/widgets/master_policy_card.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/ui/scaffold_navigation_bottom_bar.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/shimmer/loading_shader_shimmer.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/shimmer/shimmer.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
@@ -28,26 +29,8 @@ class MasterPolicyListScreen extends ConsumerWidget {
     ref.watch(masterPoliciesProviderInstance.loadingPolicies);
     final loading =
         ref.watch(masterPoliciesProviderInstance.isLoading.state).state;
-    return Scaffold(
-      //TODO: Add BottomNavigationBar to all starting screens
-      //Policies, Shop Policies and Profile
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shield),
-            label: 'Policies',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.currency_exchange),
-            label: 'Shop Policies',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-      body: SafeArea(
+    return ScaffoldNavigationBottomBar(
+      child: SafeArea(
         child: IgnorePointer(
           ignoring: loading,
           child: Shimmer(
@@ -85,8 +68,7 @@ class MasterPolicyListScreen extends ConsumerWidget {
                                   IconButton(
                                     padding: EdgeInsets.zero,
                                     onPressed: () async {
-                                      final route =
-                                          AppRoutes.profile.profileRoute;
+                                      final route = AppRoutes.profile.route;
                                       ref.read(routeProvider.notifier).state =
                                           route;
                                       context.go(route);

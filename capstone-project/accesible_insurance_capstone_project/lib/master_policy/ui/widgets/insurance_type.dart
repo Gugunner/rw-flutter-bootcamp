@@ -1,6 +1,7 @@
 import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/assets.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/colors.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,16 +49,17 @@ class InsuranceType extends ConsumerWidget {
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(4)),
             border: Border.all(color: Colors.grey),
-            color:
-                type == PolicyType.property ? Colors.green : Colors.pinkAccent,
+            color: type == PolicyType.property
+                ? AppColors.property
+                : AppColors.life,
           ),
           child: Center(
             child: Text(
               type.name.toUpperCase(),
-              style: Theme.of(context)
-                  .textTheme
-                  .displaySmall!
-                  .copyWith(color: Colors.white),
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    color: Colors.white,
+                    fontSize: 11,
+                  ),
             ),
           ),
         )

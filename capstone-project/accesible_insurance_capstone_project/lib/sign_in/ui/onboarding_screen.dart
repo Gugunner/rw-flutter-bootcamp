@@ -23,7 +23,7 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final pageController = PageController();
-  late final List<OnboardingPageModel> pages;
+  late final List<PageModel> pages;
   int currentPage = 0;
   late MasterPolicyModel masterPolicy;
 
@@ -53,13 +53,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   void _setupPages() {
-    const page1 = OnboardingPageModel(
+    final page1 = PageModel(
+      imageUrl: onboardingImages[0],
       description: EnglishCopies.page1Description,
     );
-    const page2 =
-        OnboardingPageModel(description: EnglishCopies.page2Description);
-    const page3 =
-        OnboardingPageModel(description: EnglishCopies.page3Description);
+    final page2 = PageModel(
+        imageUrl: onboardingImages[1],
+        description: EnglishCopies.page2Description);
+    final page3 = PageModel(
+        imageUrl: onboardingImages[0],
+        description: EnglishCopies.page3Description);
     pages = [page1, page2, page3];
   }
 
@@ -102,7 +105,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             width: context.width * 0.81,
                             height: context.height * 0.563,
                             child: Image.asset(
-                              onboardingImages[currentPage],
+                              pages[index].imageUrl,
                               errorBuilder: (context, obj, stackTrace) {
                                 return const Placeholder();
                               },

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:accesible_insurance_capstone_project/profile/ui/widgets/theme_mode_switch.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/ui/scaffold_navigation_bottom_bar.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/assets.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -62,9 +63,9 @@ class _State extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     final user =
         ref.read(AppProvider.instance.userProvider.notifier).auth.currentUser;
-    return Scaffold(
-      appBar: AppBar(),
-      body: Column(
+    return ScaffoldNavigationBottomBar(
+      hasAppBar: true,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const ThemeModeSwitch(),

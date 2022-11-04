@@ -1,6 +1,6 @@
 const logo = 'assets/images/blunge_logo_2.svg';
-const property = 'assets/images/property_image_2.png';
-const life = 'assets/images/life_image_2.png';
+const property = 'assets/images/property_image.png';
+const life = 'assets/images/life_image.png';
 
 const onboardingImages = [
   'assets/images/one_cup_of_coffee.png',

@@ -12,12 +12,11 @@ class AppTheme {
           const IconThemeData().copyWith(color: AppColors.primaryIconColor),
       cardTheme: const CardTheme().copyWith(
         color: Colors.white,
+        elevation: 2,
         shadowColor: AppColors.primarySwatchColor,
+        surfaceTintColor: AppColors.primarySwatchColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8)),
-          side: BorderSide(
-            color: AppColors.primarySwatchColor,
-          ),
         ),
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData().copyWith(

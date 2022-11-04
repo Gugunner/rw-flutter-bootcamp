@@ -1,7 +1,6 @@
-import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/master_policies_provider.dart';
 import 'package:accesible_insurance_capstone_project/master_policies/ui/master_policy_list_screen.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/ui/master_policy_screen.dart';
-import 'package:accesible_insurance_capstone_project/policy_store/ui/upgrade_policy_screen.dart';
+import 'package:accesible_insurance_capstone_project/policy_store/ui/store_screen.dart';
 import 'package:accesible_insurance_capstone_project/profile/ui/profile_screen.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/onboarding_screen.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/ui/sign_in_screen.dart';
@@ -96,36 +95,30 @@ class AppRouter extends ChangeNotifier {
           },
           routes: <GoRoute>[
             GoRoute(
-              name: AppRoutes.profile.name,
-              path: AppRoutes.profile.route,
+              name: AppRoutes.policy.name,
+              path: '${AppRoutes.policy.route}:index',
               builder: (BuildContext context, GoRouterState state) {
-                return const ProfileScreen();
+                final index = num.parse(state.params['index']!) as int;
+                return MasterPolicyScreen(
+                  index: index,
+                );
               },
             ),
-            GoRoute(
-                name: AppRoutes.policy.name,
-                path: '${AppRoutes.policy.route}:index',
-                builder: (BuildContext context, GoRouterState state) {
-                  final masterPolicies = ref
-                      .read(
-                          MasterPoliciesProvider.instance.masterPolicies.state)
-                      .state;
-                  final index = num.parse(state.params['index']!) as int;
-                  final masterPolicy = masterPolicies[index];
-                  return MasterPolicyScreen(
-                    index: index,
-                  );
-                },
-                routes: [
-                  GoRoute(
-                    name: AppRoutes.upgrade.name,
-                    path: '${AppRoutes.upgrade.route}:idx',
-                    builder: (BuildContext context, GoRouterState state) {
-                      return const UpgradePolicyScreen();
-                    },
-                  ),
-                ]),
           ],
+        ),
+        GoRoute(
+          name: AppRoutes.store.name,
+          path: AppRoutes.store.route,
+          builder: (BuildContext context, GoRouterState state) {
+            return const StoreScreen();
+          },
+        ),
+        GoRoute(
+          name: AppRoutes.profile.name,
+          path: AppRoutes.profile.route,
+          builder: (BuildContext context, GoRouterState state) {
+            return const ProfileScreen();
+          },
         ),
       ];
 }

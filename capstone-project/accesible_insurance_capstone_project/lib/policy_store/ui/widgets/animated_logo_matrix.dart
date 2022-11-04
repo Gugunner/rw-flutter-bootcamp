@@ -3,22 +3,6 @@ import 'package:accesible_insurance_capstone_project/universal_app/utils/extensi
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UpgradePolicyScreen extends ConsumerWidget {
-  const UpgradePolicyScreen({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SizedBox(
-        width: context.width,
-        height: context.height,
-        child: const AnimatedLogoMatrix(),
-      ),
-    );
-  }
-}
-
 class AnimatedLogoMatrix extends ConsumerStatefulWidget {
   const AnimatedLogoMatrix({super.key});
 
@@ -87,9 +71,9 @@ class _AnimatedLogoMatrixState extends ConsumerState<AnimatedLogoMatrix>
             MediaQuery.of(context).size,
           ),
         )
-        //In this case tha Animation was set from inside the 
-        //animate method call.
-        .animate(
+            //In this case tha Animation was set from inside the
+            //animate method call.
+            .animate(
           CurvedAnimation(parent: controller, curve: Curves.ease),
         ),
         //A rotation animation is used and since the controller

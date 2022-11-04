@@ -15,7 +15,7 @@ class AppColors {
     800: Color(0xFF4B59C0),
     900: Color(0xFF4B59C0),
   });
-  static const backgroundColor = Color(0XFFF2F3F7);
+  static const backgroundColor = Color(0XFFFAFAFA);
   static const errorColor = Color(0xffdb5858);
   static const correctColor = Colors.green;
   static const scaffoldBackgroundColor = AppColors.backgroundColor;
@@ -55,4 +55,7 @@ class AppColors {
     end: Alignment(1.0, 0.3),
     tileMode: TileMode.clamp,
   );
+
+  static const property = Color(0xFF7D8CFF);
+  static const life = Color(0xFF36C3D7);
 }

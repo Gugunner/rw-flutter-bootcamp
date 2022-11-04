@@ -28,6 +28,7 @@ void main() async {
     ),
   );
   await SharedPreferencesProvider.instance.setupSharedPreferences();
+  // await SharedPreferencesProvider.instance.preferences.clear();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
