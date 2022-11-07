@@ -1,3 +1,5 @@
+import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/master_policies_provider.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/app_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +50,11 @@ class _ScaffoldNavigationBottomBarState
           final route = AppRoutes.home.appRoutes
               .firstWhere((aR) => aR.currentTabIndex == index)
               .route;
+          if (ref.read(routeProvider.notifier).state != route &&
+              route == AppRoutes.home.route) {
+            ref.read(MasterPoliciesProvider.instance.isLoading.notifier).state =
+                true;
+          }
           context.go(route);
           ref.read(routeProvider.notifier).state = route;
         },

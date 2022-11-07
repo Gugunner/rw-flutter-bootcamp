@@ -1,10 +1,20 @@
+import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/master_policies_provider.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
+import 'package:accesible_insurance_capstone_project/master_policy/utils/master_policy_utils.dart';
+import 'package:accesible_insurance_capstone_project/policy_store/ui/store_screen.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/ui/widgets/imago.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/auth_utils.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AnimatedLogoMatrix extends ConsumerStatefulWidget {
-  const AnimatedLogoMatrix({super.key});
+  const AnimatedLogoMatrix({
+    super.key,
+    required this.type,
+  });
+
+  final PolicyType type;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -15,9 +25,15 @@ class _AnimatedLogoMatrixState extends ConsumerState<AnimatedLogoMatrix>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late List<Tween<RelativeRect>> positionTween;
+  late MasterPolicyModel masterPolicy;
+  AsyncValue<void>? creatingPolicy;
 
   @override
   void initState() {
+    masterPolicy = createDemoPolicy(
+      ref,
+      type: widget.type,
+    );
     controller = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
@@ -33,15 +49,71 @@ class _AnimatedLogoMatrixState extends ConsumerState<AnimatedLogoMatrix>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox(
-          width: context.width,
-          height: context.height,
-        ),
-        ..._buildMatrix(context),
-      ],
-    );
+    return ref
+        .watch(
+      MasterPoliciesProvider.instance.createMasterPolicyProvider(masterPolicy),
+    )
+        .when(data: (_) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Success Buying the Policy!',
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
+          TextButton(
+            onPressed: () {
+              controller.stop();
+              ref.read(buyinPolicyProvider.notifier).state = false;
+            },
+            child: Text('ACCEPT'),
+          ),
+          SizedBox(
+            height: context.height * 0.0233,
+          ),
+          Icon(
+            Icons.check_circle_outline_rounded,
+            color: Theme.of(context).primaryColor,
+            size: 48,
+          ),
+        ],
+      );
+    }, error: (error, stackTrace) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Error Buying the Policy',
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
+          TextButton(
+            onPressed: () {
+              controller.stop();
+              ref.read(buyinPolicyProvider.notifier).state = false;
+            },
+            child: Text('GO BACK'),
+          ),
+          SizedBox(
+            height: context.height * 0.0233,
+          ),
+          Icon(
+            Icons.check_circle_outline_rounded,
+            color: Theme.of(context).errorColor,
+            size: 48,
+          ),
+        ],
+      );
+    }, loading: () {
+      return Stack(
+        children: [
+          SizedBox(
+            width: context.width,
+            height: context.height,
+          ),
+          ..._buildMatrix(context),
+        ],
+      );
+    });
   }
 
   //TODO: Make the DRY with a simple loop

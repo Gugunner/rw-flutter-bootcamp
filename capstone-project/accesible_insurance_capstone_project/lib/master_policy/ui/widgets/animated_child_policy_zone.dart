@@ -39,6 +39,8 @@ class _AnimatedChildPoliciesState
 
   Curve containerCurve = Curves.elasticOut;
 
+  bool expanded = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -83,19 +85,20 @@ class _AnimatedChildPoliciesState
         child: GestureDetector(
           //TODO: Change to onPanEnd with velocity
           //TODO: Move into its own method
-          onPanStart: (details) {
-            final dy = details.globalPosition.dy;
-            if (dy >= context.height * 0.8) {
+          onTap: () {
+            if (!expanded) {
               setState(() {
                 height = context.height;
                 opacity = 1;
                 topRadius = 8;
+                expanded = true;
               });
-            } else if (dy <= context.height * 0.2) {
+            } else if (expanded) {
               setState(() {
                 height = context.height * 0.1;
                 opacity = 0.9;
                 topRadius = context.width * 0.15;
+                expanded = false;
               });
             }
           },
@@ -103,11 +106,8 @@ class _AnimatedChildPoliciesState
             width: width ?? context.width,
             height: height,
             duration: containerDuration,
-            padding: EdgeInsets.fromLTRB(
-              context.width * 0.0,
-              context.height * 0.1,
-              context.width * 0.0,
-              context.height * 0.0,
+            padding: EdgeInsets.only(
+              top: context.height * 0.04,
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
@@ -116,14 +116,24 @@ class _AnimatedChildPoliciesState
               ),
               color: Theme.of(context).primaryColor,
             ),
-            onEnd: () {
-              debugPrint('End');
-            },
             curve: containerCurve,
             //TODO: Make widget appear when container has finished growing
             //TODO: Make widget disappear when container has finished shrninking
-            child: ChildPoliciesZone(
-              masterPolicy: widget.masterPolicy,
+            child: Column(
+              children: [
+                Text(
+                  expanded ? 'Hide child policies' : 'Show child policies',
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                        color: Colors.white,
+                      ),
+                ),
+                if (expanded)
+                  Expanded(
+                    child: ChildPoliciesZone(
+                      masterPolicy: widget.masterPolicy,
+                    ),
+                  ),
+              ],
             ),
           ),
         ),

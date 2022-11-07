@@ -120,8 +120,12 @@ class ChildPolicyCard extends ConsumerWidget {
             top: context.height * 0.00,
             right: context.width * 0.08,
             child: IconButton(
-              onPressed: () =>
-                  onUpdate(ref, context: context, childPolicy: childPolicy),
+              onPressed: () => onUpdate(
+                ref,
+                context: context,
+                childPolicy: childPolicy,
+                masterPolicy: masterPolicy,
+              ),
               iconSize: context.height * 0.03,
               icon: const Icon(
                 Icons.currency_exchange,

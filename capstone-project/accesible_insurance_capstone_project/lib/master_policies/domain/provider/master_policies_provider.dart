@@ -17,11 +17,17 @@ class MasterPoliciesProvider {
     final database =
         ref.watch(databaseProviderInstance.appFirebaseDataBaseProvider);
     try {
-      if (database != null) {
-        await database.setMasterPolicyDocument(
-          masterPolicy,
-        );
-      }
+      //TODO: Delete delay once acquiring a policy is released
+      await Future.delayed(
+        const Duration(seconds: 3),
+        () async {
+          if (database != null) {
+            await database.setMasterPolicyDocument(
+              masterPolicy,
+            );
+          }
+        },
+      );
     } catch (e) {
       rethrow;
     }

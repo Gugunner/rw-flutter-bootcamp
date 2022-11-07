@@ -2,8 +2,8 @@ import 'package:accesible_insurance_capstone_project/child_policies/domain/provi
 import 'package:accesible_insurance_capstone_project/child_policy/domain/model/child_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/child_policy/ui/widgets/dimissable_child_policy.dart';
 import 'package:accesible_insurance_capstone_project/child_policy/utils/child_policy_utils.dart';
-import 'package:accesible_insurance_capstone_project/master_policies/domain/provider/master_policies_provider.dart';
 import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
+import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/colors.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,6 +38,9 @@ class _ChildPoliciesZoneState extends ConsumerState<ChildPoliciesZone> {
 
     return Container(
       color: Colors.white,
+      margin: EdgeInsets.only(
+        top: context.height * 0.03,
+      ),
       padding: EdgeInsets.fromLTRB(
         context.width * 0.025,
         context.height * 0.025,
@@ -46,16 +49,8 @@ class _ChildPoliciesZoneState extends ConsumerState<ChildPoliciesZone> {
       ),
       child: childPolicies.when(
         data: (childPolicies) {
-          var masterPolicySI = 0.00;
-          var premiumPolicy = 0.00;
-          if (childPolicies.isNotEmpty) {
-            masterPolicySI = childPolicies
-                .map((chp) => chp.sumInsured)
-                .reduce((current, next) => current + next);
-            premiumPolicy = childPolicies
-                .map((chp) => chp.premiumPaid)
-                .reduce((current, next) => current + next);
-          }
+          final masterPolicySI = masterPolicy.currentSI;
+          final masterPolicyPremium = masterPolicy.currentPremium;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -64,7 +59,7 @@ class _ChildPoliciesZoneState extends ConsumerState<ChildPoliciesZone> {
               Text('Current Master Policy SI: '
                   '\$${masterPolicySI.toStringAsFixed(2)}'),
               Text('Current Master Policy Premium: '
-                  '\$${premiumPolicy.toStringAsFixed(2)}'),
+                  '\$${masterPolicyPremium.toStringAsFixed(2)}'),
               SizedBox(
                 height: context.height * 0.025,
               ),
@@ -106,9 +101,7 @@ class _ChildPoliciesZoneState extends ConsumerState<ChildPoliciesZone> {
                               child: Icon(
                                 Icons.monetization_on,
                                 size: context.width * 0.03,
-                                //TODO: Move color to AppColors and call from
-                                // Theme.of
-                                color: Colors.green,
+                                color: AppColors.monetization,
                               ),
                             ),
                             onChanged: (value) {
@@ -160,7 +153,10 @@ class _ChildPoliciesZoneState extends ConsumerState<ChildPoliciesZone> {
                   height: context.height * 0.06,
                   child: ElevatedButton(
                     onPressed: () {
-                      onCreateNewChildPolicy(ref, masterPolicy, masterPolicySI);
+                      onCreateNewChildPolicy(ref,
+                          masterPolicy: masterPolicy,
+                          currentSI: masterPolicySI,
+                          currentPremium: masterPolicyPremium);
                     },
                     child: Text(
                       //TODO: Move text to English copies
