@@ -11,7 +11,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //Creates a new Child Policy based on the premium paid and the sum insured
 //calculated
 void onCreateNewChildPolicy(
-    WidgetRef ref, MasterPolicyModel masterPolicy, double currenSI) {
+  WidgetRef ref, {
+  required MasterPolicyModel masterPolicy,
+  required num currentSI,
+  required num currentPremium,
+}) {
   //TODO: Move logic after loader for purchase
   //TODO: Change random Check to a real premium calculation
   final randomPremiumPaid =
@@ -29,7 +33,8 @@ void onCreateNewChildPolicy(
     expirationDate: DateTime(nextDate.year, nextDate.month, nextDate.day),
   );
   final newMasterPolicy = masterPolicy.copyWith(
-    currentSI: currenSI + randomSumInsured,
+    currentSI: currentSI + randomSumInsured,
+    currentPremium: currentPremium + randomPremiumPaid,
   );
   ref.read(
       childPoliciesProviderInstance.childPolicyInsertProvider(childPolicy));
@@ -104,9 +109,13 @@ Future<bool> onDeleteChildPolicy(
   if (shouldDelete && childPolicy.childPolicyId != null) {
     final currentSI = masterPolicy.currentSI;
     final sumInsured = childPolicy.sumInsured;
+    final currentPremium = masterPolicy.currentPremium;
+    final premium = childPolicy.premiumPaid;
     final newCurrenSI = currentSI - sumInsured;
+    final newPremium = currentPremium - premium;
     final newMasterPolicy = masterPolicy.copyWith(
       currentSI: newCurrenSI,
+      currentPremium: newPremium,
     );
     ref.read(
       MasterPoliciesProvider.instance.updateMasterPolicyProvider(
@@ -129,6 +138,7 @@ Future<void> onUpdate(
   WidgetRef ref, {
   required BuildContext context,
   required ChildPolicyModel childPolicy,
+  required MasterPolicyModel masterPolicy,
 }) async {
   final newPremiumPaid = childPolicy.premiumPaid + 1.00;
   final newSumInsured = double.parse((newPremiumPaid * 140).toStringAsFixed(2));
@@ -185,7 +195,22 @@ Future<void> onUpdate(
   );
   //Only calls the provider to update the child policy if the
   //user confirms
-  if (shouldUpdate) {
+  if (shouldUpdate && childPolicy.childPolicyId != null) {
+    final currentSI = masterPolicy.currentSI;
+    final sumInsured = childPolicy.sumInsured;
+    final currentPremium = masterPolicy.currentPremium;
+    final premium = childPolicy.premiumPaid;
+    final newCurrenSI = currentSI - sumInsured + newSumInsured;
+    final newPremium = currentPremium - premium + newPremiumPaid;
+    final newMasterPolicy = masterPolicy.copyWith(
+      currentSI: newCurrenSI,
+      currentPremium: newPremium,
+    );
+    ref.read(
+      MasterPoliciesProvider.instance.updateMasterPolicyProvider(
+        newMasterPolicy,
+      ),
+    );
     ref.read(
       childPoliciesProviderInstance.childPolicyUpdateProvider(
         childPolicy.copyWith(
@@ -194,5 +219,8 @@ Future<void> onUpdate(
         ),
       ),
     );
+    ref
+        .read(MasterPoliciesProvider.instance.selectedMasterPolicy.notifier)
+        .state = newMasterPolicy;
   }
 }

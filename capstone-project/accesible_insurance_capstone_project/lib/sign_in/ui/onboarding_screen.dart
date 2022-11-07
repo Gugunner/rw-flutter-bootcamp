@@ -1,9 +1,6 @@
-import 'package:accesible_insurance_capstone_project/master_policies/ui/master_policy_list_screen.dart';
-import 'package:accesible_insurance_capstone_project/master_policy/domain/model/master_policy_model.dart';
 import 'package:accesible_insurance_capstone_project/sign_in/domain/model/onboarding_page_model.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/domain/provider/shared_preferences_provider.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/navigation/app_router.dart';
-import 'package:accesible_insurance_capstone_project/universal_app/utils/auth_utils.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/app_routes.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/constants/assets.dart';
 import 'package:accesible_insurance_capstone_project/universal_app/utils/copies/english_copies.dart';
@@ -25,13 +22,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final pageController = PageController();
   late final List<PageModel> pages;
   int currentPage = 0;
-  late MasterPolicyModel masterPolicy;
 
   @override
   void initState() {
     _setupPages();
-    // pageController.addListener(() => _handleCurrentPageSelect(index));
-    masterPolicy = demoMasterPolicy(ref);
     super.initState();
   }
 
@@ -61,25 +55,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         imageUrl: onboardingImages[1],
         description: EnglishCopies.page2Description);
     final page3 = PageModel(
-        imageUrl: onboardingImages[0],
+        imageUrl: onboardingImages[2],
         description: EnglishCopies.page3Description);
     pages = [page1, page2, page3];
   }
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Delete provisional logic once the app has a store or a better
-    //Way of creating the demo master policy is decided
-    ref
-        .watch(masterPoliciesProviderInstance
-            .createMasterPolicyProvider(masterPolicy))
-        .when(data: (_) async {
-      debugPrint('created');
-    }, error: (error, stackTrace) {
-      debugPrint('error');
-    }, loading: () {
-      debugPrint('loading');
-    });
     return Scaffold(
       body: SafeArea(
         child: PageView.builder(
@@ -168,6 +150,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             pages[index].description,
                             overflow: TextOverflow.fade,
                             style: Theme.of(context).textTheme.displayMedium,
+                            textAlign: TextAlign.center,
                           ),
                         ),
                         //Builds the skip/finish button that navigates to Home ('/')

@@ -58,4 +58,5 @@ class AppColors {
 
   static const property = Color(0xFF7D8CFF);
   static const life = Color(0xFF36C3D7);
+  static const monetization = Colors.green;
 }

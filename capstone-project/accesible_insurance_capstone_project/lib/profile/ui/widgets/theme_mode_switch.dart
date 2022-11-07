@@ -29,30 +29,7 @@ class ThemeModeSwitch extends ConsumerWidget {
         ),
         //Temporal button
         //TODO: Move logic to profile screen
-        Text(
-          'Sign out',
-          style: Theme.of(context).textTheme.displayLarge,
-        ),
-        IconButton(
-          padding: EdgeInsets.zero,
-          onPressed: () async {
-            SharedPreferencesProvider.instance.clear();
-            ref.read(AppProvider.instance.signIn.state).state = false;
-            ref.read(routeProvider.notifier).state = AppRoutes.signin.route;
-            ref
-                .read(
-                    DatabaseProvider.instance.appFirebaseDataBaseProvider.state)
-                .state = null;
-            ref
-                .read(AppProvider.instance.userProvider.notifier)
-                .signOutFromGoogle();
-          },
-          icon: Icon(
-            Icons.power_settings_new_rounded,
-            color: Theme.of(context).primaryColor,
-          ),
-          iconSize: 24,
-        ),
+        
         const Expanded(child: SizedBox()),
         // Switch(
         //   activeColor: Colors.white,

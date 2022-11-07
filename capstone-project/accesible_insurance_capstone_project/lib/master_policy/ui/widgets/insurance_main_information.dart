@@ -185,13 +185,20 @@ class _EditablePolicyNameState extends ConsumerState<EditablePolicyName> {
                     ),
                   ))
                 else
-                  Text(
-                    widget.masterPolicy.name ?? '',
-                    maxLines: 2,
-                    style: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w600, height: 1.2),
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        widget.masterPolicy.name ?? '',
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            height: 1.2),
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ),
               ],
             ),

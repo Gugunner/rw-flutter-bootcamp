@@ -19,6 +19,7 @@ class MasterPolicyModel {
     required this.policyId,
     required this.type,
     required this.currentSI,
+    required this.currentPremium,
     required this.insured,
     required this.name,
     this.status = PolicyStatus.pending,
@@ -35,6 +36,7 @@ class MasterPolicyModel {
 
   final String policyId;
   final num currentSI;
+  final num currentPremium;
   final InsuredModel insured;
   final PolicyType type;
   final String? documentId;
@@ -71,6 +73,7 @@ class MasterPolicyModel {
       policyId: data?['policyId'] as String,
       name: data?['name'] as String,
       currentSI: data?['currentSI'] as num,
+      currentPremium: data?['currentPremium'] as num,
       insured: InsuredModel.fromMap(data?['insured']),
       status: getStatus(data?['status']),
       type: getType(data?['type']),
@@ -94,6 +97,7 @@ class MasterPolicyModel {
       'policyId': policyId,
       'name': name,
       'currentSI': currentSI,
+      'currentPremium': currentPremium,
       'insured': insured.toMap(),
       'status': status?.name ?? PolicyStatus.pending.name,
       'type': type.name,
@@ -115,6 +119,7 @@ class MasterPolicyModel {
     DateTime? expires,
     String? name,
     num? currentSI,
+    num? currentPremium,
     PolicyStatus? status,
     PolicyType? type,
     LocationModel? location,
@@ -130,6 +135,7 @@ class MasterPolicyModel {
         expires: expires ?? this.expires,
         name: name ?? this.name,
         currentSI: currentSI ?? this.currentSI,
+        currentPremium: currentPremium ?? this.currentPremium,
         status: status ?? this.status,
         type: type ?? this.type,
         location: location ?? this.location,
