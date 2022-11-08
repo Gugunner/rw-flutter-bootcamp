@@ -38,6 +38,21 @@ dependencies:
   - cloud_firestore: ^3.4.7 (DB)
   - freezed_annotation: ^2.1.0 (Needed by Freezed)
   - json_annotation: ^4.6.0 (Needed by Freezed)
+  - go_router: ^5.1.3 (Simplified Navigation 2.0)
+  - get_it: ^7.2.0 (State manager without the need of BuildContext)
+  - shared_preferences: ^2.0.15 (Persistent storage for basic values)
+  - flutter_svg: ^1.1.5 (Handles SVG assets)
+  - sqflite: ^2.1.0+1 (Manages App SQLite DB) 
+  - path_provider: ^2.0.11 (Easy access device directories)
+  - synchronized: ^3.0.0+3 (Keeps data in sync)
+  - sqlbrite: ^2.4.0 (Easily manage SQL DB)
+  - path: ^1.8.2 (Access specific paths)
+  - equatable: ^2.0.5 (Easily convert model properties to compare them)
+  - intl: ^0.17.0 (Manage international formats)
+  - google_sign_in: ^5.4.2 (Google SSO)
+  - firebase_storage: ^11.0.3 (Manage Firebase Api)
+  - image_picker: ^0.8.6 (Helps open device image selection)
+
 
 dev_dependencies:
   - flutter_test:
@@ -46,6 +61,10 @@ dev_dependencies:
   - build_runner: ^2.2.1 (Needed by Freezed and other packages)
   - freezed: ^2.1.0+1 (Build safe non mutable models)
   - json_serializable: ^6.3.2 (Allows parsing from/to json easily)
+  - firebase_auth_mocks: ^0.9.0 (Mocks the Auth Api)
+  - google_sign_in_mocks: ^2.0.1 (Mocks Google SSO)
+  - fake_cloud_firestore: ^2.0.1 (Create a local fake Firestore for testing)
+  - flutter_launcher_icons: ^0.10.0 (Helps easily create app icons for flutter platforms)
 ```
 
 ## App Screens
@@ -126,4 +145,8 @@ The sixth deliverable targets the use of Firebase integration which includes Fir
 
 Check the progress in [WEEK 11](/capstone-project/accesible_insurance_capstone_project/WEEK11.md). 
 
+### Seventh and final deliverable of Bootcamp
+
+The seventh deliverable targets creating a cohesive app concept that uses all the homeworks from the capstone project to create a user flow of the acquisition of master policies. In this deliverable the main focus was fixing bugs of state management and improve UI style and theme.
+Check the progress in [WEEK 12](/capstone-project/accesible_insurance_capstone_project/WEEK11.md). 
 

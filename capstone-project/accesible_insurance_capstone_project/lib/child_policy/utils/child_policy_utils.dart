@@ -16,7 +16,6 @@ void onCreateNewChildPolicy(
   required num currentSI,
   required num currentPremium,
 }) {
-  //TODO: Move logic after loader for purchase
   //TODO: Change random Check to a real premium calculation
   final randomPremiumPaid =
       double.parse((Random().nextDouble() * 20.99 + 3.99).toStringAsFixed(2));
@@ -48,7 +47,7 @@ void onCreateNewChildPolicy(
       .state = newMasterPolicy;
 }
 
-//Shows a dialog to confirm the delete of a child policy
+//Deletes a Child Policy and updates the SI and premium of the master policy
 Future<bool> onDeleteChildPolicy(
   WidgetRef ref, {
   required BuildContext context,
@@ -133,7 +132,7 @@ Future<bool> onDeleteChildPolicy(
   return shouldDelete;
 }
 
-//Shows a dialog to confirm the update of a child policy
+//Updates a Child Policy and updates the SI and premium of the master policy
 Future<void> onUpdate(
   WidgetRef ref, {
   required BuildContext context,
